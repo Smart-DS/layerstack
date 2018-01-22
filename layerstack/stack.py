@@ -3,7 +3,7 @@ from __future__ import print_function, division, absolute_import
 import argparse
 from collections import MutableSequence, OrderedDict
 from layerstack import start_file_log, LayerStackError
-from .layer import Layer, LayerBase, ModelLayerBase
+from .layer import Layer, ModelLayerBase
 from .args import ArgMode
 import json
 import logging
@@ -30,7 +30,7 @@ class Stack(MutableSequence):
 
     @staticmethod
     def __checkValue(value):
-        if not isinstance(value, LayerBase):
+        if not isinstance(value, Layer):
             raise LayerStackError("Stacks only hold Layers. You passed a {}."
                                   .format(type(value)))
 
@@ -106,7 +106,7 @@ class Stack(MutableSequence):
                 kwarg_dict['description'] = kwarg.description
                 kwarg_dict['parser'] = kwarg.parser
                 kwarg_dict['choices'] = kwarg.choices
-                kwarg_dict['nkwargs'] = kwarg.nkwargs
+                kwarg_dict['nargs'] = kwarg.nargs
                 kwarg_dict['list_parser'] = kwarg.list_parser
                 kwargs[name] = kwarg_dict
             stack_layers[layer.name] = {'layer_dir': layer.layer_dir,
@@ -126,15 +126,17 @@ class Stack(MutableSequence):
             json_data = json.load(json_file)
 
         layers = []
-        for json_layer in json_data['layers']:
+        for json_layer in json_data['layers'].values():
             layer = Layer(json_layer['layer_dir'])
             for i, arg in enumerate(json_layer['args']):
                 value = arg['value']
                 if value is not None:
                     layer.args[i].value = value
+            kwargs = {}
             for name, kwarg in json_layer['kwargs'].items():
                 value = kwarg['value']
-                layer.kwargs[name] = value
+                kwargs[name] = value
+            layer.kwargs = kwargs
             layers.append(layer)
 
         return Stack(*layers,
@@ -144,24 +146,23 @@ class Stack(MutableSequence):
         logger = start_file_log(os.path.join(self.run_dir, 'stack.log'),
                                 log_level=log_level)
         if isinstance(self.model, str):
-            layer = self.layers[0]
-            if layer.issubclass(ModelLayerBase):
+            layer = self.layers[0]._layer
+            if issubclass(layer, ModelLayerBase):
                 self.model = layer._load_model(self.model)
             else:
                 raise LayerStackError('Layer must be a ModelLayer but is a {:}'
                                       .format(type(Layer)))
         for layer in self.layers:
-            if layer.issubclass(ModelLayerBase):
+            if issubclass(layer, ModelLayerBase):
                 if self.model is None:
                     raise LayerStackError('Model not initialized')
-                logger.info("Running ...")
-                self.model = layer.apply(self, self.model, *layer.args,
-                                         **layer.kwargs)
+                logger.info("Running {}".format(layer.name))
+                self.model = layer.run_layer(self, model=self.model)
             else:
-                self.result = layer.apply(self, *layer.args, **layer.kwargs)
+                self.result = layer.run_layer(self)
 
-        layer = self.layers[-1]
-        if layer.issubclass(ModelLayerBase):
+        layer = self.layers[-1]._layer
+        if issubclass(layer, ModelLayerBase):
             layer._save_model(self.model)
 
         # Do we need/want to return the model if we are already saving it above?

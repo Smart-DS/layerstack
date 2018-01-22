@@ -226,12 +226,15 @@ class Layer(object):
     def runnable(self):
         return self._args.set
 
-    def run_layer(self, stack, model):
+    def run_layer(self, stack, model=None):
         assert self.runnable
         self._args.mode = ArgMode.USE
         self._kwargs.mode = ArgMode.USE
         kwargs = dict(self._kwargs.items())
-        self._layer.apply(stack, model, *self._args, **kwargs)
+        if model is None:
+            self._layer.apply(stack, *self._args, **kwargs)
+        else:
+            self._layer.apply(stack, model, *self._args, **kwargs)
 
 
 class ModelLayerBase(LayerBase):
