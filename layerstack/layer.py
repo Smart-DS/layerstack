@@ -7,10 +7,8 @@ import logging
 import os
 import sys
 
-from enum import Enum
 from jinja2 import Environment, FileSystemLoader
-
-from .args import ArgList, KwargDict
+from .args import ArgList, KwargDict, ArgMode
 from layerstack import start_console_log, LayerStackError
 
 
@@ -39,8 +37,8 @@ class Layer(object):
             - name (str) - Concise, human readable name for the new layer
             - parent_dir (str) - Path to the parent directory for the new Layer
             - desc (optional str) - Description string to drop into the new layer
-            - layer_base_class (issubclass(layer_base_class,LayerBase)) - 
-                  Class from which the new layer should be derived. If 
+            - layer_base_class (issubclass(layer_base_class,LayerBase)) -
+                  Class from which the new layer should be derived. If
                   issubclass(layer_base_class,ModelLayerBase) then the new layer
                   will conform to that structure (i.e. assume that a model of
                   a particular type is being operated on).
@@ -48,24 +46,26 @@ class Layer(object):
 
         # Create the directory
         if not os.path.exists(parent_dir):
-            raise ValueError("The parent_dir {} does not exist."
-                             .format(parent_dir))
+            raise LayerStackError("The parent_dir {} does not exist."
+                                  .format(parent_dir))
         dir_name = name.lower().replace(" ", "_")
         dir_path = os.path.join(parent_dir, dir_name)
         if os.path.exists(dir_path):
-            raise ValueError("The new directory to be created, {}, already exists."
-                             .format(dir_path))
+            raise LayerStackError("The new directory to be created, {}, already exists."
+                                  .format(dir_path))
         os.mkdir(dir_path)
 
         # Create the layer.py file
         j2env = Environment(loader=FileSystemLoader(os.path.dirname(__file__)))
         template = j2env.get_template('layer.template')
         with open(os.path.join(dir_path, 'layer.py'), 'w') as f:
-            f.write(template.render(**cls._template_kwargs(name, model_type, desc)))
+            f.write(template.render(**cls._template_kwargs(name,
+                                                           layer_base_class,
+                                                           desc)))
         return dir_path
 
     @classmethod
-    def _template_kwargs(cls, name, model_type, desc):
+    def _template_kwargs(cls, name, layer_base_class, desc):
         kwargs = {}
         kwargs['name'] = name
 
@@ -78,7 +78,7 @@ class Layer(object):
             return result
 
         kwargs['class_name'] = class_name(name)
-        kwargs['model_type'] = model_type
+        kwargs['layer_base_class'] = layer_base_class
 
         if desc is not None:
             kwargs['desc'] = desc
@@ -101,8 +101,8 @@ class Layer(object):
         module = imp.load_source('layer', os.path.join(layer_dir, 'layer.py'))
         for item in dir(module):
             try:
-                if issubclass(getattr(module, item), ModelLayerBase):
-                    if item is not 'ModelLayerBase':
+                if issubclass(getattr(module, item), LayerBase):
+                    if item not in ['LayerBase', 'ModelLayerBase']:
                         return getattr(module, item)
             except:
                 continue
@@ -183,7 +183,8 @@ class LayerBase(object):
     # TODO: Split main into parser and execution. Should be able to re-use
     # parser-part for workflows.
     @classmethod
-    def main(cls, log_format='%(asctime)s|%(levelname)s|%(name)s|\n    %(message)s'):
+    def main(cls,
+             log_format='%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'):
         """
         Arguments:
             - log_format (str) - set this to override the format of the default
@@ -212,8 +213,8 @@ class LayerBase(object):
 
         if not os.path.isdir(cli_args.run_dir):
             # TODO: Make this a DiTTo Exception
-            raise ValueError("The run directory '{}' does not exist."
-                             .format(os.path.abspath(cli_args.run_dir)))
+            raise LayerStackError("The run directory '{}' does not exist."
+                                  .format(os.path.abspath(cli_args.run_dir)))
         cls._main_apply(cli_args, arg_list, kwarg_dict)
         sys.exit()
 
@@ -227,24 +228,13 @@ class LayerBase(object):
 
     @classmethod
     def _main_apply(cls, cli_args, arg_list, kwarg_dict):
-        # HERE -- Why doesn't *arg_list, **kwarg_dict work? (Must be bypassing __getitem__)
         assert arg_list.mode == ArgMode.USE
         assert kwarg_dict.mode == ArgMode.USE
         from ditto.layers.stack import Stack
         return cls.apply(Stack(), *arg_list, **kwarg_dict)
-        #if len(arg_list) > 0:
-        #    assert not isinstance(arg_list[0],Arg)
-        #
-        #if len(kwarg_dict.keys()) > 0:
-        #    assert not isinstance(kwarg_dict[kwarg_dict.keys()[0]],Kwarg)
-        #return cls.apply(Stack(),
-        #                 *[arg_val.value for arg_val in arg_list],
-        #                 **{kwarg_name: kwarg_val for kwarg_name, kwarg_val in kwarg_dict.items()})
 
 
 class ModelLayerBase(LayerBase):
-    model_type = ModelType.DiTTo
-
     @classmethod
     def args(cls, model=None, **kwargs):
         return super().args(**kwargs)
@@ -254,32 +244,52 @@ class ModelLayerBase(LayerBase):
         return super().kwargs(**kwargs)
 
     @classmethod
+    def _check_model_type(cls, model):
+        # Check to make sure model is of the proper type
+        pass
+
+    @classmethod
     def apply(cls, stack, model, *args, **kwargs):
-        if isinstance(model,str):
+        if isinstance(model, str):
             model = cls._load_model(model)
         cls._check_model_type(model)
         return model
 
     @classmethod
     def _cli_desc(cls):
-        return cls.desc if cls.desc is not None else "Apply Layer '{}' to {} model".format(cls.name,cls.model_type.name)
+        return cls.desc if cls.desc is not None else "Apply Layer '{}' to model".format(cls.name)
 
     @classmethod
     def _add_positional_arguments(cls, parser):
-        parser.add_argument('model', help="Path to {} model".format(cls.model_type.name))
+        parser.add_argument('model', help="Path to model")
 
     @classmethod
     def _main_apply(cls, cli_args, arg_list, kwarg_dict):
         model = cls._load_model(cli_args.model)
-        from ditto.layers.stack import Stack
+        from .stack import Stack
         return cls.apply(Stack(), model, *arg_list, **kwarg_dict)
 
     @classmethod
     def _load_model(cls, model_path):
-        if cls.model_type == ModelType.GridLABD:
-            from ditto.readers.gridlabd.read import Reader
-            from ditto.store import Store
-            m = Store()
-            Reader().parse(m, model_path)
-            return m
-        raise DiTToNotImplementedError("Cannot yet load {} models.".format(cls.model_type))
+        # Method to load model
+        pass
+
+    @classmethod
+    def _save_model(cls, model_path):
+        # Method to save model
+        pass
+
+
+class GridLabDLayerBase(ModelLayerBase):
+    @classmethod
+    def _check_model_type(cls, model):
+        # Check to make sure model is of the proper type
+        pass
+
+    @classmethod
+    def _load_model(cls, model_path):
+        from ditto.readers.gridlabd.read import Reader
+        from ditto.store import Store
+        m = Store()
+        Reader().parse(m, model_path)
+        return m

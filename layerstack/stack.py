@@ -1,12 +1,13 @@
 from __future__ import print_function, division, absolute_import
 
 import argparse
-from builtins import super
 from collections import MutableSequence, OrderedDict
-from layerstack import LayerStackError
+from layerstack import start_file_log, LayerStackError
 from .layer import Layer, LayerBase, ModelLayerBase
 from .args import ArgMode
 import json
+import logging
+import os
 
 
 class Stack(MutableSequence):
@@ -30,8 +31,8 @@ class Stack(MutableSequence):
     @staticmethod
     def __checkValue(value):
         if not isinstance(value, LayerBase):
-            raise DiTToTypeError("Stacks only hold Layers. You passed a {}."
-                                 .format(type(value)))
+            raise LayerStackError("Stacks only hold Layers. You passed a {}."
+                                  .format(type(value)))
 
     def __getitem__(self, i):
         return self.__layers[i]
@@ -127,27 +128,43 @@ class Stack(MutableSequence):
         layers = []
         for json_layer in json_data['layers']:
             layer = Layer(json_layer['layer_dir'])
-            for i, value in enumerate(json_layer['args'].values()):
+            for i, arg in enumerate(json_layer['args']):
+                value = arg['value']
                 if value is not None:
                     layer.args[i].value = value
-            layer.kwargs = json_layer['kwargs']
+            for name, kwarg in json_layer['kwargs'].items():
+                value = kwarg['value']
+                layer.kwargs[name] = value
             layers.append(layer)
 
         return Stack(*layers,
                      run_dir=json_data['run_dir'], model=json_data['model'])
 
-    def run(self,log_level=logging.INFO):
-        start_file_log(os.path.join(self.run_dir,'stack.log'),log_level=log_level):
+    def run(self, log_level=logging.INFO):
+        logger = start_file_log(os.path.join(self.run_dir, 'stack.log'),
+                                log_level=log_level)
+        if isinstance(self.model, str):
+            layer = self.layers[0]
+            if layer.issubclass(ModelLayerBase):
+                self.model = layer._load_model(self.model)
+            else:
+                raise LayerStackError('Layer must be a ModelLayer but is a {:}'
+                                      .format(type(Layer)))
         for layer in self.layers:
-            # HERE -- Maybe load model from path here using first layer cls._load_model
             if layer.issubclass(ModelLayerBase):
                 if self.model is None:
-                    raise LayerStackError()
+                    raise LayerStackError('Model not initialized')
                 logger.info("Running ...")
-                self.model = layer.apply(self,self.model,*layer.args,**layer.kwargs)
+                self.model = layer.apply(self, self.model, *layer.args,
+                                         **layer.kwargs)
             else:
-                self.result = layer.apply(self,*layer.args,**layer.kwargs)
-            # HERE -- Maybe save model to run_directory using last layer cls._save_model
+                self.result = layer.apply(self, *layer.args, **layer.kwargs)
+
+        layer = self.layers[-1]
+        if layer.issubclass(ModelLayerBase):
+            layer._save_model(self.model)
+
+        # Do we need/want to return the model if we are already saving it above?
         return self.model
 
 
