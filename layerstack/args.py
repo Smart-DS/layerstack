@@ -7,7 +7,7 @@ from collections import OrderedDict
 from builtins import super
 from enum import Enum
 
-from ditto.core.exceptions import DiTToTypeError
+from layerstack import LayerStackError
 
 
 class KwArgBase(object):
@@ -154,7 +154,7 @@ class ArgList(list):
     def __setitem__(self, i, value):
         if self.mode == ArgMode.DESC:
             if not isinstance(value, Arg):
-                raise DiTToTypeError("ArgLists only hold Args. You passed a {}."
+                raise LayerStackError("ArgLists only hold Args. You passed a {}."
                                      .format(type(value)))
             super().__setitem__(i, value)
             return
@@ -236,7 +236,7 @@ class KwargDict(OrderedDict):
     def __setitem__(self, key, value):
         if self.mode == ArgMode.DESC:
             if not isinstance(value, Kwarg):
-                raise DiTToTypeError("KwargDicts only hold Kwargs. You passed a {}."
+                raise LayerStackError("KwargDicts only hold Kwargs. You passed a {}."
                                      .format(type(value)))
             value.name = key
             super().__setitem__(key, value)

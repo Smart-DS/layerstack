@@ -15,6 +15,76 @@ from layerstack import start_console_log, LayerStackError
 logger = logging.getLogger(__name__)
 
 
+class LayerBase(object):
+    name = None
+    desc = None
+
+    @classmethod
+    def args(cls, **kwargs):
+        return ArgList()
+
+    @classmethod
+    def kwargs(cls, **kwargs):
+        return KwargDict()
+
+    @classmethod
+    def apply(cls, stack, *args, **kwargs):
+        pass
+
+    # TODO: Split main into parser and execution. Should be able to re-use
+    # parser-part for workflows.
+    @classmethod
+    def main(cls,
+             log_format='%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'):
+        """
+        Arguments:
+            - log_format (str) - set this to override the format of the default
+                  console logging output
+        """
+        # Create argument parser
+        desc = cls._cli_desc()
+        parser = argparse.ArgumentParser(description=desc)
+        cls._add_positional_arguments(parser)
+        parser.add_argument('-r', '--run_dir', help="Run directory",
+                            default='.')
+        parser.add_argument('-d', '--debug', help="Display debug messages",
+                            action='store_true')
+        arg_list = cls.args()
+        arg_list.add_arguments(parser)
+        kwarg_dict = cls.kwargs()
+        kwarg_dict.add_arguments(parser, short_names=['r', 'd'])
+
+        # Parse args and set values
+        cli_args = parser.parse_args()
+        arg_list.set_args(cli_args)
+        kwarg_dict.set_kwargs(cli_args)
+
+        log_level = logging.DEBUG if cli_args.debug else logging.INFO
+        start_console_log(log_level=log_level, log_format=log_format)
+
+        if not os.path.isdir(cli_args.run_dir):
+            # TODO: Make this a DiTTo Exception
+            raise LayerStackError("The run directory '{}' does not exist."
+                                  .format(os.path.abspath(cli_args.run_dir)))
+        cls._main_apply(cli_args, arg_list, kwarg_dict)
+        sys.exit()
+
+    @classmethod
+    def _cli_desc(cls):
+        return cls.desc if cls.desc is not None else "Apply Layer '{}'".format(cls.name)
+
+    @classmethod
+    def _add_positional_arguments(cls, parser):
+        pass
+
+    @classmethod
+    def _main_apply(cls, cli_args, arg_list, kwarg_dict):
+        assert arg_list.mode == ArgMode.USE
+        assert kwarg_dict.mode == ArgMode.USE
+        from ditto.layers.stack import Stack
+        return cls.apply(Stack(), *arg_list, **kwarg_dict)
+
+
 class Layer(object):
 
     def __init__(self, layer_dir):
@@ -78,7 +148,7 @@ class Layer(object):
             return result
 
         kwargs['class_name'] = class_name(name)
-        kwargs['layer_base_class'] = layer_base_class
+        kwargs['layer_base_class'] = layer_base_class.__name__
 
         if desc is not None:
             kwargs['desc'] = desc
@@ -162,76 +232,6 @@ class Layer(object):
         self._kwargs.mode = ArgMode.USE
         kwargs = dict(self._kwargs.items())
         self._layer.apply(stack, model, *self._args, **kwargs)
-
-
-class LayerBase(object):
-    name = None
-    desc = None
-
-    @classmethod
-    def args(cls, **kwargs):
-        return ArgList()
-
-    @classmethod
-    def kwargs(cls, **kwargs):
-        return KwargDict()
-
-    @classmethod
-    def apply(cls, stack, *args, **kwargs):
-        pass
-
-    # TODO: Split main into parser and execution. Should be able to re-use
-    # parser-part for workflows.
-    @classmethod
-    def main(cls,
-             log_format='%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'):
-        """
-        Arguments:
-            - log_format (str) - set this to override the format of the default
-                  console logging output
-        """
-        # Create argument parser
-        desc = cls._cli_desc()
-        parser = argparse.ArgumentParser(description=desc)
-        cls._add_positional_arguments(parser)
-        parser.add_argument('-r', '--run_dir', help="Run directory",
-                            default='.')
-        parser.add_argument('-d', '--debug', help="Display debug messages",
-                            action='store_true')
-        arg_list = cls.args()
-        arg_list.add_arguments(parser)
-        kwarg_dict = cls.kwargs()
-        kwarg_dict.add_arguments(parser, short_names=['r', 'd'])
-
-        # Parse args and set values
-        cli_args = parser.parse_args()
-        arg_list.set_args(cli_args)
-        kwarg_dict.set_kwargs(cli_args)
-
-        log_level = logging.DEBUG if cli_args.debug else logging.INFO
-        start_console_log(log_level=log_level, log_format=log_format)
-
-        if not os.path.isdir(cli_args.run_dir):
-            # TODO: Make this a DiTTo Exception
-            raise LayerStackError("The run directory '{}' does not exist."
-                                  .format(os.path.abspath(cli_args.run_dir)))
-        cls._main_apply(cli_args, arg_list, kwarg_dict)
-        sys.exit()
-
-    @classmethod
-    def _cli_desc(cls):
-        return cls.desc if cls.desc is not None else "Apply Layer '{}'".format(cls.name)
-
-    @classmethod
-    def _add_positional_arguments(cls, parser):
-        pass
-
-    @classmethod
-    def _main_apply(cls, cli_args, arg_list, kwarg_dict):
-        assert arg_list.mode == ArgMode.USE
-        assert kwarg_dict.mode == ArgMode.USE
-        from ditto.layers.stack import Stack
-        return cls.apply(Stack(), *arg_list, **kwarg_dict)
 
 
 class ModelLayerBase(LayerBase):
