@@ -4,7 +4,7 @@ from builtins import super
 import logging
 
 from layerstack.args import Arg, Kwarg
-from layerstack.layer import {{ layer_base_class }}
+from {{ layer_base_class_module }} import {{ layer_base_class }}
 
 logger = logging.getLogger('layerstack.layers.{{ class_name }}')
 

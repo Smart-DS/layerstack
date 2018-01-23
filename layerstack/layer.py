@@ -201,6 +201,7 @@ class Layer(object):
             return result
 
         kwargs['class_name'] = class_name(name)
+        kwargs['layer_base_class_module'] = layer_base_class.__module__
         kwargs['layer_base_class'] = layer_base_class.__name__
 
         if desc is not None:
