@@ -16,6 +16,9 @@ logger = logging.getLogger(__name__)
 
 
 class LayerBase(object):
+    """
+    Abstract base class for user-defined layers.
+    """
     name = None
     desc = None
 
@@ -83,6 +86,56 @@ class LayerBase(object):
         assert kwarg_dict.mode == ArgMode.USE
         from ditto.layers.stack import Stack
         return cls.apply(Stack(), *arg_list, **kwarg_dict)
+
+
+class ModelLayerBase(LayerBase):
+    """
+    Abstract base class for user-defined layers that operate on a model. 
+    """
+
+    @classmethod
+    def args(cls, model=None, **kwargs):
+        return super().args(**kwargs)
+
+    @classmethod
+    def kwargs(cls, model=None, **kwargs):
+        return super().kwargs(**kwargs)
+
+    @classmethod
+    def _check_model_type(cls, model):
+        # Check to make sure model is of the proper type
+        pass
+
+    @classmethod
+    def apply(cls, stack, model, *args, **kwargs):
+        if isinstance(model, str):
+            model = cls._load_model(model)
+        cls._check_model_type(model)
+        return model
+
+    @classmethod
+    def _cli_desc(cls):
+        return cls.desc if cls.desc is not None else "Apply Layer '{}' to model".format(cls.name)
+
+    @classmethod
+    def _add_positional_arguments(cls, parser):
+        parser.add_argument('model', help="Path to model")
+
+    @classmethod
+    def _main_apply(cls, cli_args, arg_list, kwarg_dict):
+        model = cls._load_model(cli_args.model)
+        from .stack import Stack
+        return cls.apply(Stack(), model, *arg_list, **kwarg_dict)
+
+    @classmethod
+    def _load_model(cls, model_path):
+        # Method to load model
+        pass
+
+    @classmethod
+    def _save_model(cls, model_path):
+        # Method to save model
+        pass
 
 
 class Layer(object):
@@ -235,64 +288,3 @@ class Layer(object):
             self._layer.apply(stack, *self._args, **kwargs)
         else:
             self._layer.apply(stack, model, *self._args, **kwargs)
-
-
-class ModelLayerBase(LayerBase):
-    @classmethod
-    def args(cls, model=None, **kwargs):
-        return super().args(**kwargs)
-
-    @classmethod
-    def kwargs(cls, model=None, **kwargs):
-        return super().kwargs(**kwargs)
-
-    @classmethod
-    def _check_model_type(cls, model):
-        # Check to make sure model is of the proper type
-        pass
-
-    @classmethod
-    def apply(cls, stack, model, *args, **kwargs):
-        if isinstance(model, str):
-            model = cls._load_model(model)
-        cls._check_model_type(model)
-        return model
-
-    @classmethod
-    def _cli_desc(cls):
-        return cls.desc if cls.desc is not None else "Apply Layer '{}' to model".format(cls.name)
-
-    @classmethod
-    def _add_positional_arguments(cls, parser):
-        parser.add_argument('model', help="Path to model")
-
-    @classmethod
-    def _main_apply(cls, cli_args, arg_list, kwarg_dict):
-        model = cls._load_model(cli_args.model)
-        from .stack import Stack
-        return cls.apply(Stack(), model, *arg_list, **kwarg_dict)
-
-    @classmethod
-    def _load_model(cls, model_path):
-        # Method to load model
-        pass
-
-    @classmethod
-    def _save_model(cls, model_path):
-        # Method to save model
-        pass
-
-
-class GridLabDLayerBase(ModelLayerBase):
-    @classmethod
-    def _check_model_type(cls, model):
-        # Check to make sure model is of the proper type
-        pass
-
-    @classmethod
-    def _load_model(cls, model_path):
-        from ditto.readers.gridlabd.read import Reader
-        from ditto.store import Store
-        m = Store()
-        Reader().parse(m, model_path)
-        return m
