@@ -4,7 +4,7 @@ import argparse
 from collections import MutableSequence, OrderedDict
 from layerstack import start_file_log, LayerStackError
 from .layer import Layer, ModelLayerBase
-from .args import ArgMode
+from .args import ArgMode, Arg, Kwarg
 import json
 import logging
 import os
@@ -129,20 +129,30 @@ class Stack(MutableSequence):
         for json_layer in json_data['layers'].values():
             layer = Layer(json_layer['layer_dir'])
             for i, arg in enumerate(json_layer['args']):
+                new_arg = Arg(arg['name'], description=arg['description'],
+                              parser=arg['parser'], choices=arg['choices'],
+                              nargs=arg['nargs'],
+                              list_parser=arg['list_parser'])
                 value = arg['value']
                 if value is not None:
-                    layer.args[i].value = value
-            kwargs = {}
+                    new_arg.value = value
+                layer.args[i] = new_arg
+
             for name, kwarg in json_layer['kwargs'].items():
-                value = kwarg['value']
-                kwargs[name] = value
-            layer.kwargs = kwargs
+                new_kwarg = Kwarg(default=kwarg['default'],
+                                  description=arg['description'],
+                                  parser=arg['parser'], choices=arg['choices'],
+                                  nargs=arg['nargs'],
+                                  list_parser=arg['list_parser'])
+                new_kwarg.value = kwarg['value']
+                layer.kwargs[name] = new_kwarg
+
             layers.append(layer)
 
         return Stack(*layers,
                      run_dir=json_data['run_dir'], model=json_data['model'])
 
-    def run(self, log_level=logging.INFO):
+    def run(self, save_path=None, log_level=logging.INFO):
         logger = start_file_log(os.path.join(self.run_dir, 'stack.log'),
                                 log_level=log_level)
         if isinstance(self.model, str):
@@ -161,12 +171,13 @@ class Stack(MutableSequence):
             else:
                 self.result = layer.run_layer(self)
 
-        layer = self.layers[-1]._layer
+        if save_path is not None:
+            layer = self.layers[-1]._layer
         if issubclass(layer, ModelLayerBase):
             layer._save_model(self.model)
-
-        # Do we need/want to return the model if we are already saving it above?
-        return self.model
+        else:
+            raise LayerStackError('Layer must be a ModelLayer but is a {:}'
+                                  .format(type(Layer)))
 
 
 if __name__ == '__main__':
