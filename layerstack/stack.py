@@ -163,10 +163,10 @@ class Stack(MutableSequence):
                 raise LayerStackError('Layer must be a ModelLayer but is a {:}'
                                       .format(type(Layer)))
         for layer in self.layers:
+            logger.info("Running {}".format(layer.name))
             if issubclass(layer, ModelLayerBase):
                 if self.model is None:
                     raise LayerStackError('Model not initialized')
-                logger.info("Running {}".format(layer.name))
                 self.model = layer.run_layer(self, model=self.model)
             else:
                 self.result = layer.run_layer(self)
