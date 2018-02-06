@@ -2,6 +2,7 @@ from __future__ import print_function, division, absolute_import
 
 import argparse
 from collections import MutableSequence, OrderedDict
+from .args import ArgMode
 import json
 import logging
 import os
@@ -206,14 +207,23 @@ class Stack(MutableSequence):
 
             # set arg and kwarg values based on the json file
             for i, arg in enumerate(json_layer['args']):
+				new_arg = Arg(arg['name'], description=arg['description'],
+                              parser=arg['parser'], choices=arg['choices'],
+                              nargs=arg['nargs'],
+                              list_parser=arg['list_parser'])
                 value = arg['value']
                 if value is not None:
-                    layer.args[i].value = value
-            kwargs = {}
+                    new_arg.value = value
+                layer.args[i] = new_arg
+
             for name, kwarg in json_layer['kwargs'].items():
-                value = kwarg['value']
-                kwargs[name] = value
-            layer.kwargs = kwargs
+                new_kwarg = Kwarg(default=kwarg['default'],
+                                  description=arg['description'],
+                                  parser=arg['parser'], choices=arg['choices'],
+                                  nargs=arg['nargs'],
+                                  list_parser=arg['list_parser'])
+                new_kwarg.value = kwarg['value']
+                layer.kwargs[name] = new_kwarg
 
             layers.append(layer)
 
@@ -242,20 +252,21 @@ class Stack(MutableSequence):
                 raise LayerStackError('Layer must be a ModelLayer but is a {:}'
                                       .format(type(Layer)))
         for layer in self.layers:
+            logger.info("Running {}".format(layer.name))
             if issubclass(layer, ModelLayerBase):
                 if self.model is None:
                     raise LayerStackError('Model not initialized')
-                logger.info("Running {}".format(layer.name))
                 self.model = layer.run_layer(self, model=self.model)
             else:
                 self.result = layer.run_layer(self)
 
-        layer = self.layers[-1]._layer
+        if save_path is not None:
+            layer = self.layers[-1]._layer
         if issubclass(layer, ModelLayerBase):
             layer._save_model(self.model)
-
-        # Do we need/want to return the model if we are already saving it above?
-        return self.model
+        else:
+            raise LayerStackError('Layer must be a ModelLayer but is a {:}'
+                                  .format(type(Layer)))
 
 
 if __name__ == '__main__':

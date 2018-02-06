@@ -91,7 +91,7 @@ class LayerBase(object):
 
 class ModelLayerBase(LayerBase):
     """
-    Abstract base class for user-defined layers that operate on a model. 
+    Abstract base class for user-defined layers that operate on a model.
     """
 
     @classmethod
