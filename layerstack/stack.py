@@ -2,12 +2,14 @@ from __future__ import print_function, division, absolute_import
 
 import argparse
 from collections import MutableSequence, OrderedDict
-from layerstack import start_file_log, LayerStackError
-from .layer import Layer, ModelLayerBase
-from .args import ArgMode
 import json
 import logging
 import os
+from uuid import uuid4
+
+from layerstack import checksum, LayerStackError, start_file_log, TempJsonFilepath
+from layerstack.layer import Layer, ModelLayerBase
+from layerstack.args import ArgMode
 
 
 class Stack(MutableSequence):
@@ -19,9 +21,14 @@ class Stack(MutableSequence):
     A Stack may also be an input to an algorithm.
     """
 
-    def __init__(self, *layers, run_dir='.', model=None):
+    def __init__(self, *layers, name=None, version='v0.1.0', run_dir=None, model=None):
+        self.name = name
+        self.version = version
         self.run_dir = run_dir
         self.model = model
+        # if loading from disk, this will be overridden
+        self.__uuid = uuid4()
+
         self.__layers = []
         if len(layers):
             for layer in layers:
@@ -62,13 +69,35 @@ class Stack(MutableSequence):
         return len(self.__layers)
 
     @property
+    def suggested_filename(self):
+        if self.name is None:
+            return None
+        return self.name.lower().replace(" ", "_") + ".json"
+
+    @property
+    def uuid(self):
+        return self.__uuid
+
+    @property
     def layers(self):
         return self.__layers
 
     @property
+    def run_dir(self):
+        return self._run_dir
+
+    @run_dir.setter
+    def run_dir(self,value):
+        self._run_dir = value
+
+    @property
     def runnable(self):
+        if not self.run_dir:
+            logger.info("The run_dir must be assigned for this stack to be runnable.")
+            return False
         for layer in self.layers:
             if not layer.runnable:
+                logger.info("Set arguments on layer '{}' to make this stack runnable.".format(layer.name))
                 return False
         return True
 
@@ -76,7 +105,33 @@ class Stack(MutableSequence):
         """
         Save this Stack to filename in json format.
         """
+        json_data = self._json_data()
+
+        with open(filename, 'w') as f:
+            json.dump(json_data, f)
+
+    def archive(self, filename=None):
+        """
+        Archives this stack by computing the .json checksum on the 
+        without-checksum json file, and then saving a json with the checksum 
+        data added in. Called by the run method with with default filename 
+        os.path.join(self.run_dir, 'stack.archive').
+        """
+        if filename is None:
+            filename = os.path.join(self.run_dir, 'stack.archive')
+        with TempJsonFilepath() as tmpjson:
+            self.save(tmpjson)
+            my_checksum = checksum(tmpjson)
+        json_data = self._json_data()
+        json_data['checksum'] = my_checksum
+        with open(filename, 'w') as f:
+            json.dump(json_data, f)
+
+    def _json_data(self):
         json_data = OrderedDict()
+        json_data['name'] = self.name
+        json_data['uuid'] = self.uuid
+        json_data['version'] = self.version
         json_data['run_dir'] = self.run_dir
         json_data['model'] = self.model
         stack_layers = OrderedDict()
@@ -109,25 +164,47 @@ class Stack(MutableSequence):
                 kwarg_dict['nargs'] = kwarg.nargs
                 kwarg_dict['list_parser'] = kwarg.list_parser
                 kwargs[name] = kwarg_dict
-            stack_layers[layer.name] = {'layer_dir': layer.layer_dir,
+            stack_layers[layer.name] = {'uuid': layer.layer.uuid,
+                                        'layer_dir': layer.layer_dir,
+                                        'version': layer.layer.version,
+                                        'checksum': layer.checksum,
                                         'args': args, 'kwargs': kwargs}
 
         json_data['layers'] = stack_layers
-
-        with open(filename, 'w') as f:
-            json.dump(json_data, f)
+        return json_data
 
     @classmethod
-    def load(cls, filename):
+    def load(cls, filename, layer_library_dir=None):
         """
         Load a Stack from filename.
         """
         with open(filename) as json_file:
             json_data = json.load(json_file)
 
+        stack_name = json_data['uuid']
+        if json_data['name'] is not None:
+            stack_name = json_data['name']
+
         layers = []
         for json_layer in json_data['layers'].values():
-            layer = Layer(json_layer['layer_dir'])
+
+            # load each layer, using layer_library_dir if not None
+            layer_dir = json_layer['layer_dir']
+            if layer_library_dir is not None:
+                layer_dir = os.path.join(layer_library_dir,os.path.basename(layer_dir))
+            layer = Layer(layer_dir)
+
+            msg_begin = "Layer '{}' loaded by stack '{}' ".format(layer.name,stack_name)
+
+            # inform the user about version changes
+            if layer.layer.uuid != json_layer['uuid']:
+                logger.warn(msg_begin + 'has unexpected uuid. Expected {}, got {}.'.format(json_layer['uuid'],layer.layer.uuid))
+            if layer.layer.version != json_layer['version']:
+                logger.info(msg_begin + 'is Version {}, whereas the stack was saved at Version {}.'.format(layer.layer.version,json_layer['version']))
+            elif layer.layer.checksum != json_layer['checksum']:
+                logger.info(msg_begin + 'has same version identifier as when the stack was saved (Version {}), but the checksum has changed.'.format(layer.layer.version))
+
+            # set arg and kwarg values based on the json file
             for i, arg in enumerate(json_layer['args']):
                 value = arg['value']
                 if value is not None:
@@ -137,14 +214,26 @@ class Stack(MutableSequence):
                 value = kwarg['value']
                 kwargs[name] = value
             layer.kwargs = kwargs
+
             layers.append(layer)
 
-        return Stack(*layers,
-                     run_dir=json_data['run_dir'], model=json_data['model'])
+        result = Stack(*layers, name=json_data['name'], version=json_data['version'], 
+                       run_dir=json_data['run_dir'], model=json_data['model'])
+        result._uuid = json_data['uuid']
+        return result
 
-    def run(self, log_level=logging.INFO):
+    def run(self, log_level=logging.INFO, archive=True):
         logger = start_file_log(os.path.join(self.run_dir, 'stack.log'),
                                 log_level=log_level)
+
+        if not self.runnable:
+            msg = "Stack is not runnable. Be sure run_dir and arguments are set."
+            logger.error(msg)
+            raise LayerStackError(msg)
+        
+        if archive:
+            self.archive()
+
         if isinstance(self.model, str):
             layer = self.layers[0]._layer
             if issubclass(layer, ModelLayerBase):

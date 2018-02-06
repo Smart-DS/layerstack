@@ -6,10 +6,11 @@ import imp
 import logging
 import os
 import sys
+from uuid import uuid4
 
 from jinja2 import Environment, FileSystemLoader
 from .args import ArgList, KwargDict, ArgMode
-from layerstack import start_console_log, LayerStackError
+from layerstack import checksum, LayerStackError, start_console_log
 
 
 logger = logging.getLogger(__name__)
@@ -141,10 +142,15 @@ class ModelLayerBase(LayerBase):
 class Layer(object):
 
     def __init__(self, layer_dir):
+        """
+        Load the layer contained in layer_dir.
+        """
+
         self.layer_dir = layer_dir
         # load the layer.py module and find the LayerBase class
-        # self._layer = the layer base class we found
+        # self._layer = the LayerBase class we found
         self._layer = self.load_layer(layer_dir)
+        self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
         self._args = self._layer.args()
         self._args.mode = ArgMode.DESC
@@ -158,7 +164,7 @@ class Layer(object):
 
         Arguments:
             - name (str) - Concise, human readable name for the new layer
-            - parent_dir (str) - Path to the parent directory for the new Layer
+            - parent_dir (str) - Path to the parent directory for the new layer
             - desc (optional str) - Description string to drop into the new layer
             - layer_base_class (issubclass(layer_base_class,LayerBase)) -
                   Class from which the new layer should be derived. If
@@ -189,9 +195,7 @@ class Layer(object):
 
     @classmethod
     def _template_kwargs(cls, name, layer_base_class, desc):
-        kwargs = {}
-        kwargs['name'] = name
-
+        
         def class_name(name):
             result = name.title()
             replacements = [(" ", ""),
@@ -200,9 +204,13 @@ class Layer(object):
                 result = result.replace(old, new)
             return result
 
+        kwargs = {}
+        kwargs['name'] = name
+        kwargs['uuid'] = uuid4()
         kwargs['class_name'] = class_name(name)
         kwargs['layer_base_class_module'] = layer_base_class.__module__
         kwargs['layer_base_class'] = layer_base_class.__name__
+        kwargs['is_model_layer'] = issubclass(layer_base_class,ModelLayerBase)
 
         if desc is not None:
             kwargs['desc'] = desc
@@ -221,8 +229,12 @@ class Layer(object):
         return kwargs
 
     @staticmethod
+    def layer_filename(layer_dir):
+        return os.path.join(layer_dir, 'layer.py')
+
+    @staticmethod
     def load_layer(layer_dir):
-        module = imp.load_source('layer', os.path.join(layer_dir, 'layer.py'))
+        module = imp.load_source('layer',Layer.layer_filename(layer_dir))
         for item in dir(module):
             try:
                 if issubclass(getattr(module, item), LayerBase):
@@ -232,8 +244,16 @@ class Layer(object):
                 continue
 
     @property
+    def name(self):
+        return self._name
+
+    @property
     def layer(self):
         return self._layer
+
+    @property
+    def checksum(self):
+        return self._checksum
 
     @property
     def args(self):
@@ -254,14 +274,6 @@ class Layer(object):
         self._kwargs.mode = ArgMode.USE
         for name, value in kwargs.items():
             self._kwargs[name] = value
-
-    @property
-    def name(self):
-        return self._name
-
-    @classmethod
-    def load(cls, layer_dir, model=None):
-        return Layer(layer_dir)
 
     @classmethod
     def run(cls, layer_dir, stack, model, *args, **kwargs):

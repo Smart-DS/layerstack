@@ -5,7 +5,10 @@ programmatically define and run ditto.Model workflows.
 __author__ = """Elaine Hale, Michael Rossol"""
 __email__ = 'michael.rossol@nrel.gov'
 
+import hashlib
 import logging
+import os
+import uuid
 
 
 class LayerStackError(Exception):
@@ -33,3 +36,22 @@ def start_file_log(filename, log_level=logging.WARN,
     logfile.setFormatter(logformat)
     logging.getLogger().setLevel(log_level)
     logging.getLogger().addHandler(logfile)
+
+
+def checksum(filename):
+    hash_md5 = hashlib.md5()
+    with open(filename,'rb') as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+class TempJsonFilepath():
+    def __init__(self):
+        self.filename = str(uuid.UUID()) + '.json'
+
+    def __enter__(self):
+        return self.filename
+
+    def __exit__(self, ctx_type, ctx_value, ctx_traceback):
+        os.remove(self.filename)
+
