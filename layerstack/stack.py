@@ -212,10 +212,9 @@ class Stack(MutableSequence):
 
             # set arg and kwarg values based on the json file
             for i, arg in enumerate(json_layer['args']):
-				new_arg = Arg(arg['name'], description=arg['description'],
+                new_arg = Arg(arg['name'], description=arg['description'],
                               parser=arg['parser'], choices=arg['choices'],
-                              nargs=arg['nargs'],
-                              list_parser=arg['list_parser'])
+                              nargs=arg['nargs'],list_parser=arg['list_parser'])
                 value = arg['value']
                 if value is not None:
                     new_arg.value = value
