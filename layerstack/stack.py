@@ -2,7 +2,6 @@ from __future__ import print_function, division, absolute_import
 
 import argparse
 from collections import MutableSequence, OrderedDict
-from .args import ArgMode
 import json
 import logging
 import os
@@ -10,7 +9,7 @@ from uuid import uuid4
 
 from layerstack import checksum, LayerStackError, start_file_log, TempJsonFilepath
 from layerstack.layer import Layer, ModelLayerBase
-from layerstack.args import ArgMode
+from layerstack.args import ArgMode, Arg, Kwarg
 
 
 class Stack(MutableSequence):
@@ -199,11 +198,17 @@ class Stack(MutableSequence):
 
             # inform the user about version changes
             if layer.layer.uuid != json_layer['uuid']:
-                logger.warn(msg_begin + 'has unexpected uuid. Expected {}, got {}.'.format(json_layer['uuid'],layer.layer.uuid))
+                logger.warn(msg_begin + \
+                    'has unexpected uuid. Expected {}, got {}.'.format(
+                        json_layer['uuid'],layer.layer.uuid))
             if layer.layer.version != json_layer['version']:
-                logger.info(msg_begin + 'is Version {}, whereas the stack was saved at Version {}.'.format(layer.layer.version,json_layer['version']))
+                logger.info(msg_begin + \
+                    'is Version {}, whereas the stack was saved at Version {}.'.format(
+                        layer.layer.version,json_layer['version']))
             elif layer.layer.checksum != json_layer['checksum']:
-                logger.info(msg_begin + 'has same version identifier as when the stack was saved (Version {}), but the checksum has changed.'.format(layer.layer.version))
+                logger.info(msg_begin + 
+                    'has same version identifier as when the stack was saved ' + \
+                    '(Version {}), but the checksum has changed.'.format(layer.layer.version))
 
             # set arg and kwarg values based on the json file
             for i, arg in enumerate(json_layer['args']):
@@ -232,7 +237,7 @@ class Stack(MutableSequence):
         result._uuid = json_data['uuid']
         return result
 
-    def run(self, log_level=logging.INFO, archive=True):
+    def run(self, save_path=None, log_level=logging.INFO, archive=True):
         logger = start_file_log(os.path.join(self.run_dir, 'stack.log'),
                                 log_level=log_level)
 
@@ -262,11 +267,11 @@ class Stack(MutableSequence):
 
         if save_path is not None:
             layer = self.layers[-1]._layer
-        if issubclass(layer, ModelLayerBase):
-            layer._save_model(self.model)
-        else:
-            raise LayerStackError('Layer must be a ModelLayer but is a {:}'
-                                  .format(type(Layer)))
+            if issubclass(layer, ModelLayerBase):
+                layer._save_model(self.model)
+            else:
+                raise LayerStackError('Layer must be a ModelLayer but is a {:}'
+                                      .format(type(Layer)))
 
 
 if __name__ == '__main__':

@@ -9,7 +9,7 @@ import sys
 from uuid import uuid4
 
 from jinja2 import Environment, FileSystemLoader
-from .args import ArgList, KwargDict, ArgMode
+from layerstack.args import ArgList, KwargDict, ArgMode
 from layerstack import checksum, LayerStackError, start_console_log
 
 
