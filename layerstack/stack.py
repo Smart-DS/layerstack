@@ -21,7 +21,7 @@ class Stack(MutableSequence):
     A Stack may also be an input to an algorithm.
     """
 
-    def __init__(self, *layers, name=None, version='v0.1.0', run_dir=None, model=None):
+    def __init__(self, name=None, version='v0.1.0', run_dir=None, model=None, *layers):
         self.name = name
         self.version = version
         self.run_dir = run_dir
