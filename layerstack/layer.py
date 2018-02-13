@@ -149,6 +149,7 @@ class Layer(object):
         self.layer_dir = layer_dir
         # load the layer.py module and find the LayerBase class
         # self._layer = the LayerBase class we found
+        logger.debug("Loading layer from {}".format(layer_dir))
         self._layer = self.load_layer(layer_dir)
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
@@ -234,14 +235,27 @@ class Layer(object):
 
     @staticmethod
     def load_layer(layer_dir):
-        module = imp.load_source('layer',Layer.layer_filename(layer_dir))
+        module = imp.load_source('loaded_layer_{}'.format(uuid4()),Layer.layer_filename(layer_dir))
+        candidate = None; base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):
             try:
-                if issubclass(getattr(module, item), LayerBase):
-                    if item not in ['LayerBase', 'ModelLayerBase']:
-                        return getattr(module, item)
+                temp = getattr(module, item)
+                if issubclass(temp, LayerBase):
+                    if item not in [x.__name__ for x in base_classes]:
+                        if (candidate is not None) and (candidate != temp):
+                            if issubclass(temp, candidate):
+                                base_classes.append(candidate)
+                                candidate = temp
+                            else:
+                                assert issubclass(candidate,temp), "Layer in {!r} contains LayerBase classes on different branches of the inheritance hierarchy tree.".format(layer_dir)
+                                base_classes.append(temp)
+                        else:
+                            candidate = temp
             except:
                 continue
+        if candidate is not None:
+            return candidate
+        raise LayerStackError("No LayerBase subclass found in {!r}. Module dir:\n{}".format(layer_dir,dir(module)))
 
     @property
     def name(self):
