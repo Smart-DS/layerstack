@@ -2,6 +2,7 @@ from __future__ import print_function, division, absolute_import
 
 from builtins import super
 import logging
+from uuid import UUID
 
 from layerstack.args import Arg, Kwarg
 from {{ layer_base_class_module }} import {{ layer_base_class }}
@@ -11,7 +12,7 @@ logger = logging.getLogger('layerstack.layers.{{ class_name }}')
 
 class {{ class_name }}({{ layer_base_class }}):
     name = "{{ name }}"
-    uuid = "{{ uuid }}"
+    uuid = "UUID({{ uuid }})"
     version = 'v0.1.0'
     desc = {% if desc %}"{{ desc }}"{% else %}None{% endif %}
 

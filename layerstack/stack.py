@@ -5,7 +5,7 @@ from collections import MutableSequence, OrderedDict
 import json
 import logging
 import os
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from layerstack import checksum, LayerStackError, start_file_log, TempJsonFilepath
 from layerstack.layer import Layer, ModelLayerBase
@@ -130,7 +130,7 @@ class Stack(MutableSequence):
     def _json_data(self):
         json_data = OrderedDict()
         json_data['name'] = self.name
-        json_data['uuid'] = self.uuid
+        json_data['uuid'] = str(self.uuid)
         json_data['version'] = self.version
         json_data['run_dir'] = self.run_dir
         json_data['model'] = self.model
@@ -164,7 +164,7 @@ class Stack(MutableSequence):
                 kwarg_dict['nargs'] = kwarg.nargs
                 kwarg_dict['list_parser'] = kwarg.list_parser
                 kwargs[name] = kwarg_dict
-            stack_layers[layer.name] = {'uuid': layer.layer.uuid,
+            stack_layers[layer.name] = {'uuid': str(layer.layer.uuid),
                                         'layer_dir': layer.layer_dir,
                                         'version': layer.layer.version,
                                         'checksum': layer.checksum,
@@ -197,7 +197,7 @@ class Stack(MutableSequence):
             msg_begin = "Layer '{}' loaded by stack '{}' ".format(layer.name,stack_name)
 
             # inform the user about version changes
-            if layer.layer.uuid != json_layer['uuid']:
+            if layer.layer.uuid != UUID(json_layer['uuid']):
                 logger.warn(msg_begin + \
                     'has unexpected uuid. Expected {}, got {}.'.format(
                         json_layer['uuid'],layer.layer.uuid))
@@ -233,7 +233,7 @@ class Stack(MutableSequence):
 
         result = Stack(*layers, name=json_data['name'], version=json_data['version'], 
                        run_dir=json_data['run_dir'], model=json_data['model'])
-        result._uuid = json_data['uuid']
+        result._uuid = UUID(json_data['uuid'])
         return result
 
     def run(self, save_path=None, log_level=logging.INFO, archive=True):
