@@ -75,7 +75,8 @@ class LayerBase(object):
 
     @classmethod
     def _cli_desc(cls):
-        return cls.desc if cls.desc is not None else "Apply Layer '{}'".format(cls.name)
+        return cls.desc if cls.desc is not None else "Apply Layer \
+'{}'".format(cls.name)
 
     @classmethod
     def _add_positional_arguments(cls, parser):
@@ -116,7 +117,8 @@ class ModelLayerBase(LayerBase):
 
     @classmethod
     def _cli_desc(cls):
-        return cls.desc if cls.desc is not None else "Apply Layer '{}' to model".format(cls.name)
+        return cls.desc if cls.desc is not None else "Apply Layer '{}' to \
+model".format(cls.name)
 
     @classmethod
     def _add_positional_arguments(cls, parser):
@@ -181,7 +183,8 @@ class Layer(object):
         dir_name = name.lower().replace(" ", "_")
         dir_path = os.path.join(parent_dir, dir_name)
         if os.path.exists(dir_path):
-            raise LayerStackError("The new directory to be created, {}, already exists."
+            raise LayerStackError("The new directory to be created, {}, \
+already exists."
                                   .format(dir_path))
         os.mkdir(dir_path)
 
@@ -196,7 +199,7 @@ class Layer(object):
 
     @classmethod
     def _template_kwargs(cls, name, layer_base_class, desc):
-        
+
         def class_name(name):
             result = name.title()
             replacements = [(" ", ""),
@@ -211,7 +214,7 @@ class Layer(object):
         kwargs['class_name'] = class_name(name)
         kwargs['layer_base_class_module'] = layer_base_class.__module__
         kwargs['layer_base_class'] = layer_base_class.__name__
-        kwargs['is_model_layer'] = issubclass(layer_base_class,ModelLayerBase)
+        kwargs['is_model_layer'] = issubclass(layer_base_class, ModelLayerBase)
 
         if desc is not None:
             kwargs['desc'] = desc
@@ -235,8 +238,10 @@ class Layer(object):
 
     @staticmethod
     def load_layer(layer_dir):
-        module = imp.load_source('loaded_layer_{}'.format(uuid4()),Layer.layer_filename(layer_dir))
-        candidate = None; base_classes = [LayerBase, ModelLayerBase]
+        module = imp.load_source('loaded_layer_{}'.format(uuid4()),
+                                 Layer.layer_filename(layer_dir))
+        candidate = None
+        base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):
             try:
                 temp = getattr(module, item)
@@ -247,7 +252,9 @@ class Layer(object):
                                 base_classes.append(candidate)
                                 candidate = temp
                             else:
-                                assert issubclass(candidate,temp), "Layer in {!r} contains LayerBase classes on different branches of the inheritance hierarchy tree.".format(layer_dir)
+                                assert issubclass(candidate, temp), "Layer in \
+{!r} contains LayerBase classes on different branches of the inheritance \
+hierarchy tree.".format(layer_dir)
                                 base_classes.append(temp)
                         else:
                             candidate = temp
@@ -255,7 +262,8 @@ class Layer(object):
                 continue
         if candidate is not None:
             return candidate
-        raise LayerStackError("No LayerBase subclass found in {!r}. Module dir:\n{}".format(layer_dir,dir(module)))
+        raise LayerStackError("No LayerBase subclass found in {!r}. Module \
+dir:\n{}".format(layer_dir, dir(module)))
 
     @property
     def name(self):

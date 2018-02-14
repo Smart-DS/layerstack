@@ -5,6 +5,7 @@ from collections import MutableSequence, OrderedDict
 import json
 import logging
 import os
+from pathlib import Path, PureWindowsPath
 from uuid import UUID, uuid4
 
 logger = logging.getLogger(__name__)
@@ -24,7 +25,8 @@ class Stack(MutableSequence):
     """
 
     # *layers has to go at the end for Python 2
-    def __init__(self, name=None, version='v0.1.0', run_dir=None, model=None, *layers):
+    def __init__(self, name=None, version='v0.1.0', run_dir=None, model=None,
+                 *layers):
         self.name = name
         self.version = version
         self.run_dir = run_dir
@@ -72,6 +74,17 @@ class Stack(MutableSequence):
     def __len__(self):
         return len(self.__layers)
 
+    @staticmethod
+    def convert_path(path):
+        if '\\' in path:
+            path_parts = PureWindowsPath(path).parts
+            path_parts = [part for part in path_parts if part != '\\']
+        else:
+            path_parts = Path(path)
+            path_parts = [part for part in path_parts if part != '/']
+
+        return os.path.join(*path_parts)
+
     @property
     def suggested_filename(self):
         if self.name is None:
@@ -91,17 +104,19 @@ class Stack(MutableSequence):
         return self._run_dir
 
     @run_dir.setter
-    def run_dir(self,value):
+    def run_dir(self, value):
         self._run_dir = value
 
     @property
     def runnable(self):
         if not self.run_dir:
-            logger.info("The run_dir must be assigned for this stack to be runnable.")
+            logger.info("The run_dir must be assigned for this stack to be \
+runnable.")
             return False
         for layer in self.layers:
             if not layer.runnable:
-                logger.info("Set arguments on layer '{}' to make this stack runnable.".format(layer.name))
+                logger.info("Set arguments on layer '{}' to make this stack \
+runnable.".format(layer.name))
                 return False
         return True
 
@@ -116,9 +131,9 @@ class Stack(MutableSequence):
 
     def archive(self, filename=None):
         """
-        Archives this stack by computing the .json checksum on the 
-        without-checksum json file, and then saving a json with the checksum 
-        data added in. Called by the run method with with default filename 
+        Archives this stack by computing the .json checksum on the
+        without-checksum json file, and then saving a json with the checksum
+        data added in. Called by the run method with with default filename
         os.path.join(self.run_dir, 'stack.archive').
         """
         if filename is None:
@@ -176,7 +191,8 @@ class Stack(MutableSequence):
                                         'checksum': layer.checksum,
                                         'args': args, 'kwargs': kwargs}
 
-        assert len(stack_layers) == len(self), "I have {} layers, but serialization has {}".format(len(self),len(stack_layers))
+        assert len(stack_layers) == len(self), "I have {} layers, but \
+serialization has {}".format(len(self), len(stack_layers))
         json_data['layers'] = stack_layers
         return json_data
 
@@ -186,7 +202,7 @@ class Stack(MutableSequence):
         Load a Stack from filename.
         """
         with open(filename) as json_file:
-            json_data = json.load(json_file,object_pairs_hook=OrderedDict)
+            json_data = json.load(json_file, object_pairs_hook=OrderedDict)
 
         stack_name = json_data['uuid']
         if json_data['name'] is not None:
@@ -196,29 +212,32 @@ class Stack(MutableSequence):
         for json_layer_name, json_layer in json_data['layers'].items():
 
             # load each layer, using layer_library_dir if not None
-            layer_dir = json_layer['layer_dir']
+            layer_dir = cls.convert_path(json_layer['layer_dir'])
             if layer_library_dir is not None:
-                layer_dir = os.path.join(layer_library_dir,os.path.basename(layer_dir))
+                layer_dir = os.path.join(layer_library_dir,
+                                         os.path.basename(layer_dir))
             layer = Layer(layer_dir)
 
-            msg_begin = "Layer {!r} loaded by Stack {!r} ".format(layer.name,stack_name)
+            msg_begin = "Layer {!r} loaded by Stack {!r} ".format(layer.name,
+                                                                  stack_name)
 
             # inform the user about version changes
             if layer.layer.uuid != UUID(json_layer['uuid']):
-                logger.warn(msg_begin + \
-                    'has unexpected uuid. Expected {!r}, got {!r}.'.format(
-                        UUID(json_layer['uuid']),layer.layer.uuid))
+                logger.warn(msg_begin +
+                            'has unexpected uuid. Expected {!r}, got {!r}.'
+                            .format(UUID(json_layer['uuid']),
+                                    layer.layer.uuid))
             if layer.name != json_layer_name:
-                logger.info(msg_begin + \
-                    'has different serialized name, {!r}'.format(json_layer_name))
+                logger.info(msg_begin +
+                            'has different serialized name, {!r}'
+                            .format(json_layer_name))
             if layer.layer.version != json_layer['version']:
-                logger.info(msg_begin + \
-                    'is Version {}, whereas the stack was saved at Version {}.'.format(
-                        layer.layer.version,json_layer['version']))
+                logger.info(msg_begin + 'is Version {}, whereas the stack was \
+saved at Version {}.'.format(layer.layer.version, json_layer['version']))
             elif layer.checksum != json_layer['checksum']:
-                logger.info(msg_begin + 
-                    'has same version identifier as when the stack was saved ' + \
-                    '(Version {}), but the checksum has changed.'.format(layer.layer.version))
+                logger.info(msg_begin + 'has same version identifier as when \
+the stack was saved (Version {}), but the checksum has \
+changed.'.format(layer.layer.version))
 
             # set arg and kwarg values based on the json file
 
@@ -240,9 +259,10 @@ class Stack(MutableSequence):
                 if (arg['name'] in actual_args) and (actual_args[arg['name']] not in assigned_args):
                     serialized_to_actual_map[i] = actual_args[arg['name']]
                     assigned_args.append(actual_args[arg['name']])
-                    logger.info("Position of Layer {!r} argument {!r}".format(layer.name,arg['name']) + \
-                        " moved from {} to {} since serialization of Stack {!r}.".format(
-                            i, actual_args[arg['name']], stack_name))
+                    logger.info("Position of Layer {!r} argument {!r} moved \
+from {} to {} since serialization of Stack {!r}."
+                                .format(layer.name, arg['name'], i,
+                                        actual_args[arg['name']], stack_name))
                     continue
                 serialized_to_actual_map[i] = None
                 unassigned_sargs.append(i)
@@ -251,42 +271,47 @@ class Stack(MutableSequence):
                 if (i < nargs) and (i not in assigned_args):
                     serialized_to_actual_map[i] = i
                     assigned_args.append(i)
-                    logger.warn("Setting the value of Layer {!r}s {}'th ".format(layer.name,i) + \
-                        "argument based on argument in same position in " + \
-                        "Stack {!r} even though names are different. ".format(stack_name) + \
-                        "Serialized argument name: {!r} Current argument name: {!r}".format(
-                            json_layer['args'][i]['name'],layer.args[i].name))
+                    logger.warn("Setting the value of Layer {!r}s {}'th \
+argument based on argument in same position in Stack {!r} even though names \
+are different. Serialized argument name: {!r} Current argument name: {!r}"
+                                .format(layer.name, i, stack_name,
+                                        json_layer['args'][i]['name'],
+                                        layer.args[i].name))
                     continue
-                logger.warn("Argument {!r}'s serialized information will not ".format(json_layer['args'][i]) + \
-                    "be used in loading Layer {!r} in Stack {!r}.".format(layer.name,stack_name))
+                logger.warn("Argument {!r}'s serialized information will not \
+be used in loading Layer {!r} in Stack {!r}.".format(json_layer['args'][i],
+                                                     layer.name, stack_name))
 
             for i, j in serialized_to_actual_map.items():
                 if j is not None:
                     try:
                         layer.args[j].value = json_layer['args'][i]['value']
                     except Exception as e:
-                        logger.error("Unable to set the value of Layer " + \
-                            "{!r}'s {}'th argument {!r} to {}, because {}.".format(
-                                layer.name,j,layer.args[j].name,json_layer['args'][i]['value'],e))
+                        logger.error("Unable to set the value of Layer {!r}'s \
+{}'th argument {!r} to {}, because {}."
+                                     .format(layer.name, j, layer.args[j].name,
+                                             json_layer['args'][i]['value'],
+                                             e))
 
             for name, kwarg in json_layer['kwargs'].items():
                 if name in layer.kwargs:
                     try:
                         layer.kwargs[name].value = kwarg['value']
                     except Exception as e:
-                        logger.error("Unable to set the value of Layer " + \
-                            "{!r}'s kwarg {!r} to {}, because {}.".format(
-                                layer.name,name,kwarg['value'],e))
+                        logger.error("Unable to set the value of Layer {!r}'s \
+kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
                 else:
-                    logger.warn("Kwarg {!r} is no longer in Layer {!r}, ".format(name,layer.name) + \
-                        "so the information serialized for it in Stack {!r} will not be used.".format(stack_name))
+                    logger.warn("Kwarg {!r} is no longer in Layer {!r}, so the\
+ information serialized for it in Stack {!r} will not be used."
+                                .format(name, layer.name, stack_name))
 
             layers.append(layer)
 
-        logger.debug("Instantiating Stack with\n  name: {!r}".format(json_data['name']) + \
-            "\n  version: {!r}\n  run_dir: {!r}\n  model: {!r}".format(json_data['version'],
-                json_data['run_dir'],json_data['model']))
-        result = Stack(name=json_data['name'], version=json_data['version'], 
+        logger.debug("Instantiating Stack with\n  name: {!r}\n version: \
+{!r}\n  run_dir: {!r}\n  model: {!r}"
+                     .format(json_data['name'], json_data['version'],
+                             json_data['run_dir'], json_data['model']))
+        result = Stack(name=json_data['name'], version=json_data['version'],
                        run_dir=json_data['run_dir'], model=json_data['model'],
                        *layers)
         result._uuid = UUID(json_data['uuid'])
@@ -297,10 +322,11 @@ class Stack(MutableSequence):
                                 log_level=log_level)
 
         if not self.runnable:
-            msg = "Stack is not runnable. Be sure run_dir and arguments are set."
+            msg = "Stack is not runnable. Be sure run_dir and arguments are \
+set."
             logger.error(msg)
             raise LayerStackError(msg)
-        
+
         if archive:
             self.archive()
 
