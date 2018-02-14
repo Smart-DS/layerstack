@@ -25,8 +25,7 @@ class Stack(MutableSequence):
     """
 
     # *layers has to go at the end for Python 2
-    def __init__(self, name=None, version='v0.1.0', run_dir=None, model=None,
-                 *layers):
+    def __init__(self, layers=[], name=None, version='v0.1.0', run_dir=None, model=None):
         self.name = name
         self.version = version
         self.run_dir = run_dir
@@ -307,25 +306,22 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
 
             layers.append(layer)
 
-        logger.debug("Instantiating Stack with\n  name: {!r}\n version: \
-{!r}\n  run_dir: {!r}\n  model: {!r}"
-                     .format(json_data['name'], json_data['version'],
-                             json_data['run_dir'], json_data['model']))
-        result = Stack(name=json_data['name'], version=json_data['version'],
-                       run_dir=json_data['run_dir'], model=json_data['model'],
-                       *layers)
+        result = cls(layers=layers,name=json_data['name'], version=json_data['version'],
+                     run_dir=json_data['run_dir'], model=json_data['model'])
         result._uuid = UUID(json_data['uuid'])
-        return result
+        return result        
 
     def run(self, save_path=None, log_level=logging.INFO, archive=True):
-        logger = start_file_log(os.path.join(self.run_dir, 'stack.log'),
-                                log_level=log_level)
-
         if not self.runnable:
             msg = "Stack is not runnable. Be sure run_dir and arguments are \
 set."
             logger.error(msg)
             raise LayerStackError(msg)
+
+        if not os.path.exists(self.run_dir):
+            os.mkdir(self.run_dir)
+
+        start_file_log(os.path.join(self.run_dir, 'stack.log'),log_level=log_level)
 
         if archive:
             self.archive()
