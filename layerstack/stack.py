@@ -182,7 +182,7 @@ runnable.".format(layer.name))
 
             logger.debug("Serializing Layer {!r}".format(layer.name))
             stack_layers[layer.name] = {'uuid': str(layer.layer.uuid),
-                                        'layer_dir': layer.layer_dir,
+                                        'layer_dir': str(layer.layer_dir),
                                         'version': layer.layer.version,
                                         'checksum': layer.checksum,
                                         'args': args, 'kwargs': kwargs}
