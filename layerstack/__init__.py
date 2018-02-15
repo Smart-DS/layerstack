@@ -8,7 +8,7 @@ __email__ = 'michael.rossol@nrel.gov'
 import hashlib
 import logging
 import os
-import uuid
+from uuid import uuid4
 
 
 class LayerStackError(Exception):
@@ -47,7 +47,7 @@ def checksum(filename):
 
 class TempJsonFilepath():
     def __init__(self):
-        self.filename = str(uuid.UUID()) + '.json'
+        self.filename = str(uuid4()) + '.json'
 
     def __enter__(self):
         return self.filename

@@ -335,7 +335,7 @@ set."
                                       .format(type(Layer)))
         for layer in self.layers:
             logger.info("Running {}".format(layer.name))
-            if issubclass(layer, ModelLayerBase):
+            if issubclass(layer.layer, ModelLayerBase):
                 if self.model is None:
                     raise LayerStackError('Model not initialized')
                 self.model = layer.run_layer(self, model=self.model)
@@ -343,12 +343,12 @@ set."
                 self.result = layer.run_layer(self)
 
         if save_path is not None:
-            layer = self.layers[-1]._layer
+            layer = self.layers[-1].layer
             if issubclass(layer, ModelLayerBase):
                 layer._save_model(self.model)
             else:
                 raise LayerStackError('Layer must be a ModelLayer but is a {:}'
-                                      .format(type(Layer)))
+                                      .format(type(layer)))
 
 
 if __name__ == '__main__':
