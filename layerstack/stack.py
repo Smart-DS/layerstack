@@ -5,7 +5,7 @@ from collections import MutableSequence, OrderedDict
 import json
 import logging
 import os
-from pathlib import Path, PureWindowsPath
+from pathlib import Path
 from uuid import UUID, uuid4
 
 logger = logging.getLogger(__name__)
@@ -25,7 +25,8 @@ class Stack(MutableSequence):
     """
 
     # *layers has to go at the end for Python 2
-    def __init__(self, layers=[], name=None, version='v0.1.0', run_dir=None, model=None):
+    def __init__(self, layers=[], name=None, version='v0.1.0', run_dir=None,
+                 model=None):
         self.name = name
         self.version = version
         self.run_dir = run_dir
@@ -76,13 +77,9 @@ class Stack(MutableSequence):
     @staticmethod
     def convert_path(path):
         if '\\' in path:
-            path_parts = PureWindowsPath(path).parts
-            path_parts = [part for part in path_parts if part != '\\']
-        else:
-            path_parts = Path(path)
-            path_parts = [part for part in path_parts if part != '/']
+            path = path.replace('\\', '/')
 
-        return os.path.join(*path_parts)
+        return Path(path)
 
     @property
     def suggested_filename(self):
@@ -306,10 +303,11 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
 
             layers.append(layer)
 
-        result = cls(layers=layers,name=json_data['name'], version=json_data['version'],
+        result = cls(layers=layers, name=json_data['name'],
+                     version=json_data['version'],
                      run_dir=json_data['run_dir'], model=json_data['model'])
         result._uuid = UUID(json_data['uuid'])
-        return result        
+        return result
 
     def run(self, save_path=None, log_level=logging.INFO, archive=True):
         if not self.runnable:
@@ -321,7 +319,8 @@ set."
         if not os.path.exists(self.run_dir):
             os.mkdir(self.run_dir)
 
-        start_file_log(os.path.join(self.run_dir, 'stack.log'),log_level=log_level)
+        start_file_log(os.path.join(self.run_dir, 'stack.log'),
+                       log_level=log_level)
 
         if archive:
             self.archive()
