@@ -320,6 +320,5 @@ dir:\n{}".format(layer_dir, dir(module)))
         self._kwargs.mode = ArgMode.USE
         kwargs = dict(self._kwargs.items())
         if model is None:
-            self._layer.apply(stack, *self._args, **kwargs)
-        else:
-            self._layer.apply(stack, model, *self._args, **kwargs)
+            return self._layer.apply(stack, *self._args, **kwargs)
+        return self._layer.apply(stack, model, *self._args, **kwargs)
