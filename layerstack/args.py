@@ -1,5 +1,5 @@
 """
-Classes that allow the specification of arguments that can be serialized and
+Classes that allow the specification of arguments that can be serialized to and
 loaded from json, as well as expressed on the command line.
 """
 
@@ -11,14 +11,50 @@ from layerstack import LayerStackError
 
 
 class KwArgBase(object):
-    def __init__(self, description='',
-                 parser=None,
-                 choices=None,
-                 nargs=None,
+    """
+    Base class for expressing json- and CLI-compatible arguments. Builds off of
+    the patterns established by argparse.
+
+    :var name: name of the [keyword] argument
+    :vartype name: str or None
+    :var description: optional description text for this [keyword] argument
+    :vartype description: str
+    :var parser: function to parse the [keyword] argument value. analogous 
+        to the type argument in the argparse add_argument method
+    :vartype parser: callable
+    :var choices: list of allowable values
+    :vartype choices: None or list
+    :var nargs: analogouose to the nargs argument in the argparse 
+        add_argument method
+    :vartype nargs: None, int, str
+    :var list_parser: function to parse a [keyword] argument value list
+    :vartype list_parser: callable
+    :var is_list: whether this [keyword] argument is a list (True) or single 
+        value (False)
+    :vartype is_list: bool
+    """
+
+    def __init__(self, description='', parser=None, choices=None, nargs=None,
                  list_parser=None):
+        """
+        :param description: optional description text for this [keyword] argument
+        :type description: str
+        :param parser: function to parse the [keyword] argument value. analogous 
+            to the type argument in the argparse add_argument method
+        :type parser: callable
+        :param choices: list of allowable values
+        :type choices: None or list
+        :param nargs: analogous to the nargs argument in the argparse 
+            add_argument method
+        :type nargs: None, int, str
+        :param list_parser: function to parse a [keyword] argument value list
+        :type list_parser: callable
+        """
         self.name = None
-        self.description = description
-        self.parser = parser
+        self.description = description # optional description text
+        # function to parse the [keyword] argument value, e.g. int, float. 
+        # analogous to the type argument in the argparse add_argument method.
+        self.parser = parser           
         self.choices = choices
         self._is_list = False
         self.nargs = nargs
@@ -26,6 +62,9 @@ class KwArgBase(object):
 
     @property
     def nargs(self):
+        """
+        settable attribute
+        """
         return self._nargs
 
     @nargs.setter
@@ -38,19 +77,33 @@ class KwArgBase(object):
 
     @property
     def is_list(self):
+        """
+        read-only attribute
+        """
         return self._is_list
 
     def _set_value(self, value):
+        self._value = self._process_value(value)
+
+    def _process_value(self, value, none_allowed=False):
+        if none_allowed and (value is None):
+            return value
         if self.is_list:
             values = value
             if self.parser is not None:
                 values = [self.parser(value) for value in values]
-            self._value = self.list_parser(values) if self.list_parser is not None else values
-            return
+            return self.list_parser(values) if self.list_parser is not None else values
         assert not self.is_list
-        self._value = self.parser(value) if self.parser is not None else value
+        return self.parser(value) if self.parser is not None else value
 
     def add_argument_kwargs(self):
+        """
+        Converts KwArgBase atttributes to argparse add_argument keyword 
+        arugments. For use in constructing command-line interfaces.
+
+        :return: kwargs for argparse add_argument call
+        :rtype: dict
+        """
         return {'help': self.description,
                 'type': self.parser,
                 'choices': self.choices,
@@ -59,20 +112,48 @@ class KwArgBase(object):
 
 class Arg(KwArgBase):
     """
-    A layer argument.
+    Defines a required, positional argument.
+
+    :var set: whether the value has been set
+    :vartype set: bool
+    :var value: the value to which this argument has been set
     """
+
     def __init__(self, name, description='', parser=None, choices=None,
                  nargs=None, list_parser=None):
+        """
+        :param name: name of the argument
+        :type name: str
+        :param description: optional description text for this [keyword] argument
+        :type description: str
+        :param parser: function to parse the [keyword] argument value. analogous 
+            to the type argument in the argparse add_argument method
+        :type parser: callable
+        :param choices: list of allowable values
+        :type choices: None or list
+        :param nargs: analogous to the nargs argument in the argparse 
+            add_argument method
+        :type nargs: None, int, str
+        :param list_parser: function to parse a [keyword] argument value list
+        :type list_parser: callable
+        """
         super().__init__(description=description, parser=parser,
                          choices=choices, nargs=nargs, list_parser=list_parser)
         self.name = name
 
     @property
     def set(self):
+        """
+        read-only attribute
+        """
         return hasattr(self, '_value')
 
     @property
     def value(self):
+        """
+        settable attribute. setter parses value using parser and list_parser as 
+        appropriate
+        """
         return self._value
 
     @value.setter
@@ -81,19 +162,59 @@ class Arg(KwArgBase):
 
 
 class Kwarg(KwArgBase):
+    """
+    Defines an optional or defaulted keyword argument.
+
+    :var default: default value to be used if no explicit value has been set
+    :var defaulted: whether a non-default value has been set
+    :vartype defaulted: bool
+    :var value: the value to which this argument has been set
+    :var action: analogous to the action argument in the argparse add_argument 
+        method. allows, e.g., command-line boolean flags.
+    :vartype action: str
+    """
+
     def __init__(self, default=None, description='', parser=None, choices=None,
                  nargs=None, list_parser=None, action=None):
+        """
+        :param default: default value to be used if no explicit value has been 
+            set. is parsed with parser and list_parser as appropriate, if 
+            default is not None
+        :param description: optional description text for this [keyword] argument
+        :type description: str
+        :param parser: function to parse the [keyword] argument value. analogous 
+            to the type argument in the argparse add_argument method
+        :type parser: callable
+        :param choices: list of allowable values
+        :type choices: None or list
+        :param nargs: analogous to the nargs argument in the argparse 
+            add_argument method
+        :type nargs: None, int, str
+        :param list_parser: function to parse a [keyword] argument value list
+        :type list_parser: callable
+        :param action: analogous to the action argument in the argparse add_argument 
+            method. allows, e.g., command-line boolean flags.
+        :type action: str
+        """
         super().__init__(description=description, parser=parser,
                          choices=choices, nargs=nargs, list_parser=list_parser)
         self.action = action
-        self.default = default
+        self.default = self._process_value(default,none_allowed=True)
 
     @property
     def defaulted(self):
+        """
+        read-only attribute
+        """
         return not hasattr(self, '_value')
 
     @property
     def value(self):
+        """
+        settable attribute. setter parses value using parser and list_parser as 
+        appropriate. setting to None clears any user-defined value and reverts 
+        to the default.
+        """
         return self._value if hasattr(self, '_value') else self.default
 
     @value.setter
