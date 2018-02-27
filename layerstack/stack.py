@@ -17,11 +17,38 @@ from layerstack.args import ArgMode, Arg, Kwarg
 
 class Stack(MutableSequence):
     """
-    A Stack is a list of DiTTo Layers that can be applied to a DiTTo model.
+    Base class to handle and run layer sequences
+    - Save to json
+    - Load from json
+    - Run
 
-    If all of the sub-layer args are defined, the Stack can be run.
+    Attributes
+    ----------
+    name : 'str'
+        Stack name
+    version : 'str'
+        Stack version
+    run_dir : 'str'
+        Run directory for stack
+    model
+        Model to apply layers to
+    __uuid : 'uuid4'
+        Unique identifier for stack
+    __layers : 'list'
+        List of layers in stack
 
-    A Stack may also be an input to an algorithm.
+    Parameters
+    ----------
+    layers : 'list'
+        List of layers in stack
+    name : 'str'
+        name of stack
+    version : 'str'
+        stack version number
+    run_dir : 'str'
+        directory to run stack in
+    model
+        Model to apply layers to
     """
 
     # *layers has to go at the end for Python 2
@@ -42,40 +69,134 @@ class Stack(MutableSequence):
 
     @staticmethod
     def __checkValue(value):
+        """
+        Check to ensure value is a Layer class object
+
+        Parameters
+        ----------
+        value : 'Layer'
+            New layer to add to stack
+        """
         if not isinstance(value, Layer):
             raise LayerStackError("Stacks only hold Layers. You passed a {}."
                                   .format(type(value)))
 
     def __getitem__(self, i):
+        """
+        Get layer i
+
+        Parameters
+        ----------
+        i : 'int'
+            position of layer to get from stack
+
+        Returns
+        -------
+        'Layer'
+            Layer class for layer i in stack
+        """
         return self.__layers[i]
 
     def __setitem__(self, i, layer):
+        """
+        Set ith layer in stack
+
+        Parameters
+        ----------
+        i : 'int'
+            position of layer to set in stack
+        layer : 'Layer'
+            Layer to place at ith position in stack
+        """
         self.__checkValue(layer)
         self.__layers.insert(i, layer)
 
     def __delitem__(self, i):
+        """
+        Delete ith layer
+
+        Parameters
+        ----------
+        i : 'int'
+            Position of layer to delete
+        """
         del self.__layers[i]
 
     def insert(self, i, layer):
+        """
+        Insert layer into stack
+
+        Parameters
+        ----------
+        i : 'int'
+            Position at which to insert layer
+        layer : 'Layer'
+            Layer to insert into stack
+        """
         self.__checkValue(layer)
         self.__layers.insert(i, layer)
 
     def append(self, layer):
+        """
+        Append layer to end of stack
+
+        Parameters
+        ----------
+        layer : 'Layer'
+            Layer to append to end of stack
+        """
         logger.debug("Appending Layer {!r}".format(layer.name))
         self.__checkValue(layer)
         self.__layers.append(layer)
 
     def __str__(self):
+        """
+        Return readable list for layers in stack
+
+        Returns
+        -------
+        'str'
+            Readable string of layers in stack
+        """
         return str(self.__layers)
 
     def __iter__(self):
+        """
+        Create iterable of layers in stack
+
+        Returns
+        -------
+        'iter'
+            Iterable for layers in stack
+        """
         return iter(self.__layers)
 
     def __len__(self):
+        """
+        Number of layers in stack
+
+        Returns
+        -------
+        'int'
+            Number of layers in stack
+        """
         return len(self.__layers)
 
     @staticmethod
     def convert_path(path):
+        """
+        Convert windows file paths to linux path format
+
+        Parameters
+        ----------
+        path : 'str'
+            file path to convert
+
+        Returns
+        -------
+        'Path'
+            Path class object to handle file path
+        """
         if '\\' in path:
             path = path.replace('\\', '/')
 
@@ -83,28 +204,77 @@ class Stack(MutableSequence):
 
     @property
     def suggested_filename(self):
+        """
+        Create stack filename
+
+        Returns
+        -------
+        'str'
+            Stack json name
+        """
         if self.name is None:
             return None
         return self.name.lower().replace(" ", "_") + ".json"
 
     @property
     def uuid(self):
+        """
+        Get stack uuid
+
+        Returns
+        -------
+        'uuid4'
+            Stack unique identifier
+        """
         return self.__uuid
 
     @property
     def layers(self):
+        """
+        Get layers in stack
+
+        Returns
+        -------
+        'list'
+            List of layers in stack
+        """
         return self.__layers
 
     @property
     def run_dir(self):
+        """
+        Get stack run directory
+
+        Returns
+        -------
+        'str'
+            Run directory for stack
+        """
         return self._run_dir
 
     @run_dir.setter
     def run_dir(self, value):
+        """
+        Set run directory for stack
+
+        Parameters
+        ----------
+        value : 'str'
+            Stack run directory
+        """
         self._run_dir = value
 
     @property
     def runnable(self):
+        """
+        Determine if stack is runnable:
+        - Are args set for all layers in stack
+
+        Returns
+        -------
+        'bool'
+            All args are set for all layers in stack, stack can be run
+        """
         if not self.run_dir:
             logger.info("The run_dir must be assigned for this stack to be \
 runnable.")
@@ -118,7 +288,12 @@ runnable.".format(layer.name))
 
     def save(self, filename):
         """
-        Save this Stack to filename in json format.
+        Save stack
+
+        Parameters
+        ----------
+        filename : 'str'
+            file path to save stack to
         """
         json_data = self._json_data()
 
@@ -131,6 +306,11 @@ runnable.".format(layer.name))
         without-checksum json file, and then saving a json with the checksum
         data added in. Called by the run method with with default filename
         os.path.join(self.run_dir, 'stack.archive').
+
+        Parameters
+        ----------
+        filename : 'str'
+            file path to save stack to
         """
         if filename is None:
             filename = os.path.join(self.run_dir, 'stack.archive')
@@ -143,6 +323,19 @@ runnable.".format(layer.name))
             json.dump(json_data, f)
 
     def _json_data(self):
+        """
+        Extract data from stack and place in json format
+
+        Returns
+        -------
+        json_data : 'dict'
+            Dictionary containing stack information:
+            - stack meta data
+            - layers in stack
+                - layer meta data
+                - layer args
+                - layer kwargs
+        """
         json_data = OrderedDict()
         json_data['name'] = self.name
         json_data['uuid'] = str(self.uuid)
@@ -195,7 +388,19 @@ serialization has {}".format(len(self), len(stack_layers))
     @classmethod
     def load(cls, filename, layer_library_dir=None):
         """
-        Load a Stack from filename.
+        Load stack from given .json file
+
+        Parameters
+        ----------
+        filename : 'str'
+            File path from which to load stack
+        layer_library_dir : 'str'
+            Root directory containing layers to be loaded into stack
+
+        Returns
+        -------
+        result : 'Stack'
+            Instantiated Stack class instance
         """
         with open(filename) as json_file:
             json_data = json.load(json_file, object_pairs_hook=OrderedDict)
@@ -310,6 +515,18 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
         return result
 
     def run(self, save_path=None, log_level=logging.INFO, archive=True):
+        """
+        Run stack
+
+        Parameters
+        ----------
+        save_path : 'str'
+            Path to which results from running stack should be saved
+        log_level : 'logging'
+            Level of logging to be used while running stack
+        archive : 'bool'
+            Archive stack before running
+        """
         if not self.runnable:
             msg = "Stack is not runnable. Be sure run_dir and arguments are \
 set."
