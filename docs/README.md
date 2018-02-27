@@ -47,3 +47,11 @@ make latexpdf
 ```
 make.bat latexpdf
 ```
+
+## Pushing to GitHub Pages
+
+In Windows, use Git Bash
+
+```
+make github
+```
