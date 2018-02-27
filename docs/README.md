@@ -14,7 +14,7 @@ pip install sphinx
 
 - Make sure layerstack is in your PYTHONPATH
 - Delete the contents of `source/api`.
-- Run `sphinx-apidoc -o source/api ..` from the `doc` folder.
+- Run `sphinx-apidoc -o source/api ..` from the `docs` folder.
 - Compare `source/api/modules.rst` to `source/api.rst`.
 - Make the documentation per below
 
