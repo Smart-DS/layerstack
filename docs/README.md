@@ -16,6 +16,7 @@ pip install sphinx
 - Delete the contents of `source/api`.
 - Run `sphinx-apidoc -o source/api ..` from the `docs` folder.
 - Compare `source/api/modules.rst` to `source/api.rst`.
+- 'git push' changes to the documentation source code as needed.
 - Make the documentation per below
 
 ## Building HTML Docs
@@ -50,8 +51,25 @@ make.bat latexpdf
 
 ## Pushing to GitHub Pages
 
-In Windows, use Git Bash
+### Mac/Linux
 
 ```
 make github
+```
+
+### Windows
+
+```
+make.bat html
+```
+
+Then run the github-related commands by hand:
+
+```
+git branch -D gh-pages
+git push origin --delete gh-pages
+ghp-import -n -b gh-pages -m "Update documentation" ./build/html
+git checkout gh-pages
+git push origin gh-pages
+git checkout master # or whatever branch you were on
 ```
