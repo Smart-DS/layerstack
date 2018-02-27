@@ -19,6 +19,13 @@ logger = logging.getLogger(__name__)
 class LayerBase(object):
     """
     Abstract base class for user-defined layers.
+
+    Attributes
+    ----------
+    name : 'str'
+        Layer name
+    desc : 'str'
+        Layer description
     """
     name = None
     desc = None
@@ -60,7 +67,7 @@ class LayerBase(object):
     @classmethod
     def apply(cls, stack, *args, **kwargs):
         """
-        Apply this layer in the context described by stack
+        Run layer
 
         Parameters
         ----------
@@ -79,7 +86,7 @@ class LayerBase(object):
     def main(cls,
              log_format='%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'):
         """
-        CLI entry point
+        cli entry point
 
         Parameters
         ----------
@@ -144,7 +151,7 @@ class LayerBase(object):
     @classmethod
     def _main_apply(cls, cli_args, arg_list, kwarg_dict):
         """
-        CLI layer apply
+        Run layer from cli
 
         Parameters
         ----------
@@ -168,23 +175,87 @@ class LayerBase(object):
 class ModelLayerBase(LayerBase):
     """
     Abstract base class for user-defined layers that operate on a model.
+
+    Attributes
+    ----------
+    name : 'str'
+        Layer name
+    desc : 'str'
+        Layer description
     """
 
     @classmethod
     def args(cls, model=None, **kwargs):
+        """
+        Create ArgList
+
+        Parameters
+        ----------
+        model
+            model to be operated on
+        **kwargs
+            Internal kwargs
+
+        Returns
+        -------
+        'ArgList'
+            ArgList class instance containing list of layer's args
+        """
         return super().args(**kwargs)
 
     @classmethod
     def kwargs(cls, model=None, **kwargs):
+        """
+        Create KwargDict
+
+        Parameters
+        ----------
+        model
+            model to be operated on
+        **kwargs
+            Internal kwargs
+
+        Returns
+        -------
+        'KwargDict'
+            KwargDict class instance containing dict of layer's kwargs
+        """
         return super().kwargs(**kwargs)
 
     @classmethod
     def _check_model_type(cls, model):
+        """
+        Check model type to ensure it is operable
+
+        Parameters
+        ----------
+        model
+            model to be operated on
+        """
         # Check to make sure model is of the proper type
         pass
 
     @classmethod
     def apply(cls, stack, model, *args, **kwargs):
+        """
+        Run layer
+
+        Parameters
+        ----------
+        stack : 'Stack'
+            Stack class instance in which the layer is being run
+        model
+            model to be operated on
+        *args
+            The layer's args
+        **kwargs
+            The layer's kwargs
+
+        Returns
+        -------
+        model
+            Updated model
+        """
         if isinstance(model, str):
             model = cls._load_model(model)
         cls._check_model_type(model)
@@ -192,37 +263,107 @@ class ModelLayerBase(LayerBase):
 
     @classmethod
     def _cli_desc(cls):
+        """
+        Get layer description
+
+        Returns
+        -------
+        'str'
+            Layer description
+        """
         return cls.desc if cls.desc is not None else "Apply Layer '{}' to \
 model".format(cls.name)
 
     @classmethod
     def _add_positional_arguments(cls, parser):
+        """
+        Add arg for model to parser
+
+        Parameters
+        ----------
+        parser : 'argparser'
+            Add arg to parser
+        """
         parser.add_argument('model', help="Path to model")
 
     @classmethod
     def _main_apply(cls, cli_args, arg_list, kwarg_dict):
+        """
+        Run layer from cli
+
+        Parameters
+        ----------
+        cli_args : 'list'
+            list of args from the cli
+        arg_list : 'list'
+            list of layer args
+        kwargs_dict : 'dict'
+            dict of layer kwargs
+
+        Returns
+        -------
+            updated model
+        """
         model = cls._load_model(cli_args.model)
         from .stack import Stack
         return cls.apply(Stack(), model, *arg_list, **kwarg_dict)
 
     @classmethod
     def _load_model(cls, model_path):
+        """
+        Load model from cli
+
+        Parameters
+        ----------
+        model_path : 'str'
+            Path from which to load model
+        """
         # Method to load model
         pass
 
     @classmethod
     def _save_model(cls, model_path):
+        """
+        Save model from cli
+
+        Parameters
+        ----------
+        model_path : 'str'
+            Path to save model to
+        """
         # Method to save model
         pass
 
 
 class Layer(object):
+    """
+    Base class to interact with layers:
+    - Create
+    - Load
+    - Run
+
+    Attributes
+    ----------
+    layer_dir : 'str'
+        Directory containing the layer
+    _layer : 'LayerBase|ModelLayerBase'
+        Layer object
+    _checksum : 'str'
+        Checksum for layer
+    _name : 'str'
+        Layer name
+    _args : 'ArgList'
+        Layer's args
+    _kwargs : 'KwargDict'
+        Layer's kwargs
+
+    Parameters
+    ----------
+    layer_dir : 'str'
+        Directory from which to load the layer
+    """
 
     def __init__(self, layer_dir):
-        """
-        Load the layer contained in layer_dir.
-        """
-
         self.layer_dir = layer_dir
         # load the layer.py module and find the LayerBase class
         # self._layer = the LayerBase class we found
@@ -238,19 +379,24 @@ class Layer(object):
     @classmethod
     def create(cls, name, parent_dir, desc=None, layer_base_class=LayerBase):
         """
-        Creates a new Layer on the file system under parent_dir.
+        Create new layer
 
-        Arguments:
-            - name (str) - Concise, human readable name for the new layer
-            - parent_dir (str) - Path to the parent directory for the new layer
-            - desc (optional str) - Description string to drop into the new layer
-            - layer_base_class (issubclass(layer_base_class,LayerBase)) -
-                  Class from which the new layer should be derived. If
-                  issubclass(layer_base_class,ModelLayerBase) then the new layer
-                  will conform to that structure (i.e. assume that a model of
-                  a particular type is being operated on).
+        Parameters
+        ----------
+        name : 'str'
+            Layer name
+        parent_dir : 'str'
+            Parent directory for layer
+        desc : 'str'
+            Layer description
+        layer_base_class : 'LayerBase|ModelLayerBase'
+            Base class on which to build layer
+
+        Returns
+        -------
+        dir_path : 'str'
+            Directory containing new layer
         """
-
         # Create the directory
         if not os.path.exists(parent_dir):
             raise LayerStackError("The parent_dir {} does not exist."
@@ -274,7 +420,23 @@ already exists."
 
     @classmethod
     def _template_kwargs(cls, name, layer_base_class, desc):
+        """
+        Kwargs for layer template
 
+        Parameters
+        ----------
+        name : 'str'
+            Layer name
+        layer_base_class : 'LayerBase|ModelLayerBase'
+            Base class on which to build layer
+        desc : 'str'
+            Layer description
+
+        Returns
+        -------
+        kwargs : 'dict'
+            kwargs to pass to layer template
+        """
         def class_name(name):
             result = name.title()
             replacements = [(" ", ""),
@@ -309,10 +471,36 @@ already exists."
 
     @staticmethod
     def layer_filename(layer_dir):
+        """
+        Create file path for layer
+
+        Parameters
+        ----------
+        layer_dir : 'str'
+            Parent directory for layer
+
+        Returns
+        -------
+        'str'
+            Path to layer.py file
+        """
         return os.path.join(layer_dir, 'layer.py')
 
     @staticmethod
     def load_layer(layer_dir):
+        """
+        Load layer
+
+        Parameters
+        ----------
+        layer_dir : 'str'
+            Parent directory for layer
+
+        Returns
+        -------
+        'Layer'
+            Layer class object
+        """
         module = imp.load_source('loaded_layer_{}'.format(uuid4()),
                                  Layer.layer_filename(layer_dir))
         candidate = None
@@ -342,38 +530,114 @@ dir:\n{}".format(layer_dir, dir(module)))
 
     @property
     def name(self):
+        """
+        Get layer name
+
+        Returns
+        -------
+        'str'
+            layer name
+        """
         return self._name
 
     @property
     def layer(self):
+        """
+        Get layer class
+
+        Returns
+        -------
+        'Layer'
+            layer class object
+        """
         return self._layer
 
     @property
     def checksum(self):
+        """
+        Get layer checksum
+
+        Returns
+        -------
+        'str'
+            layer checksum
+        """
         return self._checksum
 
     @property
     def args(self):
+        """
+        Get layer args
+
+        Returns
+        -------
+        'ArgList'
+            Layer ArgList
+        """
         return self._args
 
     @args.setter
     def args(self, args):
+        """
+        Set args
+
+        Parameters
+        ----------
+        args : 'list'
+            layer arg values
+        """
         self._args.mode = ArgMode.USE
         for i, arg in enumerate(args):
             self._args[i] = arg
 
     @property
     def kwargs(self):
+        """
+        Get layer kwargs
+
+        Returns
+        -------
+        'KwargDict'
+            Layer KwargDict
+        """
         return self._kwargs
 
     @kwargs.setter
     def kwargs(self, kwargs):
+        """
+        Set kwargs
+
+        Parameters
+        ----------
+        kwargs : 'dict'
+            layer kwargs
+        """
         self._kwargs.mode = ArgMode.USE
         for name, value in kwargs.items():
             self._kwargs[name] = value
 
     @classmethod
     def run(cls, layer_dir, stack, model, *args, **kwargs):
+        """
+        Run layer
+
+        Parameters
+        ----------
+        layer_dir : 'str'
+            Parent directory for layer
+        stack : 'Stack'
+            Stack class instance that is handling the layer
+        model
+            Model to be operated on
+        *args
+            layer args
+        **kwargs
+            layer kwargs
+
+        Returns
+        -------
+            updated model
+        """
         layer = Layer(layer_dir)
         layer.args.mode = ArgMode.USE
         for i, arg in enumerate(args):
@@ -387,9 +651,31 @@ dir:\n{}".format(layer_dir, dir(module)))
 
     @property
     def runnable(self):
+        """
+        Check if layer is runnable (i.e. all args are set)
+
+        Returns
+        -------
+        'bool'
+            Layer args are set and layer can be run
+        """
         return self._args.set
 
     def run_layer(self, stack, model=None):
+        """
+        Run layer
+
+        Parameters
+        ----------
+        stack : 'Stack'
+            Stack class instance that is handling the layer
+        model
+            Model to be operated on
+
+        Returns
+        -------
+            updated model
+        """
         assert self.runnable
         self._args.mode = ArgMode.USE
         self._kwargs.mode = ArgMode.USE
