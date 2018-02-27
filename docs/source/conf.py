@@ -45,6 +45,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'numpydoc'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -87,7 +88,11 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'titles_only': False
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -165,3 +170,8 @@ texinfo_documents = [
 # -- Extension configuration -------------------------------------------------
 
 autoclass_content = 'both'
+autodoc_member_order = 'bysource'
+# Uncomment when https://github.com/sphinx-doc/sphinx/pull/4076 is 
+# released.
+#autodoc_special_members = ['__getitem__', '__setitem__','__iter__']
+numpy_show_class_member = True

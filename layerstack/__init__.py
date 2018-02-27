@@ -22,6 +22,20 @@ class LayerStackError(Exception):
     pass
 
 
+class LayerStackTypeError(LayerStackError):
+    """
+    TypeError exception class for this package.
+    """
+    pass
+
+
+class LayerStackRuntimeError(LayerStackError):
+    """
+    RuntimeError exception class for this package.
+    """
+    pass
+
+
 FORMAT = '%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'
 
 

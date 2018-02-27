@@ -60,7 +60,7 @@ class LayerBase(object):
     @classmethod
     def apply(cls, stack, *args, **kwargs):
         """
-        Create ArgList
+        Apply this layer in the context described by stack
 
         Parameters
         ----------
@@ -99,9 +99,11 @@ class LayerBase(object):
         kwarg_dict = cls.kwargs()
         kwarg_dict.add_arguments(parser, short_names=['r', 'd'])
 
-        # Parse args and set values
+        # Parse args and set values        
         cli_args = parser.parse_args()
+        arg_list.mode = ArgMode.USE
         arg_list.set_args(cli_args)
+        kwarg_dict.mode = ArgMode.USE
         kwarg_dict.set_kwargs(cli_args)
 
         log_level = logging.DEBUG if cli_args.debug else logging.INFO
