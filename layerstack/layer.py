@@ -25,14 +25,52 @@ class LayerBase(object):
 
     @classmethod
     def args(cls, **kwargs):
+        """
+        Create ArgList
+
+        Parameters
+        ----------
+        **kwargs
+            Internal kwargs
+
+        Returns
+        -------
+        'ArgList'
+            ArgList class instance containing list of layer's args
+        """
         return ArgList()
 
     @classmethod
     def kwargs(cls, **kwargs):
+        """
+        Create KwargDict
+
+        Parameters
+        ----------
+        **kwargs
+            Internal kwargs
+
+        Returns
+        -------
+        'KwargDict'
+            KwargDict class instance containing dict of layer's kwargs
+        """
         return KwargDict()
 
     @classmethod
     def apply(cls, stack, *args, **kwargs):
+        """
+        Create ArgList
+
+        Parameters
+        ----------
+        stack : 'Stack'
+            Stack class instance in which the layer is being run
+        *args
+            The layer's args
+        **kwargs
+            The layer's kwargs
+        """
         pass
 
     # TODO: Split main into parser and execution. Should be able to re-use
@@ -41,9 +79,12 @@ class LayerBase(object):
     def main(cls,
              log_format='%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'):
         """
-        Arguments:
-            - log_format (str) - set this to override the format of the default
-                  console logging output
+        CLI entry point
+
+        Parameters
+        ----------
+        log_format : 'str'
+            Custom logging format
         """
         # Create argument parser
         desc = cls._cli_desc()
@@ -75,18 +116,50 @@ class LayerBase(object):
 
     @classmethod
     def _cli_desc(cls):
+        """
+        Get layer description
+
+        Returns
+        -------
+        'str'
+            Layer description
+        """
         return cls.desc if cls.desc is not None else "Apply Layer \
 '{}'".format(cls.name)
 
     @classmethod
     def _add_positional_arguments(cls, parser):
+        """
+        Add argument to parser
+
+        Parameters
+        ----------
+        parser : 'argparser'
+            Add arg to parser
+        """
         pass
 
     @classmethod
     def _main_apply(cls, cli_args, arg_list, kwarg_dict):
+        """
+        CLI layer apply
+
+        Parameters
+        ----------
+        cli_args : 'list'
+            list of args from the cli
+        arg_list : 'list'
+            list of layer args
+        kwargs_dict : 'dict'
+            dict of layer kwargs
+
+        Returns
+        -------
+            Layer output
+        """
         assert arg_list.mode == ArgMode.USE
         assert kwarg_dict.mode == ArgMode.USE
-        from ditto.layers.stack import Stack
+        from layerstack.stack import Stack
         return cls.apply(Stack(), *arg_list, **kwarg_dict)
 
 
