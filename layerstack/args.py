@@ -298,8 +298,7 @@ class ArgList(list):
         iterable : list or other iterable
             passed to list.__init__. if non-empty, must contain Arg objects.
         mode : ArgMode
-            mode for this ArgList to be in upon return. is constructed in 
-            ArgMode.DESC
+            mode for this ArgList to be in upon return
         """
         self.mode = ArgMode.DESC
         super().__init__(iterable)
@@ -395,8 +394,8 @@ class ArgList(list):
             in an argparse.ArgumentParser is a descriptive task
         """
         if not self.mode == ArgMode.DESC:
-            raise LayerStackRuntimeError("ArgList be in ArgMode.DESC to add " + 
-                "arguments to an argparse parser.")
+            raise LayerStackRuntimeError("{} ".format(self.__class__.__name__) + 
+                "must be in ArgMode.DESC to add arguments to an argparse parser.")
         for arg in self:
             parser.add_argument(arg.name, **arg.add_argument_kwargs())
 
@@ -425,8 +424,8 @@ class ArgList(list):
             unexpected behavior.
         """
         if not self.mode == ArgMode.USE:
-            raise LayerStackRuntimeError("ArgList must be in ArgMode.USE to " + 
-                "set values.")
+            raise LayerStackRuntimeError("{} ".format(self.__class__.__name__) + 
+                "must be in ArgMode.USE to set values.")
         try:
             self.mode = ArgMode.DESC
             for arg in self:
@@ -472,20 +471,37 @@ class ArgList(list):
 
 
 class KwargDict(OrderedDict):
-    def __init__(self, iterable=[], **kwargs):
+    def __init__(self, iterable=[], mode=ArgMode.DESC):
         """
-        Construct a KwargDict.
+        OrderedDict that contains Kwarg objects. In describe mode (mode == 
+        ArgMode.DESC), Kwarg objects may be add and removed. Their descriptions 
+        and other attributes may be edited. In use mode (mode == ArgMode.USE), 
+        only the argument values are accessible through this class's get, set, 
+        and iter methods.
 
-        Arguments
-
-        - iterable=[] - An iterable passed to collections.OrderedDict.__init__.
-                        If non-empty, values must be Kwarg objects.
+        Parameters
+        ----------
+        iterable : list or other iterable
+            passed to collections.OrderedDict.__init__. if non-empty, values 
+            must be Kwarg objects.
+        mode : ArgMode
+            mode for this KwargDict to be in upon return
         """
         self.mode = ArgMode.DESC
         super().__init__(iterable)
+        self.mode = mode
 
     @property
     def mode(self):
+        """
+        settable attribute
+
+        Returns
+        -------
+        ArgMode
+            current mode of this KwargDict, that is, whether it is being used to 
+            DESCribe or USE arguments
+        """
         return self._mode
 
     @mode.setter
@@ -493,30 +509,99 @@ class KwargDict(OrderedDict):
         self._mode = ArgMode(value)
 
     def __getitem__(self, key):
+        """
+        Parameters
+        ----------
+        key : str
+            name of the Kwarg of interest
+
+        Returns
+        -------
+        Kwarg or any
+            Kwarg with name key (if mode == ArgMode.DESC), or Kwarg.value for 
+            the Kwarg with name key (if mode == ArgMode.USE)
+        """        
         result = super().__getitem__(key)
         if self.mode == ArgMode.DESC:
             return result
         return result.value
 
     def items(self):
+        """
+        return the items in this KwargDict
+
+        Returns
+        -------
+        list of name, value pairs
+            name is always the Kwarg.name. the value is either the Kwarg itself 
+            (if mode == ArgMode.DESC), or its .value (if mode == ArgMode.USE)
+        """
         if self.mode == ArgMode.USE:
             return [(name, kwarg.value) for name, kwarg in super().items()]
         return super().items()
 
     def iteritems(self):
+        """
+        iterate throught the items in this KwargDict
+
+        Yields
+        ------
+        name, value pair
+            name is always the next Kwarg.name. the value is either the next 
+            Kwarg itself (if mode == ArgMode.DESC), or its .value (if mode == 
+            ArgMode.USE)
+        """
         for name, kwarg in super().iteritems():
             yield (name, kwarg) if self.mode == ArgMode.DESC else (name, kwarg.value)
 
     def values(self):
+        """
+        return the list of values in this KwargDict
+
+        Returns
+        -------
+        list of values
+            values are either Kwargs (if mode == ArgMode.DESC) or the 
+            Kwarg.values (if mode == ArgMode.USE)
+        """
         if self.mode == ArgMode.USE:
             return [kwarg.value for kwarg in super().values()]
         return super().values()
 
     def itervalues(self):
+        """
+        iterate through the list of values in this KwargDict
+
+        Yields
+        -------
+        value
+            value is either the next Kwarg (if mode == ArgMode.DESC) or the 
+            next Kwarg.value (if mode == ArgMode.USE)
+        """
         for kwarg in super().itervalues():
             yield kwarg if self.mode == ArgMode.DESC else kwarg.value
 
     def __setitem__(self, key, value):
+        """
+        Add or edit a Kwarg named key, or set its value, depending on mode.
+
+        Parameters
+        ----------
+        key : str
+            Kwarg name
+        value : Kwarg or any
+            Kwarg to assign to name key if mode == ArgMode.DESC, or value to set
+            the Kwarg already named key if mode == ArgMode.USE
+
+        Raises
+        ------
+        LayerStackTypeError
+            if mode == ArgMode.DESC and value is not an Kwarg
+        Exception
+            if mode == ArgMode.USE and there is a failure in the value parsing
+            process. value and value list parsers are provided by users, so 
+            there could be unexpected behavior.
+        """
         if self.mode == ArgMode.DESC:
             if not isinstance(value, Kwarg):
                 raise LayerStackTypeError("KwargDicts only hold Kwargs. " + 
@@ -525,6 +610,8 @@ class KwargDict(OrderedDict):
             super().__setitem__(key, value)
             return
         if key not in self:
+            logger.warn("{} not in this {},".format(key,self.__class__.__name__) + 
+                " but asked to set its value. Creating a default Kwarg.")
             tmp = Kwarg()
             tmp.name = key
             super().__setitem__(key, tmp)
@@ -532,6 +619,28 @@ class KwargDict(OrderedDict):
         tmp.value = value
 
     def add_arguments(self, parser, short_names=[]):
+        """
+        Adds this KwargDict's keyword arguments to parser, for use in a 
+        command-line interface.
+
+        Parameters
+        ----------
+        parser : argparse.ArgumentParser
+            parser.add_argument is called once for each Arg in this ArgList
+        short_names : list
+            list of short names (e.g., 'd' for an argument specified as '-d',
+            '--debug') already registered in parser
+
+        Raises
+        ------
+        LayerStackRuntimeError
+            if mode != ArgMode.DESC, since representing this KwargDict's 
+            keyword arguments in an argparse.ArgumentParser is a descriptive 
+            task
+        """
+        if not self.mode == ArgMode.DESC:
+            raise LayerStackRuntimeError("{} ".format(self.__class__.__name__) + 
+                "must be in ArgMode.DESC to add arguments to an argparse parser.")
 
         def get_short_name(name):
             short_name = None; n = 0
@@ -548,7 +657,42 @@ class KwargDict(OrderedDict):
                                 **kwarg.add_argument_kwargs())
 
     def set_kwargs(self, cli_args):
-        self.mode = ArgMode.DESC
-        for key, kwarg in self.items():
-            kwarg.value = eval('cli_args.' + key)
-        self.mode = ArgMode.USE
+        """
+        Sets this KwargDict's keyword argument values to those in cli_args, 
+        which is assumed to have come from argparse.
+
+        Parameters
+        ----------
+        cli_args : argparse.Namespace
+            object returned by parser.parse_args(), where parser is an 
+            argparse.ArgumentParser to which this ArgList's add_arguments method
+            was applied
+
+        Raises
+        ------
+        LayerStackRuntimeError
+            if mode != ArgMode.USE, since setting this ArgList's argument values
+            is a form of using a fixed ArgList
+        LayerStackRuntimeError
+            if an expected argument name is not found in cli_args
+        Exception
+            there could be a failure in the value parsing process. value and 
+            value list parsers are provided by users, so there could be 
+            unexpected behavior.
+        """
+        if not self.mode == ArgMode.USE:
+            raise LayerStackRuntimeError("{} ".format(self.__class__.__name__) + 
+                "must be in ArgMode.USE to set values.")
+        try:
+            self.mode = ArgMode.DESC
+            for key, kwarg in self.items():
+                try:
+                    temp_value = eval('cli_args.' + key) 
+                except Exception as e:
+                    raise LayerStackRuntimeError("{} not found in cli_args, {}".format(key,e))
+                kwarg.value = temp_value # may throw if temp_value is bad per kwarg.parser, etc.
+            self.mode = ArgMode.USE
+        except Exception as e:
+            self.mode = ArgMode.USE
+            raise e
+        
