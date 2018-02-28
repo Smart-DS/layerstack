@@ -5,6 +5,7 @@ from collections import MutableSequence, OrderedDict
 import json
 import logging
 import os
+from pathlib import Path
 from uuid import UUID, uuid4
 
 logger = logging.getLogger(__name__)
@@ -16,15 +17,43 @@ from layerstack.args import ArgMode, Arg, Kwarg
 
 class Stack(MutableSequence):
     """
-    A Stack is a list of DiTTo Layers that can be applied to a DiTTo model.
+    Base class to handle and run layer sequences
+    - Save to json
+    - Load from json
+    - Run
 
-    If all of the sub-layer args are defined, the Stack can be run.
+    Attributes
+    ----------
+    name : 'str'
+        Stack name
+    version : 'str'
+        Stack version
+    run_dir : 'str'
+        Run directory for stack
+    model
+        Model to apply layers to
+    __uuid : 'uuid4'
+        Unique identifier for stack
+    __layers : 'list'
+        List of layers in stack
 
-    A Stack may also be an input to an algorithm.
+    Parameters
+    ----------
+    layers : 'list'
+        List of layers in stack
+    name : 'str'
+        name of stack
+    version : 'str'
+        stack version number
+    run_dir : 'str'
+        directory to run stack in
+    model
+        Model to apply layers to
     """
 
     # *layers has to go at the end for Python 2
-    def __init__(self, name=None, version='v0.1.0', run_dir=None, model=None, *layers):
+    def __init__(self, layers=[], name=None, version='v0.1.0', run_dir=None,
+                 model=None):
         self.name = name
         self.version = version
         self.run_dir = run_dir
@@ -40,74 +69,231 @@ class Stack(MutableSequence):
 
     @staticmethod
     def __checkValue(value):
+        """
+        Check to ensure value is a Layer class object
+
+        Parameters
+        ----------
+        value : 'Layer'
+            New layer to add to stack
+        """
         if not isinstance(value, Layer):
             raise LayerStackError("Stacks only hold Layers. You passed a {}."
                                   .format(type(value)))
 
     def __getitem__(self, i):
+        """
+        Get layer i
+
+        Parameters
+        ----------
+        i : 'int'
+            position of layer to get from stack
+
+        Returns
+        -------
+        'Layer'
+            Layer class for layer i in stack
+        """
         return self.__layers[i]
 
     def __setitem__(self, i, layer):
+        """
+        Set ith layer in stack
+
+        Parameters
+        ----------
+        i : 'int'
+            position of layer to set in stack
+        layer : 'Layer'
+            Layer to place at ith position in stack
+        """
         self.__checkValue(layer)
         self.__layers.insert(i, layer)
 
     def __delitem__(self, i):
+        """
+        Delete ith layer
+
+        Parameters
+        ----------
+        i : 'int'
+            Position of layer to delete
+        """
         del self.__layers[i]
 
     def insert(self, i, layer):
+        """
+        Insert layer into stack
+
+        Parameters
+        ----------
+        i : 'int'
+            Position at which to insert layer
+        layer : 'Layer'
+            Layer to insert into stack
+        """
         self.__checkValue(layer)
         self.__layers.insert(i, layer)
 
     def append(self, layer):
+        """
+        Append layer to end of stack
+
+        Parameters
+        ----------
+        layer : 'Layer'
+            Layer to append to end of stack
+        """
         logger.debug("Appending Layer {!r}".format(layer.name))
         self.__checkValue(layer)
         self.__layers.append(layer)
 
     def __str__(self):
+        """
+        Return readable list for layers in stack
+
+        Returns
+        -------
+        'str'
+            Readable string of layers in stack
+        """
         return str(self.__layers)
 
     def __iter__(self):
+        """
+        Create iterable of layers in stack
+
+        Returns
+        -------
+        'iter'
+            Iterable for layers in stack
+        """
         return iter(self.__layers)
 
     def __len__(self):
+        """
+        Number of layers in stack
+
+        Returns
+        -------
+        'int'
+            Number of layers in stack
+        """
         return len(self.__layers)
+
+    @staticmethod
+    def convert_path(path):
+        """
+        Convert windows file paths to linux path format
+
+        Parameters
+        ----------
+        path : 'str'
+            file path to convert
+
+        Returns
+        -------
+        'Path'
+            Path class object to handle file path
+        """
+        if '\\' in path:
+            path = path.replace('\\', '/')
+
+        return Path(path)
 
     @property
     def suggested_filename(self):
+        """
+        Create stack filename
+
+        Returns
+        -------
+        'str'
+            Stack json name
+        """
         if self.name is None:
             return None
         return self.name.lower().replace(" ", "_") + ".json"
 
     @property
     def uuid(self):
+        """
+        Get stack uuid
+
+        Returns
+        -------
+        'uuid4'
+            Stack unique identifier
+        """
         return self.__uuid
 
     @property
     def layers(self):
+        """
+        Get layers in stack
+
+        Returns
+        -------
+        'list'
+            List of layers in stack
+        """
         return self.__layers
 
     @property
     def run_dir(self):
+        """
+        Get stack run directory
+
+        Returns
+        -------
+        'str'
+            Run directory for stack
+        """
         return self._run_dir
 
     @run_dir.setter
-    def run_dir(self,value):
+    def run_dir(self, value):
+        """
+        Set run directory for stack
+
+        Parameters
+        ----------
+        value : 'str'
+            Stack run directory
+        """
         self._run_dir = value
 
     @property
     def runnable(self):
+        """
+        Determine if stack is runnable:
+        - Are args set for all layers in stack
+
+        Returns
+        -------
+        'bool'
+            All args are set for all layers in stack, stack can be run
+        """
         if not self.run_dir:
-            logger.info("The run_dir must be assigned for this stack to be runnable.")
+            logger.info("The run_dir must be assigned for this stack to be \
+runnable.")
             return False
         for layer in self.layers:
             if not layer.runnable:
-                logger.info("Set arguments on layer '{}' to make this stack runnable.".format(layer.name))
+                logger.info("Set arguments on layer '{}' to make this stack \
+runnable.".format(layer.name))
                 return False
         return True
 
     def save(self, filename):
         """
-        Save this Stack to filename in json format.
+        Save stack
+
+        Parameters
+        ----------
+        filename : 'str'
+            file path to save stack to
         """
         json_data = self._json_data()
 
@@ -116,10 +302,15 @@ class Stack(MutableSequence):
 
     def archive(self, filename=None):
         """
-        Archives this stack by computing the .json checksum on the 
-        without-checksum json file, and then saving a json with the checksum 
-        data added in. Called by the run method with with default filename 
+        Archives this stack by computing the .json checksum on the
+        without-checksum json file, and then saving a json with the checksum
+        data added in. Called by the run method with with default filename
         os.path.join(self.run_dir, 'stack.archive').
+
+        Parameters
+        ----------
+        filename : 'str'
+            file path to save stack to
         """
         if filename is None:
             filename = os.path.join(self.run_dir, 'stack.archive')
@@ -132,6 +323,19 @@ class Stack(MutableSequence):
             json.dump(json_data, f)
 
     def _json_data(self):
+        """
+        Extract data from stack and place in json format
+
+        Returns
+        -------
+        json_data : 'dict'
+            Dictionary containing stack information:
+            - stack meta data
+            - layers in stack
+                - layer meta data
+                - layer args
+                - layer kwargs
+        """
         json_data = OrderedDict()
         json_data['name'] = self.name
         json_data['uuid'] = str(self.uuid)
@@ -171,22 +375,35 @@ class Stack(MutableSequence):
 
             logger.debug("Serializing Layer {!r}".format(layer.name))
             stack_layers[layer.name] = {'uuid': str(layer.layer.uuid),
-                                        'layer_dir': layer.layer_dir,
+                                        'layer_dir': str(layer.layer_dir),
                                         'version': layer.layer.version,
                                         'checksum': layer.checksum,
                                         'args': args, 'kwargs': kwargs}
 
-        assert len(stack_layers) == len(self), "I have {} layers, but serialization has {}".format(len(self),len(stack_layers))
+        assert len(stack_layers) == len(self), "I have {} layers, but \
+serialization has {}".format(len(self), len(stack_layers))
         json_data['layers'] = stack_layers
         return json_data
 
     @classmethod
     def load(cls, filename, layer_library_dir=None):
         """
-        Load a Stack from filename.
+        Load stack from given .json file
+
+        Parameters
+        ----------
+        filename : 'str'
+            File path from which to load stack
+        layer_library_dir : 'str'
+            Root directory containing layers to be loaded into stack
+
+        Returns
+        -------
+        result : 'Stack'
+            Instantiated Stack class instance
         """
         with open(filename) as json_file:
-            json_data = json.load(json_file,object_pairs_hook=OrderedDict)
+            json_data = json.load(json_file, object_pairs_hook=OrderedDict)
 
         stack_name = json_data['uuid']
         if json_data['name'] is not None:
@@ -196,29 +413,32 @@ class Stack(MutableSequence):
         for json_layer_name, json_layer in json_data['layers'].items():
 
             # load each layer, using layer_library_dir if not None
-            layer_dir = json_layer['layer_dir']
+            layer_dir = cls.convert_path(json_layer['layer_dir'])
             if layer_library_dir is not None:
-                layer_dir = os.path.join(layer_library_dir,os.path.basename(layer_dir))
+                layer_dir = os.path.join(layer_library_dir,
+                                         os.path.basename(layer_dir))
             layer = Layer(layer_dir)
 
-            msg_begin = "Layer {!r} loaded by Stack {!r} ".format(layer.name,stack_name)
+            msg_begin = "Layer {!r} loaded by Stack {!r} ".format(layer.name,
+                                                                  stack_name)
 
             # inform the user about version changes
             if layer.layer.uuid != UUID(json_layer['uuid']):
-                logger.warn(msg_begin + \
-                    'has unexpected uuid. Expected {!r}, got {!r}.'.format(
-                        UUID(json_layer['uuid']),layer.layer.uuid))
+                logger.warn(msg_begin +
+                            'has unexpected uuid. Expected {!r}, got {!r}.'
+                            .format(UUID(json_layer['uuid']),
+                                    layer.layer.uuid))
             if layer.name != json_layer_name:
-                logger.info(msg_begin + \
-                    'has different serialized name, {!r}'.format(json_layer_name))
+                logger.info(msg_begin +
+                            'has different serialized name, {!r}'
+                            .format(json_layer_name))
             if layer.layer.version != json_layer['version']:
-                logger.info(msg_begin + \
-                    'is Version {}, whereas the stack was saved at Version {}.'.format(
-                        layer.layer.version,json_layer['version']))
+                logger.info(msg_begin + 'is Version {}, whereas the stack was \
+saved at Version {}.'.format(layer.layer.version, json_layer['version']))
             elif layer.checksum != json_layer['checksum']:
-                logger.info(msg_begin + 
-                    'has same version identifier as when the stack was saved ' + \
-                    '(Version {}), but the checksum has changed.'.format(layer.layer.version))
+                logger.info(msg_begin + 'has same version identifier as when \
+the stack was saved (Version {}), but the checksum has \
+changed.'.format(layer.layer.version))
 
             # set arg and kwarg values based on the json file
 
@@ -240,9 +460,10 @@ class Stack(MutableSequence):
                 if (arg['name'] in actual_args) and (actual_args[arg['name']] not in assigned_args):
                     serialized_to_actual_map[i] = actual_args[arg['name']]
                     assigned_args.append(actual_args[arg['name']])
-                    logger.info("Position of Layer {!r} argument {!r}".format(layer.name,arg['name']) + \
-                        " moved from {} to {} since serialization of Stack {!r}.".format(
-                            i, actual_args[arg['name']], stack_name))
+                    logger.info("Position of Layer {!r} argument {!r} moved \
+from {} to {} since serialization of Stack {!r}."
+                                .format(layer.name, arg['name'], i,
+                                        actual_args[arg['name']], stack_name))
                     continue
                 serialized_to_actual_map[i] = None
                 unassigned_sargs.append(i)
@@ -251,54 +472,73 @@ class Stack(MutableSequence):
                 if (i < nargs) and (i not in assigned_args):
                     serialized_to_actual_map[i] = i
                     assigned_args.append(i)
-                    logger.warn("Setting the value of Layer {!r}s {}'th ".format(layer.name,i) + \
-                        "argument based on argument in same position in " + \
-                        "Stack {!r} even though names are different. ".format(stack_name) + \
-                        "Serialized argument name: {!r} Current argument name: {!r}".format(
-                            json_layer['args'][i]['name'],layer.args[i].name))
+                    logger.warn("Setting the value of Layer {!r}s {}'th \
+argument based on argument in same position in Stack {!r} even though names \
+are different. Serialized argument name: {!r} Current argument name: {!r}"
+                                .format(layer.name, i, stack_name,
+                                        json_layer['args'][i]['name'],
+                                        layer.args[i].name))
                     continue
-                logger.warn("Argument {!r}'s serialized information will not ".format(json_layer['args'][i]) + \
-                    "be used in loading Layer {!r} in Stack {!r}.".format(layer.name,stack_name))
+                logger.warn("Argument {!r}'s serialized information will not \
+be used in loading Layer {!r} in Stack {!r}.".format(json_layer['args'][i],
+                                                     layer.name, stack_name))
 
             for i, j in serialized_to_actual_map.items():
                 if j is not None:
                     try:
                         layer.args[j].value = json_layer['args'][i]['value']
                     except Exception as e:
-                        logger.error("Unable to set the value of Layer " + \
-                            "{!r}'s {}'th argument {!r} to {}, because {}.".format(
-                                layer.name,j,layer.args[j].name,json_layer['args'][i]['value'],e))
+                        logger.error("Unable to set the value of Layer {!r}'s \
+{}'th argument {!r} to {}, because {}."
+                                     .format(layer.name, j, layer.args[j].name,
+                                             json_layer['args'][i]['value'],
+                                             e))
 
             for name, kwarg in json_layer['kwargs'].items():
                 if name in layer.kwargs:
                     try:
                         layer.kwargs[name].value = kwarg['value']
                     except Exception as e:
-                        logger.error("Unable to set the value of Layer " + \
-                            "{!r}'s kwarg {!r} to {}, because {}.".format(
-                                layer.name,name,kwarg['value'],e))
+                        logger.error("Unable to set the value of Layer {!r}'s \
+kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
                 else:
-                    logger.warn("Kwarg {!r} is no longer in Layer {!r}, ".format(name,layer.name) + \
-                        "so the information serialized for it in Stack {!r} will not be used.".format(stack_name))
+                    logger.warn("Kwarg {!r} is no longer in Layer {!r}, so the\
+ information serialized for it in Stack {!r} will not be used."
+                                .format(name, layer.name, stack_name))
 
             layers.append(layer)
 
-        logger.debug("Instantiating Stack with\n  name: {!r}".format(json_data['name']) + \
-            "\n  version: {!r}\n  run_dir: {!r}\n  model: {!r}".format(json_data['version'],
-                json_data['run_dir'],json_data['model']))
-        result = Stack(json_data['name'], json_data['version'], json_data['run_dir'],json_data['model'], *layers)
+        result = cls(layers=layers, name=json_data['name'],
+                     version=json_data['version'],
+                     run_dir=json_data['run_dir'], model=json_data['model'])
         result._uuid = UUID(json_data['uuid'])
         return result
 
     def run(self, save_path=None, log_level=logging.INFO, archive=True):
-        logger = start_file_log(os.path.join(self.run_dir, 'stack.log'),
-                                log_level=log_level)
+        """
+        Run stack
 
+        Parameters
+        ----------
+        save_path : 'str'
+            Path to which results from running stack should be saved
+        log_level : 'logging'
+            Level of logging to be used while running stack
+        archive : 'bool'
+            Archive stack before running
+        """
         if not self.runnable:
-            msg = "Stack is not runnable. Be sure run_dir and arguments are set."
+            msg = "Stack is not runnable. Be sure run_dir and arguments are \
+set."
             logger.error(msg)
             raise LayerStackError(msg)
-        
+
+        if not os.path.exists(self.run_dir):
+            os.mkdir(self.run_dir)
+
+        start_file_log(os.path.join(self.run_dir, 'stack.log'),
+                       log_level=log_level)
+
         if archive:
             self.archive()
 
@@ -311,7 +551,7 @@ class Stack(MutableSequence):
                                       .format(type(Layer)))
         for layer in self.layers:
             logger.info("Running {}".format(layer.name))
-            if issubclass(layer._layer, ModelLayerBase):
+            if issubclass(layer.layer, ModelLayerBase):
                 if self.model is None:
                     raise LayerStackError('Model not initialized')
                 layer.run_layer(self, model=self.model)
@@ -319,12 +559,12 @@ class Stack(MutableSequence):
                 self.result = layer.run_layer(self)
 
         if save_path is not None:
-            layer = self.layers[-1]._layer
+            layer = self.layers[-1].layer
             if issubclass(layer, ModelLayerBase):
                 layer._save_model(self.model)
             else:
                 raise LayerStackError('Layer must be a ModelLayer but is a {:}'
-                                      .format(type(Layer)))
+                                      .format(type(layer)))
 
 
 if __name__ == '__main__':
