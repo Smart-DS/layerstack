@@ -43,12 +43,18 @@ def start_console_log(log_level=logging.WARN,log_format=FORMAT):
     """
     Starts logging to the console.
 
-    :param log_level: logging package log level, i.e. logging.ERROR, 
-        logging.WARN, logging.INFO or logging.DEBUG
-    :param log_format: format string to use with the logging package
-    :type log_format: str
-    :returns: console_handler
-    :rtype: logging.StreamHandler
+    Parameters
+    ----------
+    log_level : enum
+        logging package log level, i.e. logging.ERROR, logging.WARN, 
+        logging.INFO or logging.DEBUG
+    log_format : str
+        format string to use with the logging package
+    
+    Returns
+    -------
+    logging.StreamHandler
+        console_handler
     """
     console_handler = logging.StreamHandler()
     console_handler.setLevel(log_level)
@@ -63,14 +69,20 @@ def start_file_log(filename, log_level=logging.WARN,log_format=FORMAT):
     """
     Starts logging to a file.
 
-    :param filename: path to the log file
-    :type filename: str
-    :param log_level: logging package log level, i.e. logging.ERROR, 
-        logging.WARN, logging.INFO or logging.DEBUG
-    :param log_format: format string to use with the logging package
-    :type log_format: str
-    :returns: logfile
-    :rtype: logging.FileHandler
+    Parameters
+    ----------
+    filename : str
+        path to the log file
+    log_level : enum
+        logging package log level, i.e. logging.ERROR, logging.WARN, 
+        logging.INFO or logging.DEBUG
+    log_format : str
+        format string to use with the logging package
+
+    Returns
+    -------
+    logging.FileHandler
+        logfile
     """
     logfile = logging.FileHandler(filename=filename)
     logfile.setLevel(log_level)
@@ -84,10 +96,16 @@ def checksum(filename):
     """
     Computes the checksum of a file.
 
-    :param filename: file to calculate the checksum for
+    Parameters
+    ----------
+    filename : str
+        file to calculate the checksum for
     :type filename: str
-    :returns: checksum
-    :rtype: str
+
+    Returns
+    -------
+    str
+        checksum
     """
     hash_md5 = hashlib.md5()
     with open(filename,'rb') as f:
