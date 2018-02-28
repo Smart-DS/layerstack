@@ -1,7 +1,6 @@
 import pytest
 
-from ditto.layers.args import ArgMode, Arg, Kwarg, ArgList, KwargDict
-from ditto.layers.layer import ModelType
+from layerstack.args import ArgMode, Arg, Kwarg, ArgList, KwargDict
 
 
 def test_arglist_creation():
@@ -41,16 +40,4 @@ def test_kwarg_creation():
     with pytest.raises(Exception):
         KwargDict(kwargs['max_pv'])
 
-
-def test_model_type_enum():
-    ModelType.DiTTo
-    ModelType('ditto')
-    ModelType('GridLAB-D')
-
-    with pytest.raises(Exception):
-        ModelType.NotAModel
-
-def test_arglist_modes(): pass
-
-def test_kwargdict_modes(): pass
 
