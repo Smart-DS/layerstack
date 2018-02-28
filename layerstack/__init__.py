@@ -90,12 +90,7 @@ def start_file_log(filename, log_level=logging.WARN,log_format=FORMAT):
     logfile.setFormatter(logformat)
     logging.getLogger().setLevel(log_level)
     logging.getLogger().addHandler(logfile)
-<<<<<<< HEAD
-    return logging.getLogger()
-
-=======
     return logfile
->>>>>>> 5f430be5fa4599d30b3fe16fe235cd7ff8a971a5
 
 def checksum(filename):
     """
@@ -129,11 +124,7 @@ class TempJsonFilepath():
             # (used in this package to calculate a json checksum)
     """
     def __init__(self):
-<<<<<<< HEAD
-        self.filename = str(uuid.uuid4()) + '.json'
-=======
         self.filename = str(uuid4()) + '.json'
->>>>>>> 5f430be5fa4599d30b3fe16fe235cd7ff8a971a5
 
     def __enter__(self):
         return self.filename
