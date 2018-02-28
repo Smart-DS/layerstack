@@ -554,7 +554,7 @@ set."
             if issubclass(layer.layer, ModelLayerBase):
                 if self.model is None:
                     raise LayerStackError('Model not initialized')
-                self.model = layer.run_layer(self, model=self.model)
+                layer.run_layer(self, model=self.model)
             else:
                 self.result = layer.run_layer(self)
 
