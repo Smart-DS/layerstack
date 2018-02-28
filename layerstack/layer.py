@@ -18,65 +18,84 @@ logger = logging.getLogger(__name__)
 
 class LayerBase(object):
     """
-    Abstract base class for user-defined layers.
+    Abstract base class for user-defined layers. All attributes and methods are
+    class level.
 
     Attributes
     ----------
-    name : 'str'
-        Layer name
-    desc : 'str'
-        Layer description
+    name : str
+        layer name, expected to be human-readable (spaces are okay and even 
+        preferred)
+    uuid : uuid.uuid4
+        unique identifier for the layer
+    version : str
+        human readable version number for the layer (defaults to '0.1.0')
+    desc : str
+        layer description
     """
     name = None
+    uuid = None
+    version = None
     desc = None
 
     @classmethod
     def args(cls, **kwargs):
         """
-        Create ArgList
+        Each layer must define its positional arguments by populating and 
+        returning an ArgList object.
 
         Parameters
         ----------
         **kwargs
-            Internal kwargs
+            application-internal kwargs
 
         Returns
         -------
-        'ArgList'
-            ArgList class instance containing list of layer's args
+        ArgList
+            ArgList object describing the layer's positional arguments. Arg
+            names should appear as positional arguments in the apply method in 
+            the same order as they are defined here.
         """
         return ArgList()
 
     @classmethod
     def kwargs(cls, **kwargs):
         """
-        Create KwargDict
+        Each layer must define its keyword arguments by populating and returning
+        a KwargDict object.
 
         Parameters
         ----------
         **kwargs
-            Internal kwargs
+            application-internal kwargs
 
         Returns
         -------
-        'KwargDict'
-            KwargDict class instance containing dict of layer's kwargs
+        KwargDict
+            KwargDict object describing the layer's keyword arguments. Keyword
+            argument specifications in the apply method should match what is 
+            defined in this method (i.e., be equivalent to 
+            Kwarg.name=Kwarg.default).
         """
         return KwargDict()
 
     @classmethod
     def apply(cls, stack, *args, **kwargs):
         """
-        Run layer
+        Run this layer in the context of the stack, with positional and keyword
+        arguments. In general in user-defined layers (classes derived from 
+        LayerBase), *args and **kwargs should be replaced by the actual 
+        positional argument names (defined in the args method) and keyword 
+        argument name, default value pairs (defined in the kwargs method).
 
         Parameters
         ----------
-        stack : 'Stack'
+        stack : layerstack.stack.Stack
             Stack class instance in which the layer is being run
         *args
-            The layer's args
+            the layer's positional arguments
         **kwargs
-            The layer's kwargs
+            the layer's keyword arguments
         """
         pass
 
@@ -86,12 +105,13 @@ class LayerBase(object):
     def main(cls,
              log_format='%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'):
         """
-        cli entry point
+        Single-layer command-line interface entry point.
 
         Parameters
         ----------
-        log_format : 'str'
-            Custom logging format
+        log_format : str
+            custom logging format to use with the logging package via 
+            layerstack.start_console_log
         """
         # Create argument parser
         desc = cls._cli_desc()
@@ -117,7 +137,6 @@ class LayerBase(object):
         start_console_log(log_level=log_level, log_format=log_format)
 
         if not os.path.isdir(cli_args.run_dir):
-            # TODO: Make this a DiTTo Exception
             raise LayerStackError("The run directory '{}' does not exist."
                                   .format(os.path.abspath(cli_args.run_dir)))
         cls._main_apply(cli_args, arg_list, kwarg_dict)
@@ -130,23 +149,11 @@ class LayerBase(object):
 
         Returns
         -------
-        'str'
-            Layer description
+        str
+            Layer description or 'Apply Layer {}'.format(cls.name) by default
         """
         return cls.desc if cls.desc is not None else "Apply Layer \
 '{}'".format(cls.name)
-
-    @classmethod
-    def _add_positional_arguments(cls, parser):
-        """
-        Add argument to parser
-
-        Parameters
-        ----------
-        parser : 'argparser'
-            Add arg to parser
-        """
-        pass
 
     @classmethod
     def _main_apply(cls, cli_args, arg_list, kwarg_dict):
@@ -175,13 +182,6 @@ class LayerBase(object):
 class ModelLayerBase(LayerBase):
     """
     Abstract base class for user-defined layers that operate on a model.
-
-    Attributes
-    ----------
-    name : 'str'
-        Layer name
-    desc : 'str'
-        Layer description
     """
 
     @classmethod
@@ -191,7 +191,7 @@ class ModelLayerBase(LayerBase):
 
         Parameters
         ----------
-        model
+        model : None or a model
             model to be operated on
         **kwargs
             Internal kwargs
