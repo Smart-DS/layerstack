@@ -286,9 +286,7 @@ class Stack(MutableSequence):
         logger.debug("Instantiating Stack with\n  name: {!r}".format(json_data['name']) + \
             "\n  version: {!r}\n  run_dir: {!r}\n  model: {!r}".format(json_data['version'],
                 json_data['run_dir'],json_data['model']))
-        result = Stack(name=json_data['name'], version=json_data['version'], 
-                       run_dir=json_data['run_dir'], model=json_data['model'],
-                       *layers)
+        result = Stack(json_data['name'], json_data['version'], json_data['run_dir'],json_data['model'], *layers)
         result._uuid = UUID(json_data['uuid'])
         return result
 
@@ -313,10 +311,10 @@ class Stack(MutableSequence):
                                       .format(type(Layer)))
         for layer in self.layers:
             logger.info("Running {}".format(layer.name))
-            if issubclass(layer, ModelLayerBase):
+            if issubclass(layer._layer, ModelLayerBase):
                 if self.model is None:
                     raise LayerStackError('Model not initialized')
-                self.model = layer.run_layer(self, model=self.model)
+                layer.run_layer(self, model=self.model)
             else:
                 self.result = layer.run_layer(self)
 

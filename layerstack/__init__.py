@@ -36,6 +36,7 @@ def start_file_log(filename, log_level=logging.WARN,
     logfile.setFormatter(logformat)
     logging.getLogger().setLevel(log_level)
     logging.getLogger().addHandler(logfile)
+    return logging.getLogger()
 
 
 def checksum(filename):
@@ -47,7 +48,7 @@ def checksum(filename):
 
 class TempJsonFilepath():
     def __init__(self):
-        self.filename = str(uuid.UUID()) + '.json'
+        self.filename = str(uuid.uuid4()) + '.json'
 
     def __enter__(self):
         return self.filename
