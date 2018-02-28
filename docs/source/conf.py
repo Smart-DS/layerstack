@@ -16,6 +16,7 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 import sphinx_rtd_theme
+from sphinxcontrib.pandoc_markdown import MarkdownParser
 
 
 # -- Project information -----------------------------------------------------
@@ -54,8 +55,10 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-# source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
+# source_suffix = '.rst'
+
+source_parsers = {'.md': MarkdownParser}
 
 # The master toctree document.
 master_doc = 'index'
