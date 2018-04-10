@@ -16,7 +16,6 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 import sphinx_rtd_theme
-from sphinxcontrib.pandoc_markdown import MarkdownParser
 
 
 # -- Project information -----------------------------------------------------
