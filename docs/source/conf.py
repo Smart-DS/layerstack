@@ -16,7 +16,6 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 import sphinx_rtd_theme
-from sphinxcontrib.pandoc_markdown import MarkdownParser
 
 
 # -- Project information -----------------------------------------------------
@@ -46,7 +45,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
-    'numpydoc'
+    'sphinx.ext.napoleon' # had numpydoc, but got lots of extraneous warnings
 ]
 
 # Add any paths that contain templates here, relative to this directory.

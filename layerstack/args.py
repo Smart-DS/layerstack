@@ -6,9 +6,11 @@ loaded from json, as well as expressed on the command line.
 from collections import OrderedDict
 from builtins import super
 from enum import Enum
+import logging
 
 from layerstack import LayerStackTypeError, LayerStackRuntimeError
 
+logger = logging.getLogger(__name__)
 
 class KwArgBase(object):
     """
@@ -208,10 +210,9 @@ class Kwarg(KwArgBase):
         analogous to the nargs argument in the argparse add_argument method
     list_parser : callable
         function to parse a [keyword] argument value list
-    :type list_parser: 
-    :param action: analogous to the action argument in the argparse add_argument 
-        method. allows, e.g., command-line boolean flags.
-    :type action: str
+    action : str
+        analogous to the action argument in the argparse add_argument method. 
+        allows, e.g., command-line boolean flags.
 
     Attributes
     ----------
@@ -551,7 +552,7 @@ class KwargDict(OrderedDict):
             Kwarg itself (if mode == ArgMode.DESC), or its .value (if mode == 
             ArgMode.USE)
         """
-        for name, kwarg in super().iteritems():
+        for name, kwarg in super().items():
             yield (name, kwarg) if self.mode == ArgMode.DESC else (name, kwarg.value)
 
     def values(self):
@@ -578,7 +579,7 @@ class KwargDict(OrderedDict):
             value is either the next Kwarg (if mode == ArgMode.DESC) or the 
             next Kwarg.value (if mode == ArgMode.USE)
         """
-        for kwarg in super().itervalues():
+        for kwarg in super().values():
             yield kwarg if self.mode == ArgMode.DESC else kwarg.value
 
     def __setitem__(self, key, value):

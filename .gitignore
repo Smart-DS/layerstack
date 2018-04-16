@@ -63,3 +63,6 @@ target/
 
 # test outputs
 tests/outputs/
+
+# Visual Studio Code
+.vscode
