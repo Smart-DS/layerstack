@@ -84,7 +84,7 @@ class LayerBase(object):
         """
         Run this layer in the context of the stack, with positional and keyword
         arguments. In general in user-defined layers (classes derived from 
-        LayerBase), *args and **kwargs should be replaced by the actual 
+        LayerBase), \*args and \*\*kwargs should be replaced by the actual 
         positional argument names (defined in the args method) and keyword 
         argument name, default value pairs (defined in the kwargs method).
 
@@ -177,6 +177,13 @@ class LayerBase(object):
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
         return cls.apply(Stack(), *arg_list, **kwarg_dict)
+
+    @classmethod
+    def _add_positional_arguments(cls, parser): 
+        """
+        Add positional arguments for the apply method to parser.
+        """
+        pass
 
 
 class ModelLayerBase(LayerBase):

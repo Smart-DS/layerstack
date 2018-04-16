@@ -90,15 +90,3 @@ specify this class as the ``layer_base_class`` in
 how to identify, load, and save the models that you want to operate on
 with your layers.
 
-.. toctree::
-   :maxdepth: 2
-
-   index
-   api
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

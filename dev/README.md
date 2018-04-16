@@ -45,33 +45,7 @@ python ../../dev/md_to_rst.py md_files.txt
 
 ## Building HTML Docs
 
-### Mac/Linux
-
-```
-make html
-```
-
-### Windows
-
-```
-make.bat html
-```
-
-## Building PDF Docs
-
-To build a PDF, you'll need a latex distribution for your system. 
-
-### Mac/Linux
-
-```
-make latexpdf
-```
-
-### Windows
-
-```
-make.bat latexpdf
-```
+Run `make html` for Mac and Linux; `make.bat html` for Windows.
 
 ## Pushing to GitHub Pages
 
@@ -97,6 +71,5 @@ git checkout gh-pages
 git push origin gh-pages
 git checkout master # or whatever branch you were on
 ```
-
 
 ## release on pypi

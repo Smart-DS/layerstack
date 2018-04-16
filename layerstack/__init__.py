@@ -100,7 +100,6 @@ def checksum(filename):
     ----------
     filename : str
         file to calculate the checksum for
-    :type filename: str
 
     Returns
     -------
