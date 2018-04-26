@@ -342,7 +342,7 @@ runnable.".format(layer.name))
         json_data['version'] = self.version
         json_data['run_dir'] = self.run_dir
         json_data['model'] = self.model
-        stack_layers = OrderedDict()
+        stack_layers = []
         for layer in self.layers:
             layer.args.mode = ArgMode.DESC
             args = []
@@ -374,11 +374,13 @@ runnable.".format(layer.name))
                 kwargs[name] = kwarg_dict
 
             logger.debug("Serializing Layer {!r}".format(layer.name))
-            stack_layers[layer.name] = {'uuid': str(layer.layer.uuid),
-                                        'layer_dir': str(layer.layer_dir),
-                                        'version': layer.layer.version,
-                                        'checksum': layer.checksum,
-                                        'args': args, 'kwargs': kwargs}
+            stack_layers.append({
+                'name': layer.name,
+                'uuid': str(layer.layer.uuid),
+                'layer_dir': str(layer.layer_dir),
+                'version': layer.layer.version,
+                'checksum': layer.checksum,
+                'args': args, 'kwargs': kwargs})
 
         assert len(stack_layers) == len(self), "I have {} layers, but \
 serialization has {}".format(len(self), len(stack_layers))
@@ -410,7 +412,7 @@ serialization has {}".format(len(self), len(stack_layers))
             stack_name = json_data['name']
 
         layers = []
-        for json_layer_name, json_layer in json_data['layers'].items():
+        for json_layer in json_data['layers']:
 
             # load each layer, using layer_library_dir if not None
             layer_dir = cls.convert_path(json_layer['layer_dir'])
@@ -428,10 +430,10 @@ serialization has {}".format(len(self), len(stack_layers))
                             'has unexpected uuid. Expected {!r}, got {!r}.'
                             .format(UUID(json_layer['uuid']),
                                     layer.layer.uuid))
-            if layer.name != json_layer_name:
+            if layer.name != json_layer['name']:
                 logger.info(msg_begin +
                             'has different serialized name, {!r}'
-                            .format(json_layer_name))
+                            .format(json_layer['name']))
             if layer.layer.version != json_layer['version']:
                 logger.info(msg_begin + 'is Version {}, whereas the stack was \
 saved at Version {}.'.format(layer.layer.version, json_layer['version']))
