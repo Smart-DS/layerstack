@@ -491,7 +491,7 @@ already exists."
         'str'
             Path to layer.py file
         """
-        return os.path.join(layer_dir, 'layer.py')
+        return os.path.join(str(layer_dir), 'layer.py')
 
     @staticmethod
     def load_layer(layer_dir):
