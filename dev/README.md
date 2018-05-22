@@ -96,3 +96,20 @@ git checkout master # or whatever branch you were on
 ```
 
 ## release on pypi
+
+1. [using testpyi](https://packaging.python.org/guides/using-testpypi/) has good instructions for setting up your user account on TestPyPI and PyPI, and configuring twine to know how to access both repositories.
+2. Test the package
+
+    ```
+    python setup.py sdist
+    twine upload --repository testpypi dist/*
+    # look at https://test.pypi.org/project/layerstack/
+    pip install --index-url https://test.pypi.org/simple/ layerstack
+    # check it out ... fix things ...
+    ```
+
+3. Upload to pypi
+
+    ```
+    twine upload --repository pypi dist/*
+    ```

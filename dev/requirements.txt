@@ -5,3 +5,4 @@ pytest
 pytest-ordering
 sphinx
 sphinx_rtd_theme
+twine

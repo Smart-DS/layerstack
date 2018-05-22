@@ -67,3 +67,6 @@ tests/outputs/
 
 # Visual Studio Code
 .vscode
+
+# Packaging
+MANIFEST
