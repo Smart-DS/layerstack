@@ -10,7 +10,7 @@ Also, you will need to install
 
 - [pandoc](https://pandoc.org/installing.html)
 
-[release process overview](#release-process-overview) | [how to run tests](#how-to-run-tests) | [publish documentation](#publish-documentation)
+[release process overview](#release-process-overview) | [how to run tests](#how-to-run-tests) | [publish documentation](#publish-documentation) | [release on pypi](#release-on-pypi)
 
 ## release process overview
 
@@ -66,19 +66,19 @@ python ../../dev/md_to_rst.py md_files.txt
 - 'git push' changes to the documentation source code as needed.
 - Make the documentation per below
 
-## Building HTML Docs
+### Building HTML Docs
 
 Run `make html` for Mac and Linux; `make.bat html` for Windows.
 
-## Pushing to GitHub Pages
+### Pushing to GitHub Pages
 
-### Mac/Linux
+#### Mac/Linux
 
 ```
 make github
 ```
 
-### Windows
+#### Windows
 
 ```
 make.bat html
