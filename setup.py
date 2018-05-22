@@ -24,6 +24,6 @@ setup(
     long_description = long_description,
     package_data = {
         'layerstack': ['*.template']
-    }
+    },
     install_requires=open('requirements.txt').read()
 )
