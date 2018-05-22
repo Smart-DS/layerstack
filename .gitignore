@@ -62,6 +62,7 @@ target/
 .python-version
 
 # test outputs
+.pytest_cache
 tests/outputs/
 
 # Visual Studio Code
