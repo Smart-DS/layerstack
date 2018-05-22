@@ -14,7 +14,20 @@ Also, you will need to install
 
 ## release process overview
 
+1. Update version number, CHANGES.txt, setup.py, LICENSE and header as needed
+2. Run tests locally and fix any issues
+3. Run tests on draft (master branch) package installed from github and fix any issues
+4. Uninstall the draft package
+5. Publish documentation
+6. Create release on github
+7. Release tagged version on pypi
+8. Install released package and re-run tests
+
 ## how to run tests
+
+To run tests locally:
+
+To run tests on an installed package:
 
 ## publish documentation
 

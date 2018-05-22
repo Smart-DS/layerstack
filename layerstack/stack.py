@@ -572,7 +572,7 @@ set."
 if __name__ == '__main__':
     parser = argparse.ArgumentParser("Load and optionally run a stack.")
     parser.add_argument('stack_file', help="Stack json file to load.")
-    mode_parsers = parser.add_subparsers('mode')
+    mode_parsers = parser.add_subparsers(title='mode')
     mode_parsers.add_parser('list')
     mode_parsers.add_parser('run')
     mode_parsers.add_parser('save')
