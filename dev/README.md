@@ -62,7 +62,7 @@ python ../../dev/md_to_rst.py md_files.txt
 - Make sure layerstack is in your PYTHONPATH
 - Delete the contents of `source/api`.
 - Run `sphinx-apidoc -o source/api ..` from the `docs` folder.
-- Compare `source/api/modules.rst` to `source/api.rst`.
+- Compare `source/api/modules.rst` to `source/api.rst`. Delete `setup.rst` and references to it.
 - 'git push' changes to the documentation source code as needed.
 - Make the documentation per below
 
