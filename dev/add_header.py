@@ -142,7 +142,7 @@ if __name__ == '__main__':
     
     #read current license
     print("Reading license from {}".format(args.license))
-    with open(args.license, encoding="utf8") as f:
+    with open(args.license) as f:
         current_license = f.read()
         
     #get filenames to change
@@ -166,7 +166,7 @@ if __name__ == '__main__':
             print('Adding license to: {}'.format(current_file))
         else:
             print('Removing license from: {}'.format(current_file))
-        with open(current_file, encoding='utf8') as f:
+        with open(current_file) as f:
             current_file_text = f.read()
             
         header, body = get_header(current_file_text)

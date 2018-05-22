@@ -1,0 +1,5 @@
+[
+  "tests/test_layer_creation.py::test_layer_base",
+  "tests/test_layers_args.py::test_arglist_creation",
+  "tests/test_layers_args.py::test_kwarg_creation"
+]
