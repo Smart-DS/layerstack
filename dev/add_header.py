@@ -29,8 +29,8 @@ ARGS['-d']           = ( ['--folder'],
                                          Default: False"""} )
 
 ARGS['-l']           = ( ['--license'],
-                           {'default'    :LICENSE_FILE, 
-                           'help'       :"""(optional) The filename of the license to add to the Python files"""} )
+                           {'default'   :LICENSE_FILE, 
+                            'help'      :"""(optional) The filename of the license to add to the Python files"""} )
 
 ARGS['-r']           = ( ['--recursive'],
                           {'action'     :'store_true', 
@@ -63,7 +63,7 @@ def get_header(s):
             else:
                 body += l
     else: #no header
-        header = '\'\'\'' + os.linesep + '\'\'\'' + os.linesep
+        header = '\'\'\'' + "\n" + '\'\'\'' + "\n"
         body = s
     
     return header, body
@@ -106,9 +106,9 @@ def add_license(header,lic):
     ret_head += lines[0]
     
     #add license to header
-    ret_head += '%s%s' % (START_LICENSE,os.linesep)
-    ret_head += '%s%s' % (lic,os.linesep)
-    ret_head += '%s%s' % (END_LICENSE,os.linesep)
+    ret_head += '%s%s' % (START_LICENSE,"\n")
+    ret_head += '%s%s' % (lic,"\n")
+    ret_head += '%s%s' % (END_LICENSE,"\n")
     
     #add the rest of the header
     for l in lines[1:]:
@@ -141,7 +141,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     
     #read current license
-    with open(args.license) as f:
+    print("Reading license from {}".format(args.license))
+    with open(args.license, encoding="utf8") as f:
         current_license = f.read()
         
     #get filenames to change
@@ -165,7 +166,7 @@ if __name__ == '__main__':
             print('Adding license to: {}'.format(current_file))
         else:
             print('Removing license from: {}'.format(current_file))
-        with open(current_file) as f:
+        with open(current_file, encoding='utf8') as f:
             current_file_text = f.read()
             
         header, body = get_header(current_file_text)
