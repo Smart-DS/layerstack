@@ -16,7 +16,7 @@ Also, you will need to install
 
 1. Update version number, CHANGES.txt, setup.py, LICENSE and header as needed
 2. Run tests locally and fix any issues
-3. Run tests on draft (master branch) package installed from github and fix any issues
+3. **Ideally we would** run tests on draft (master branch) package installed from github (`pip install git+https://github.com/Smart-DS/layerstack.git`) and fix any issues, **but tests cannot be installed in a runnable way using current structure**
 4. Uninstall the draft package
 5. Publish documentation
 6. Create release on github
@@ -27,7 +27,17 @@ Also, you will need to install
 
 To run tests locally:
 
+```bash
+# add layerstack to PYTHONPATH
+cd layerstack
+pytest
+```
+
 To run tests on an installed package:
+
+```
+# Still working on this. May need to wait for CI.
+```
 
 ## publish documentation
 

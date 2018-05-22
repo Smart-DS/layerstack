@@ -18,9 +18,12 @@ setup(
     version = version,
     author = 'Elaine Hale, Michael Rossol',
     author_email = 'elaine.hale@nrel.gov',
-    packages = ['layerstack','tests'],
+    packages = ['layerstack'],
     url = 'https://github.com/Smart-DS/layerstack',
     description = 'Python package for assembling, sharing, and running workflows, especially those associated with modifying, running, and analyzing simulation models',
-    long_description=long_description,
+    long_description = long_description,
+    package_data = {
+        'layerstack': ['*.template']
+    }
     install_requires=open('requirements.txt').read()
 )
