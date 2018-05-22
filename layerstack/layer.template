@@ -12,7 +12,7 @@ logger = logging.getLogger('layerstack.layers.{{ class_name }}')
 
 class {{ class_name }}({{ layer_base_class }}):
     name = "{{ name }}"
-    uuid = "UUID({{ uuid }})"
+    uuid = UUID({{ uuid }})
     version = '0.1.0'
     desc = {% if desc %}"{{ desc }}"{% else %}None{% endif %}
 
