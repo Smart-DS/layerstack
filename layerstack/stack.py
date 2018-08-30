@@ -558,36 +558,48 @@ set."
         if not os.path.exists(self.run_dir):
             os.mkdir(self.run_dir)
 
-        start_file_log(os.path.join(self.run_dir, 'stack.log'),
-                       log_level=log_level)
+        # change directory to run_dir
+        old_cur_dir = os.getcwd()
+        os.chdir(self.run_dir)
 
+        # set up logging
+        start_file_log('stack.log',log_level=log_level)
+        # also archive
         if archive:
             self.archive()
 
-        if isinstance(self.model, str):
-            layer = self.layers[0]._layer
-            if issubclass(layer, ModelLayerBase):
-                self.model = layer._load_model(self.model)
-                layer._check_model_type(self.model)
-            else:
-                raise LayerStackError('Layer must be a ModelLayer but is a {:}'
-                                      .format(type(Layer)))
-        for layer in self.layers:
-            logger.info("Running {}".format(layer.name))
-            if issubclass(layer.layer, ModelLayerBase):
-                if self.model is None:
-                    raise LayerStackError('Model not initialized')
-                self.model = layer.run_layer(self, model=self.model)
-            else:
-                self.result = layer.run_layer(self)
+        # run the stack
+        try:
+            if isinstance(self.model, str):
+                layer = self.layers[0]._layer
+                if issubclass(layer, ModelLayerBase):
+                    self.model = layer._load_model(self.model)
+                    layer._check_model_type(self.model)
+                else:
+                    raise LayerStackError('Layer must be a ModelLayer but is a {:}'
+                                        .format(type(Layer)))
+            for layer in self.layers:
+                logger.info("Running {}".format(layer.name))
+                if issubclass(layer.layer, ModelLayerBase):
+                    if self.model is None:
+                        raise LayerStackError('Model not initialized')
+                    self.model = layer.run_layer(self, model=self.model)
+                else:
+                    self.result = layer.run_layer(self)
 
-        if save_path is not None:
-            layer = self.layers[-1].layer
-            if issubclass(layer, ModelLayerBase):
-                layer._save_model(self.model,save_path)
-            else:
-                raise LayerStackError('Layer must be a ModelLayer but is a {:}'
-                                      .format(type(layer)))
+            if save_path is not None:
+                layer = self.layers[-1].layer
+                if issubclass(layer, ModelLayerBase):
+                    layer._save_model(self.model,save_path)
+                else:
+                    raise LayerStackError('Layer must be a ModelLayer but is a {:}'
+                                        .format(type(layer)))
+            # switch back to initial directory
+            os.chdir(old_cur_dir)
+        except:
+            os.chdir(old_cur_dir)
+            raise        
+        
 
 
 if __name__ == '__main__':
