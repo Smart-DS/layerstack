@@ -4,24 +4,24 @@ layerstack package
 Submodules
 ----------
 
-layerstack.args module
-----------------------
+layerstack\.args module
+-----------------------
 
 .. automodule:: layerstack.args
     :members:
     :undoc-members:
     :show-inheritance:
 
-layerstack.layer module
------------------------
+layerstack\.layer module
+------------------------
 
 .. automodule:: layerstack.layer
     :members:
     :undoc-members:
     :show-inheritance:
 
-layerstack.stack module
------------------------
+layerstack\.stack module
+------------------------
 
 .. automodule:: layerstack.stack
     :members:

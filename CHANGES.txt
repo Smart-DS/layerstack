@@ -1,1 +1,2 @@
+v0.1.1, TBD -- bug and documentation fixes
 v0.1.0, 05/22/18 -- initial release

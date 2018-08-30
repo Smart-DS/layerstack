@@ -18,6 +18,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 
 [/LICENSE]
 '''
+
 from __future__ import print_function, division, absolute_import
 
 import argparse
@@ -209,6 +210,10 @@ class LayerBase(object):
 class ModelLayerBase(LayerBase):
     """
     Abstract base class for user-defined layers that operate on a model.
+
+    .. automethod:: _check_model_type
+    .. automethod:: _load_model
+    .. automethod:: _save_model
     """
 
     @classmethod
@@ -252,12 +257,18 @@ class ModelLayerBase(LayerBase):
     @classmethod
     def _check_model_type(cls, model):
         """
-        Check model type to ensure it is operable
+        Check model type to ensure it is operable. Raises an exception if the
+        model is the wrong type or some other error is encountered. Derived 
+        classes should implement this method.
 
         Parameters
         ----------
         model
             model to be operated on
+
+        Returns
+        -------
+        None
         """
         # Check to make sure model is of the proper type
         pass
@@ -338,27 +349,33 @@ model".format(cls.name)
     @classmethod
     def _load_model(cls, model_path):
         """
-        Load model from cli
+        Load model from cli. Derived classes must implement this method if they
+        support loading from disk.
 
         Parameters
         ----------
         model_path : 'str'
             Path from which to load model
+
+        Returns
+        -------
+        model
         """
-        # Method to load model
         pass
 
     @classmethod
-    def _save_model(cls, model_path):
+    def _save_model(cls, model, model_path):
         """
-        Save model from cli
+        Save model from cli. Derived classes must implement this method if they 
+        support saving the model out to disk.
 
         Parameters
         ----------
+        model 
+            model to be saved to disk
         model_path : 'str'
             Path to save model to
         """
-        # Method to save model
         pass
 
 
