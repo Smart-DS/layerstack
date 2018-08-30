@@ -147,10 +147,18 @@ class KwArgBase(object):
         dict
             kwargs for argparse add_argument call
         """
-        return {'help': self.description,
-                'type': self.parser,
-                'choices': self.choices,
-                'nargs': self.nargs}
+        kwargs = {}
+
+        if self.description is not None:
+            kwargs['help'] = self.description
+        if self.parser is not None:
+            kwargs['type'] = self.parser
+        if self.choices is not None:
+            kwargs['choices'] = self.choices
+        if self.nargs is not None:
+            kwargs['nargs'] = self.nargs
+
+        return kwargs
 
 
 class Arg(KwArgBase):
@@ -288,8 +296,12 @@ class Kwarg(KwArgBase):
 
     def add_argument_kwargs(self):
         kwargs = super().add_argument_kwargs()
-        kwargs['action'] = self.action
-        kwargs['default'] = self.default
+
+        if self.action is not None:
+            kwargs['action'] = self.action
+        if self.default is not None:
+            kwargs['default'] = self.default
+
         return kwargs
 
 
@@ -674,8 +686,15 @@ class KwargDict(OrderedDict):
             return short_name
 
         for name, kwarg in self.items():
-            parser.add_argument('-' + get_short_name(name), '--' + name,
-                                **kwarg.add_argument_kwargs())
+            short_name = get_short_name(name)
+            kwarg_kwargs = kwarg.add_argument_kwargs()
+            try:
+                parser.add_argument('-' + short_name, '--' + name,
+                                    **kwarg_kwargs)
+            except:
+                logger.error("Unable to add kwarg '{}' to parser with ".format(name) + 
+                             "short name '{}' and add_argument kwargs {}".format(short_name,kwarg_kwargs))
+                raise
 
     def set_kwargs(self, cli_args):
         """
