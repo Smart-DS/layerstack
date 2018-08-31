@@ -160,7 +160,17 @@ class LayerBase(object):
         if not os.path.isdir(cli_args.run_dir):
             raise LayerStackError("The run directory '{}' does not exist."
                                   .format(os.path.abspath(cli_args.run_dir)))
-        cls._main_apply(cli_args, arg_list, kwarg_dict)
+        old_cur_dir = os.getcwd()
+        os.chdir(cli_args.run_dir)
+
+        try:
+            cls._main_apply(cli_args, arg_list, kwarg_dict)
+        # switch back to initial directory
+            os.chdir(old_cur_dir)
+        except:
+            os.chdir(old_cur_dir)
+            raise
+
         sys.exit()
 
     @classmethod
@@ -197,7 +207,8 @@ class LayerBase(object):
         assert arg_list.mode == ArgMode.USE
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
-        return cls.apply(Stack(), *arg_list, **kwarg_dict)
+        # TODO: Fix KwargDict so **kwarg_dict works natively
+        return cls.apply(Stack(), *arg_list, **{k: v for k, v in kwarg_dict.items()})
 
     @classmethod
     def _add_positional_arguments(cls, parser): 
@@ -343,8 +354,11 @@ model".format(cls.name)
             updated model
         """
         model = cls._load_model(cli_args.model)
-        from .stack import Stack
-        return cls.apply(Stack(), model, *arg_list, **kwarg_dict)
+        assert arg_list.mode == ArgMode.USE
+        assert kwarg_dict.mode == ArgMode.USE
+        from layerstack.stack import Stack
+        # TODO: Fix KwargDict so **kwarg_dict works natively
+        return cls.apply(Stack(), model, *arg_list, **{k: v for k, v in kwarg_dict.items()})
 
     @classmethod
     def _load_model(cls, model_path):
