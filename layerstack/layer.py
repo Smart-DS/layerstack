@@ -485,11 +485,13 @@ already exists."
             kwargs to pass to layer template
         """
         def class_name(name):
-            result = name.title()
-            replacements = [(" ", ""),
-                            ("-", "")]
-            for old, new in replacements:
-                result = result.replace(old, new)
+            words = [y for x in name.split() for y in x.split('-')]
+            result = ''
+            for word in words:
+                if word.isupper():
+                    result += word
+                else:
+                    result += word.title()
             return result
 
         kwargs = {}
