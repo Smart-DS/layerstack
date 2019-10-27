@@ -340,7 +340,7 @@ runnable.".format(layer.name))
         json_data = self._json_data()
         json_data['checksum'] = my_checksum
         with open(filename, 'w') as f:
-            json.dump(json_data, f)
+            json.dump(json_data, f, indent=4, separators=(',', ': '))
 
     def _json_data(self):
         """
