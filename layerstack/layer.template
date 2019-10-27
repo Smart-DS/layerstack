@@ -11,13 +11,16 @@ logger = logging.getLogger('layerstack.layers.{{ class_name }}')
 
 
 class {{ class_name }}({{ layer_base_class }}):
+    '''{{ layer_base_class_doc }}'''
+
     name = "{{ name }}"
     uuid = UUID("{{ uuid }}")
     version = '0.1.0'
     desc = {% if desc %}"{{ desc }}"{% else %}None{% endif %}
 
     @classmethod
-    def args(cls{% if layer_base_class != 'LayerBase' %}, model=None{% endif %}):
+    def args(cls{% if is_model_layer != 'LayerBase' %}, model=None{% endif %}):
+        '''{{ layer_base_class_args_doc }}'''
         arg_list = super().args()
         arg_list.append(Arg('arg_name', description='', parser=None,
                             choices=None, nargs=None))
@@ -25,6 +28,7 @@ class {{ class_name }}({{ layer_base_class }}):
 
     @classmethod
     def kwargs(cls{% if is_model_layer %}, model=None{% endif %}):
+        '''{{ layer_base_class_kwargs_doc }}'''
         kwarg_dict = super().kwargs()
         kwarg_dict['kwarg_name'] = Kwarg(default=None, description='',
                                          parser=None, choices=None,
@@ -33,6 +37,7 @@ class {{ class_name }}({{ layer_base_class }}):
 
     @classmethod
     def apply(cls, stack, {% if layer_base_class != 'LayerBase' %}model, {% endif %}*args, **kwargs):
+        '''{{ layer_base_class_apply_doc }}'''
         return {% if is_model_layer %}model{% else %}True{% endif %}
 
 

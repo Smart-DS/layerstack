@@ -590,7 +590,7 @@ set."
             if save_path is not None:
                 layer = self.layers[-1].layer
                 if issubclass(layer, ModelLayerBase):
-                    layer._save_model(self.model,save_path)
+                    layer._save_model(self.model, save_path)
                 else:
                     raise LayerStackError('Layer must be a ModelLayer but is a {:}'
                                         .format(type(layer)))

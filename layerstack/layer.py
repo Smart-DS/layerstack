@@ -65,11 +65,6 @@ class LayerBase(object):
         Each layer must define its positional arguments by populating and 
         returning an ArgList object.
 
-        Parameters
-        ----------
-        **kwargs
-            application-internal kwargs
-
         Returns
         -------
         ArgList
@@ -84,11 +79,6 @@ class LayerBase(object):
         """
         Each layer must define its keyword arguments by populating and returning
         a KwargDict object.
-
-        Parameters
-        ----------
-        **kwargs
-            application-internal kwargs
 
         Returns
         -------
@@ -183,8 +173,7 @@ class LayerBase(object):
         str
             Layer description or 'Apply Layer {}'.format(cls.name) by default
         """
-        return cls.desc if cls.desc is not None else "Apply Layer \
-'{}'".format(cls.name)
+        return cls.desc if cls.desc is not None else "Apply Layer '{}'".format(cls.name)
 
     @classmethod
     def _main_apply(cls, cli_args, arg_list, kwarg_dict):
@@ -236,8 +225,6 @@ class ModelLayerBase(LayerBase):
         ----------
         model : None or a model
             model to be operated on
-        **kwargs
-            Internal kwargs
 
         Returns
         -------
@@ -255,8 +242,6 @@ class ModelLayerBase(LayerBase):
         ----------
         model
             model to be operated on
-        **kwargs
-            Internal kwargs
 
         Returns
         -------
@@ -287,18 +272,22 @@ class ModelLayerBase(LayerBase):
     @classmethod
     def apply(cls, stack, model, *args, **kwargs):
         """
-        Run layer
+        Run this layer in the context of the stack, with positional and keyword
+        arguments. In general in user-defined layers (classes derived from 
+        LayerBase), \*args and \*\*kwargs should be replaced by the actual 
+        positional argument names (defined in the args method) and keyword 
+        argument name, default value pairs (defined in the kwargs method).
 
         Parameters
         ----------
         stack : 'Stack'
             Stack class instance in which the layer is being run
         model
-            model to be operated on
+            model this layer will operate on
         *args
-            The layer's args
+            The layer's positional arguments
         **kwargs
-            The layer's kwargs
+            The layer's keyword arguments
 
         Returns
         -------
@@ -513,6 +502,22 @@ already exists."
 
         if desc is not None:
             kwargs['desc'] = desc
+
+        def class_doc_str(aclass, doc_str=''):
+            if issubclass(aclass, LayerBase):
+                result = '\n    {}\n    {}'.format(aclass.__name__, '=' * len(aclass.__name__))
+                result += aclass.__doc__
+
+                for base_class in aclass.__bases__:
+                    result = class_doc_str(base_class, doc_str=(result + doc_str))
+
+                return result
+            return doc_str
+
+        kwargs['layer_base_class_doc'] = class_doc_str(layer_base_class)
+        kwargs['layer_base_class_args_doc'] = layer_base_class.args.__doc__
+        kwargs['layer_base_class_kwargs_doc'] = layer_base_class.kwargs.__doc__
+        kwargs['layer_base_class_apply_doc'] = layer_base_class.apply.__doc__
 
         main_opts = ""
         lead = None
