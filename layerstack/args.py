@@ -352,6 +352,9 @@ class ArgList(list):
 
     @mode.setter
     def mode(self, value):
+        if isinstance(value, str):
+            self._mode = ArgMode[value]
+            return
         self._mode = ArgMode(value)
 
     def __getitem__(self, i):
@@ -539,6 +542,9 @@ class KwargDict(OrderedDict):
 
     @mode.setter
     def mode(self, value):
+        if isinstance(value, str):
+            self._mode = ArgMode[value]
+            return
         self._mode = ArgMode(value)
 
     def __getitem__(self, key):
