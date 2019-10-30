@@ -56,10 +56,10 @@ class LayerStackRuntimeError(LayerStackError):
     pass
 
 
-FORMAT = '%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'
+DEFAULT_LOG_FORMAT = '%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'
 
 
-def start_console_log(log_level=logging.WARN,log_format=FORMAT):
+def start_console_log(log_level=logging.WARN,log_format=DEFAULT_LOG_FORMAT):
     """
     Starts logging to the console.
 
@@ -85,7 +85,7 @@ def start_console_log(log_level=logging.WARN,log_format=FORMAT):
     return console_handler
 
 
-def start_file_log(filename, log_level=logging.WARN,log_format=FORMAT):
+def start_file_log(filename, log_level=logging.WARN,log_format=DEFAULT_LOG_FORMAT):
     """
     Starts logging to a file.
 

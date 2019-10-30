@@ -31,7 +31,8 @@ from uuid import uuid4
 
 from jinja2 import Environment, FileSystemLoader
 from layerstack.args import ArgList, KwargDict, ArgMode
-from layerstack import checksum, LayerStackError, start_console_log
+from layerstack import (DEFAULT_LOG_FORMAT, LayerStackError, checksum, 
+    start_console_log)
 
 
 logger = logging.getLogger(__name__)
@@ -113,8 +114,7 @@ class LayerBase(object):
     # TODO: Split main into parser and execution. Should be able to re-use
     # parser-part for workflows.
     @classmethod
-    def main(cls,
-             log_format='%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'):
+    def main(cls, log_format=DEFAULT_LOG_FORMAT):
         """
         Single-layer command-line interface entry point.
 

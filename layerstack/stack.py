@@ -30,7 +30,8 @@ from uuid import UUID, uuid4
 
 logger = logging.getLogger(__name__)
 
-from layerstack import checksum, LayerStackError, start_file_log, TempJsonFilepath
+from layerstack import (LayerStackError, TempJsonFilepath, checksum, 
+    start_console_log, start_file_log)
 from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
@@ -171,14 +172,19 @@ class Stack(MutableSequence):
 
     def __str__(self):
         """
-        Return readable list for layers in stack
+        Return readable description of this stack
 
         Returns
         -------
-        'str'
-            Readable string of layers in stack
+        str
         """
-        return str(self.__layers)
+        result = '{}, v{}\n'.format(self.name, self.version)
+        result += 'runnable\n' if self.runnable else 'NOT runnable\n'
+        result += "run_dir: '{}'\n".format(self.run_dir)
+        result += "model: '{}'\n".format(self.model)
+        result += 'layers:\n'
+        result += str(self.__layers)
+        return result
 
     def __iter__(self):
         """
@@ -319,6 +325,8 @@ runnable.".format(layer.name))
 
         with open(filename, 'w') as f:
             json.dump(json_data, f, indent=4, separators=(',', ': '))
+
+        return
 
     def archive(self, filename=None):
         """
@@ -550,8 +558,7 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
             Archive stack before running
         """
         if not self.runnable:
-            msg = "Stack is not runnable. Be sure run_dir and arguments are \
-set."
+            msg = "Stack is not runnable. Be sure run_dir and arguments are set."
             logger.error(msg)
             raise LayerStackError(msg)
 
@@ -599,17 +606,100 @@ set."
         except:
             os.chdir(old_cur_dir)
             raise        
-        
 
 
-if __name__ == '__main__':
+def repoint_stack(p, run_dir=None, model=None, outfile=None):
+    """
+    Load Stack from p, update run_dir and/or model, and save to outfile or to the
+    same folder but with the file name prepended with an underscore.
+
+    Parameters
+    ----------
+    p : str
+        path to Stack .json file
+    run_dir : str or None
+        run directory to use
+    model : str or None
+        path to starting model
+    outfile : str or None
+        where to save modified stack. If not provided, will save the result to 
+        the same directory but with the filename prepended with an underscore
+    """
+    stack = Stack.load(p)
+    
+    if run_dir is not None:
+        stack.run_dir = run_dir
+    if model is not None:
+        stack.model = model
+
+    filepath = outfile
+    if filepath is None:
+        orig_p = Path(p)
+        filepath = orig_p.parent / ('_' + orig_p.name)
+
+    stack.save(filepath)
+    
+    return    
+
+
+def main():
     parser = argparse.ArgumentParser("Load and optionally run a stack.")
     parser.add_argument('stack_file', help="Stack json file to load.")
-    mode_parsers = parser.add_subparsers(title='mode')
-    mode_parsers.add_parser('list')
-    mode_parsers.add_parser('run')
-    mode_parsers.add_parser('save')
+    parser.add_argument('-d','--debug', action='store_true', default=False)
+    parser.add_argument('-w','--warning-only', action='store_true', default=False)
+    
+    mode_parsers = parser.add_subparsers(title='mode', dest='mode', help='sub-command')
+    parser_list = mode_parsers.add_parser('list')
+    parser_repoint = mode_parsers.add_parser('repoint')
+    parser_run = mode_parsers.add_parser('run')
+
+    # repoint arguments
+    parser_repoint.add_argument('-o', '--outfile', help="""Where to save the 
+        modified stack. By default, will be saved in the same location with '_' 
+        added as a prefix to the filename.""")
+    parser_repoint.add_argument('-rd', '--run-dir', help="""Where this stack 
+        should be run.""")
+    parser_repoint.add_argument('-mp', '--model-path', help="""Model this stack 
+        should be run on.""")    
+
+    # run arguments
+    parser_run.add_argument('-sp', '--save-path', help="""Where the results of 
+        running this stack should be saved. This is an output path for the 
+        stack's final model.""")
+    parser_run.add_argument('-a', '--archive', help="""Default is for this 
+        flag to be set to true, in which case the stack is archived to the run 
+        directory.""", dest='archive', default=True, action='store_true')
+    parser_run.add_argument('-na', '--no-archive', help="""Set this flag to 
+        turn off stack archiving.""", dest='archive', action='store_false')
 
     args = parser.parse_args()
 
-    stack = Stack.load(args.stack_file)
+    # determine log level
+    log_level = logging.INFO
+    if args.warning_only:
+        log_level = logging.WARNING
+    if args.debug:
+        log_level = logging.DEBUG
+
+    # start logging
+    start_console_log(log_level=log_level)
+
+    if args.mode == 'list':
+        stack = Stack.load(args.stack_file)
+        print(stack)
+    if args.mode == 'repoint':
+        repoint_stack(args.stack_file, 
+                      run_dir=args.run_dir, 
+                      model=args.model_path, 
+                      outfile=args.outfile)
+    elif args.mode == 'run':
+        stack = Stack.load(args.stack_file)
+        stack.run(save_path=args.save_path, log_level=log_level, archive=args.archive)
+    else:
+        assert False, 'Unknown mode {}'.format(args.mode)
+    
+    return
+
+
+if __name__ == '__main__':
+    main()
