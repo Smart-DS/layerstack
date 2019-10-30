@@ -564,6 +564,12 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
             logger.error(msg)
             raise LayerStackError(msg)
 
+        # get absolute paths
+        if isinstance(self.model, (str, Path)):
+            model_path = Path(self.model).absolute()
+        if save_path is not None:
+            save_path = Path(save_path).absolute()
+
         if not os.path.exists(self.run_dir):
             os.mkdir(self.run_dir)
 
@@ -579,10 +585,10 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
 
         # run the stack
         try:
-            if isinstance(self.model, str):
+            if model_path is not None:
                 layer = self.layers[0]._layer
                 if issubclass(layer, ModelLayerBase):
-                    self.model = layer._load_model(self.model)
+                    self.model = layer._load_model(model_path)
                     layer._check_model_type(self.model)
                 else:
                     raise LayerStackError('Layer must be a ModelLayer but is a {:}'
