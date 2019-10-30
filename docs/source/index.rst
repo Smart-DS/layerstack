@@ -1,12 +1,14 @@
 layerstack documentation
 ========================
 
-|Documentation|
+|PyPI| |Documentation|
 
 Layerstack is a python package for assembling, sharing, and running
 workflows, especially those associated with modifying, running, and
 analyzing simulation models.
 
+.. |PyPI| image:: https://img.shields.io/pypi/v/layerstack.svg
+   :target: https://pypi.python.org/pypi/layerstack/
 .. |Documentation| image:: https://img.shields.io/badge/docs-ready-blue.svg
    :target: http://smart-ds.github.io/layerstack
 
