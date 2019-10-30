@@ -4,24 +4,24 @@ tests package
 Submodules
 ----------
 
-tests\.test\_layer\_creation module
------------------------------------
+tests.test\_layer\_creation module
+----------------------------------
 
 .. automodule:: tests.test_layer_creation
     :members:
     :undoc-members:
     :show-inheritance:
 
-tests\.test\_layers\_args module
---------------------------------
+tests.test\_layers\_args module
+-------------------------------
 
 .. automodule:: tests.test_layers_args
     :members:
     :undoc-members:
     :show-inheritance:
 
-tests\.test\_session module
----------------------------
+tests.test\_session module
+--------------------------
 
 .. automodule:: tests.test_session
     :members:
