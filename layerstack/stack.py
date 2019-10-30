@@ -178,12 +178,14 @@ class Stack(MutableSequence):
         -------
         str
         """
-        result = '{}, v{}\n'.format(self.name, self.version)
+        result = '{}, v{}\n'.format(self.name, 
+                                    self.version[1:] if self.version.startswith(('v','V')) else self.version)
         result += 'runnable\n' if self.runnable else 'NOT runnable\n'
         result += "run_dir: '{}'\n".format(self.run_dir)
         result += "model: '{}'\n".format(self.model)
+        json_data = self._json_data()
         result += 'layers:\n'
-        result += str(self.__layers)
+        result += json.dumps(json_data['layers'], indent=4, separators=(',', ': '))
         return result
 
     def __iter__(self):
@@ -687,7 +689,7 @@ def main():
     if args.mode == 'list':
         stack = Stack.load(args.stack_file)
         print(stack)
-    if args.mode == 'repoint':
+    elif args.mode == 'repoint':
         repoint_stack(args.stack_file, 
                       run_dir=args.run_dir, 
                       model=args.model_path, 
