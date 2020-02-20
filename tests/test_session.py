@@ -42,12 +42,12 @@ def manage_outdir(request):
     """
     global STARTUP
     if STARTUP:
-        if os.path.exists(outdir):
+        if outdir.exists():
             # create clean space for running tests
             shutil.rmtree(outdir)
         STARTUP = False
-        os.mkdir(outdir)
+        outdir.mkdir()
     def finalize_outdir():
-        if os.path.exists(outdir) and clean_up:
+        if outdir.exists() and clean_up:
             shutil.rmtree(outdir)
     request.addfinalizer(finalize_outdir)

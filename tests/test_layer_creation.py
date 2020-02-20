@@ -29,13 +29,13 @@ from layerstack.layer import Layer, LayerBase, ModelLayerBase
 from tests import outdir
 from tests.test_session import manage_outdir
 
-layer_library_dir = os.path.join(outdir,'test_layer_creation')
+layer_library_dir = outdir / 'test_layer_creation'
 
 @pytest.fixture(scope='module',autouse=True)
 def create_layer_library_dir(manage_outdir):
-    assert os.path.exists(outdir)
-    assert not os.path.exists(layer_library_dir)
-    os.mkdir(layer_library_dir)
+    assert outdir.exists(), outdir
+    assert not layer_library_dir.exists()
+    layer_library_dir.mkdir()
 
 def test_layer_base():
     layer_dir = Layer.create('Test Layer Base',layer_library_dir)

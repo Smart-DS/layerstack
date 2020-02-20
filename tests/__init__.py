@@ -19,7 +19,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 [/LICENSE]
 '''
 # -*- coding: utf-8 -*-
-import os
+from pathlib import Path
 
 clean_up = True
-outdir = os.path.join(os.path.dirname(__file__),'outputs')
+
+here = Path(__file__).parent
+outdir = here / 'outputs'
