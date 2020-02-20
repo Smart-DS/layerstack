@@ -21,7 +21,5 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 # -*- coding: utf-8 -*-
 from pathlib import Path
 
-clean_up = True
-
 here = Path(__file__).parent
 outdir = here / 'outputs'
