@@ -27,12 +27,12 @@ import shutil
 
 import pytest
 
-from tests import clean_up, outdir
+from tests import outdir
 
 STARTUP = True
 
 @pytest.fixture(scope="session",autouse=True)
-def manage_outdir(request):
+def manage_outdir(request, clean_up):
     """
     At the beginning of the session, creates the test outdir. If tests.clean_up,
     deletes this folder after the tests have finished running.
@@ -42,12 +42,12 @@ def manage_outdir(request):
     """
     global STARTUP
     if STARTUP:
-        if os.path.exists(outdir):
+        if outdir.exists():
             # create clean space for running tests
             shutil.rmtree(outdir)
         STARTUP = False
-        os.mkdir(outdir)
+        outdir.mkdir()
     def finalize_outdir():
-        if os.path.exists(outdir) and clean_up:
+        if outdir.exists() and clean_up:
             shutil.rmtree(outdir)
     request.addfinalizer(finalize_outdir)
