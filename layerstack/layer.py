@@ -294,6 +294,7 @@ class ModelLayerBase(LayerBase):
         model
             Updated model
         """
+
         if isinstance(model, str):
             model = cls._load_model(model)
         cls._check_model_type(model)
@@ -379,6 +380,7 @@ model".format(cls.name)
         model_path : 'str'
             Path to save model to
         """
+
         pass
 
 
@@ -425,6 +427,7 @@ class Layer(object):
 
     @classmethod
     def create(cls, name, parent_dir, desc=None, layer_base_class=LayerBase):
+
         """
         Create new layer
 
@@ -467,6 +470,7 @@ already exists."
 
     @classmethod
     def _template_kwargs(cls, name, layer_base_class, desc):
+
         """
         Kwargs for layer template
 
@@ -549,6 +553,7 @@ already exists."
         'str'
             Path to layer.py file
         """
+
         return os.path.join(str(layer_dir), 'layer.py')
 
     @staticmethod
@@ -566,6 +571,7 @@ already exists."
         'Layer'
             Layer class object
         """
+
         module = imp.load_source('loaded_layer_{}'.format(uuid4()),
                                  Layer.layer_filename(layer_dir))
         candidate = None
@@ -703,6 +709,7 @@ dir:\n{}".format(layer_dir, dir(module)))
         -------
             updated model
         """
+
         layer = Layer(layer_dir)
         layer.args.mode = ArgMode.USE
         for i, arg in enumerate(args):
@@ -727,6 +734,7 @@ dir:\n{}".format(layer_dir, dir(module)))
         return self._args.set
 
     def run_layer(self, stack, model=None):
+
         """
         Run layer
 
@@ -745,6 +753,8 @@ dir:\n{}".format(layer_dir, dir(module)))
         self._args.mode = ArgMode.USE
         self._kwargs.mode = ArgMode.USE
         kwargs = dict(self._kwargs.items())
+
         if model is None:
             return self._layer.apply(stack, *self._args, **kwargs)
+
         return self._layer.apply(stack, model, *self._args, **kwargs)
