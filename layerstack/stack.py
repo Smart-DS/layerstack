@@ -417,7 +417,6 @@ serialization has {}".format(len(self), len(stack_layers))
         json_data['layers'] = stack_layers
         return json_data
 
-
 # *** TLS thoughts, 5.14.20 ***
 # if filename is needed then I think issue 14 pertaining to the layer_library_dir may be a separate task from the directory search elaine mentioned, unless
 # filename is made optional or is removed and the load function is changed such that when opening the layer file it will always search through a passed
@@ -428,8 +427,6 @@ serialization has {}".format(len(self), len(stack_layers))
 # the layer_library_dir arg should always be passed and handled such that the layer directory is repointed when load is called and layerstack is run in CLI
 # use nargs + functionality within the load function; add some additional code to main()
 
-# based on changes in main with nargs +, I think I may need to just check the list and execute the existing code as is if list len ==1 and resent layer_library_dir if 
-# list len ==2
 
     @classmethod
     def load(cls, filename, layer_library_dir=None):
@@ -461,12 +458,7 @@ serialization has {}".format(len(self), len(stack_layers))
         for json_layer in json_data['layers']:
 
             # load each layer, using layer_library_dir if not None
-
             layer_dir = cls.convert_path(json_layer['layer_dir'])
-   #         layer_dir = layer_library_dir
-            # *** ^ above, set layer_dir to the passed in path; still need to edit stack though in same way as repoint
-            # not sure if it can be done in same way since repoint relies on loading, hence you may just have the option to run with a different layer_dir and 
-            # maybe you can save like: json_layer['layer_dir'] = layer_library_dir
 
             if layer_library_dir is not None:
                 layer_dir = os.path.join(layer_library_dir,
@@ -570,7 +562,7 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
         result._uuid = UUID(json_data['uuid'])
         return result
 
-    def run(self, save_path=None, log_level=logging.INFO, archive=True):
+    def run(self, save_path=None, new_layer_library_dir=None, log_level=logging.INFO, archive=True):
         """
         Run stack
 
@@ -583,20 +575,24 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
         archive : 'bool'
             Archive stack before running
         """
+
+        # change the layer_library_dir 
+        lib_check_layer = self.layers[-1].layer
+        if new_layer_library_dir is not None:
+            lib_check_layer.layer_dir = new_layer_library_dir
+
         if not self.runnable:
             msg = "Stack is not runnable. Be sure run_dir and arguments are set."
             logger.error(msg)
             raise LayerStackError(msg)
 
         # get absolute paths
+        model_path = None
+
         if isinstance(self.model, (str, Path)):
             temp_path = Path(self.model).absolute()
             if temp_path.exists():
                 model_path = Path(self.model).absolute()
-            else:
-                model_path = None
-        else:
-            model_path = None
 
         if save_path is not None:
             save_path = Path(save_path).absolute()
@@ -649,7 +645,7 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
             raise        
 
 
-def repoint_stack(p, lyr_lib_dir=None, run_dir=None, model=None, outfile=None):
+def repoint_stack(p, layer_library_dir=None, run_dir=None, model=None, outfile=None):
     """
     Load Stack from p, update run_dir and/or model, and save to outfile or to the
     same folder but with the file name prepended with an underscore.
@@ -669,7 +665,7 @@ def repoint_stack(p, lyr_lib_dir=None, run_dir=None, model=None, outfile=None):
         the same directory but with the filename prepended with an underscore
     """
 
-    stack = Stack.load(p,lyr_lib_dir)
+    stack = Stack.load(p, layer_library_dir)
     
     if run_dir is not None:
         stack.run_dir = run_dir
@@ -688,9 +684,8 @@ def repoint_stack(p, lyr_lib_dir=None, run_dir=None, model=None, outfile=None):
 
 def main():
     parser = argparse.ArgumentParser("Load and optionally run a stack.")
-    # TLS 5.15.20 - added extra help statement and nargs +
-    # would this take the place of the 'backing out' done in a NB? I think so, but the backing out could just be for another reason
-    #parser.add_argument('stack_file', nargs='+', help="Stack json file to load and optionally a new layer library directory to reassign.")
+    # TLS 5.29.20 - per 5.21 meeting, will implement a flag to either use the path specified in the device set JSON or to use
+    # a new library_dir path that is passed in at runtime in the CLI  
     parser.add_argument('stack_file', help="Stack json file to load and optionally a new layer library directory to reassign.")
     parser.add_argument('-d','--debug', action='store_true', default=False)
     parser.add_argument('-w','--warning-only', action='store_true', default=False)
@@ -708,9 +703,15 @@ def main():
         should be run.""")
     parser_repoint.add_argument('-mp', '--model-path', help="""Model this stack 
         should be run on.""")
-    parser_repoint.add_argument('-lp', '--lyrlib-path', help="""new layer library directory to run the stack with.""")    
+    # TLS 5.29.20; BELOW: can repoint the layer_libbrary_dir like this which will create a new stack with an underscore appended to the front of the file name
+    # per 5.21.20 checkin, a new run argument was added that default to change the layer_library_dir, otherwise will use existing path
+    # --> this seems redundant as the user could just repoint...it seems like th only benefit is in not having a new stack created w/ the underscore 
+    parser_repoint.add_argument('-ld', '--layer-library-dir', help="""new layer library directory to run the stack with.""")    
 
     # run arguments
+    parser_run.add_argument('-dd', '--default-dir', help="""Default is for this
+        flag to be set to false, in which case the stack uses the existing
+        layer_library_dir""")
     parser_run.add_argument('-sp', '--save-path', help="""Where the results of 
         running this stack should be saved. This is an output path for the 
         stack's final model.""")
@@ -737,15 +738,14 @@ def main():
         print(stack)
     elif args.mode == 'repoint':
         repoint_stack(args.stack_file, 
-                      lyr_lib_dir=args.lyrlib_path,
+                      layer_library_dir=args.layer_library_dir,
                       run_dir=args.run_dir, 
                       model=args.model_path, 
                       outfile=args.outfile)
-    # add the layer_dir narg stuff below; not sure if this should actually have the arg as a new library dir might not be passed
-    # I think just stack_file is needed but the user can "overload" it
-    # stack file would be a list of either 1 or 2 elements I think
     elif args.mode == 'run':
-        stack = Stack.load(args.stack_file)
+        # added line 747 and 748 for changing default dir
+        new_layer_library_dir=args.default_dir
+        stack = Stack.load(args.stack_file, new_layer_library_dir)
         stack.run(save_path=args.save_path, log_level=log_level, archive=args.archive)
     else:
         assert False, 'Unknown mode {}'.format(args.mode)

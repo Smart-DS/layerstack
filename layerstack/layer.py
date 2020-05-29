@@ -749,6 +749,7 @@ dir:\n{}".format(layer_dir, dir(module)))
         -------
             updated model
         """
+
         assert self.runnable
         self._args.mode = ArgMode.USE
         self._kwargs.mode = ArgMode.USE
