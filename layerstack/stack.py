@@ -709,7 +709,7 @@ def main():
     parser_repoint.add_argument('-ld', '--layer-library-dir', help="""new layer library directory to run the stack with.""")    
 
     # run arguments
-    parser_run.add_argument('-dd', '--default-dir', help="""Default is for this
+    parser_run.add_argument('-dd', '--layer-library-dir', help="""Default is for this
         flag to be set to false, in which case the stack uses the existing
         layer_library_dir""")
     parser_run.add_argument('-sp', '--save-path', help="""Where the results of 
@@ -744,7 +744,7 @@ def main():
                       outfile=args.outfile)
     elif args.mode == 'run':
         # added line 747 and 748 for changing default dir
-        new_layer_library_dir=args.default_dir
+        new_layer_library_dir=args.layer_library_dir
         stack = Stack.load(args.stack_file, new_layer_library_dir)
         stack.run(save_path=args.save_path, log_level=log_level, archive=args.archive)
     else:
