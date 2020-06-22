@@ -38,21 +38,30 @@ from layerstack.args import ArgMode, Arg, Kwarg
 
 class Stack(MutableSequence):
     """
-    Base class to handle and run layer sequences
-    - Save to json
-    - Load from json
-    - Run
+    Class to create, edit, save, load, and run workflows stored as sequences of 
+    :class:`Layers <layerstack.layer.Layer>`. 
+
+    Stacks are serialized to .json files. Loading and running them is contingent
+    upon being able to locate the :class:`Layers <layerstack.layer.Layer>` in 
+    the current environment.
+
+    Stacks are run in a specified directory, but at this time provide little 
+    scaffolding as far as what contents are ultimately saved to that directory.
 
     Attributes
     ----------
-    name : 'str'
+    name : str
         Stack name
-    version : 'str'
+    version : str
         Stack version
-    run_dir : 'str'
+    run_dir : str
         Run directory for stack
-    model
-        Model to apply layers to
+    model : None, str, *
+        Optional model layers are being applied to. Upon initialization, 
+        Stack.model may be None or a str path pointing to where a model exists 
+        that may be loaded. Stack relies on Layers that implement the 
+        :class:`ModelLayerBase <layerstack.layer.ModelLayerBase>` interface for 
+        model loading and saving.
     __uuid : 'uuid4'
         Unique identifier for stack
     __layers : 'list'
@@ -60,13 +69,13 @@ class Stack(MutableSequence):
 
     Parameters
     ----------
-    layers : 'list'
+    layers : list
         List of layers in stack
-    name : 'str'
+    name : str
         name of stack
-    version : 'str'
+    version : str
         stack version number
-    run_dir : 'str'
+    run_dir : str
         directory to run stack in
     model
         Model to apply layers to
