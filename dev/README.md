@@ -10,7 +10,11 @@ Also, you will need to install
 
 - [pandoc](https://pandoc.org/installing.html)
 
-[release process overview](#release-process-overview) | [how to run tests](#how-to-run-tests) | [publish documentation](#publish-documentation) | [release on pypi](#release-on-pypi)
+[repository conventions](#repository-conventions) | [release process overview](#release-process-overview) | [how to run tests](#how-to-run-tests) | [publish documentation](#publish-documentation) | [release on pypi](#release-on-pypi)
+
+## repository conventions
+
+- Documentation is made using Sphinx, and follows NumPy docstring style conventions, please see [Example NumPy Style Python Docstrings on Sphinx site](https://www.sphinx-doc.org/en/master/usage/extensions/example_numpy.html). The NumPy docstrings are interpreted by [Napolean](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/), which relies on sphinx.ext.autodoc. Some helpful tips for how to link to things in Sphinx are available [here](https://kevin.burke.dev/kevin/sphinx-interlinks/).
 
 ## release process overview
 
