@@ -1,4 +1,9 @@
 '''
+Contents
+--------
+- :class:`layerstack.stack.Stack`
+- :func:`layerstack.stack.main`
+
 [LICENSE]
 Copyright (c) 2019 Alliance for Sustainable Energy, LLC, All Rights Reserved
 

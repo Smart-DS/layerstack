@@ -177,3 +177,13 @@ autodoc_member_order = 'bysource'
 # released.
 #autodoc_special_members = ['__getitem__', '__setitem__','__iter__']
 numpy_show_class_member = True
+
+
+# -- Setup code --------------------------------------------------------------
+from sphinx.ext.autodoc import between
+
+def setup(app):
+    # Register a sphinx.ext.autodoc.between listener to ignore license header 
+    # text.
+    app.connect('autodoc-process-docstring', between('^.*LICENSE.*$', what=['module'], exclude=True))
+    return app

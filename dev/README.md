@@ -14,7 +14,7 @@ Also, you will need to install
 
 ## repository conventions
 
-- Documentation is made using Sphinx, and follows NumPy docstring style conventions, please see [Example NumPy Style Python Docstrings on Sphinx site](https://www.sphinx-doc.org/en/master/usage/extensions/example_numpy.html). The NumPy docstrings are interpreted by [Napolean](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/), which relies on sphinx.ext.autodoc. Some helpful tips for how to link to things in Sphinx are available [here](https://kevin.burke.dev/kevin/sphinx-interlinks/).
+- Documentation is made using Sphinx, and follows NumPy docstring style conventions, please see [Example NumPy Style Python Docstrings on Sphinx site](https://www.sphinx-doc.org/en/master/usage/extensions/example_numpy.html). The NumPy docstrings are interpreted by [Napolean](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/), which relies on sphinx.ext.autodoc. Some helpful tips for how to link to things in Sphinx are available [here](https://kevin.burke.dev/kevin/sphinx-interlinks/). The list of Python object types that can be cross-referenced is available [here](https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html?highlight=info%20field%20lists#info-field-lists).
 
 ## release process overview
 
