@@ -392,7 +392,7 @@ class Layer(object):
     ----------
     layer_dir : 'str'
         Directory containing the layer
-    _layer : LayerBase or ModelLayerBase
+    _layer : 'LayerBase|ModelLayerBase'
         Layer object
     _checksum : 'str'
         Checksum for layer
