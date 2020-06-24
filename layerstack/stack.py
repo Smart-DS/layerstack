@@ -29,7 +29,6 @@ import argparse
 from collections import MutableSequence, OrderedDict
 import json
 import logging
-import os
 from pathlib import Path
 from uuid import UUID, uuid4
 
@@ -40,6 +39,16 @@ from layerstack import (LayerStackError, TempJsonFilepath, checksum,
 from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
+# TODO:
+#  - Convert from using os to using pathlib.Path
+#  - Verify tests pass again
+#  - Implement continuous integration -- testing and docs
+#  - Implement get_layer_dir
+#  - Test implementation of get_layer_dir
+#  - Update Stack.load accordingly
+#  - Update Stack.main accordingly
+#  - Test layer_library_dir functionality as used in main
+#  - Iterate on documentation
 
 class Stack(MutableSequence):
     """
@@ -52,69 +61,66 @@ class Stack(MutableSequence):
 
     Stacks are run in a specified directory, but at this time provide little 
     scaffolding as far as what contents are ultimately saved to that directory.
-
-    Attributes
-    ----------
-    name : str
-        Stack name
-    version : str
-        Stack version
-    run_dir : str
-        Run directory for stack
-    model : None, str, *
-        Optional model layers are being applied to. Upon initialization, 
-        Stack.model may be None or a str path pointing to where a model exists 
-        that may be loaded. Stack relies on Layers that implement the 
-        :class:`ModelLayerBase <layerstack.layer.ModelLayerBase>` interface for 
-        model loading and saving.
-    __uuid : 'uuid4'
-        Unique identifier for stack
-    __layers : 'list'
-        List of layers in stack
-
-    Parameters
-    ----------
-    layers : list
-        List of layers in stack
-    name : str
-        name of stack
-    version : str
-        stack version number
-    run_dir : str
-        directory to run stack in
-    model
-        Model to apply layers to
     """
 
-    # *layers has to go at the end for Python 2
     def __init__(self, layers=[], name=None, version='v0.1.0', run_dir=None,
                  model=None):
+        """
+        Parameters
+        ----------
+        layers : list of :class:`layerstack.layer.Layer`
+            List of layers in stack
+        name : str
+            name of stack
+        version : str
+            stack version number
+        run_dir : None, str, or pathlib.Path
+            directory to run stack in
+        model : None, str, or other
+            Model to apply layers to, if applicable. Can be None, an object, or 
+            a path to a serialized model.
+        """
+
+        #: str: stack name
         self.name = name
+        
+        #: str: stack version
         self.version = version
+        
+        #: None or str: run directory for the stack
         self.run_dir = run_dir
+
+        #: None, str, or other: Model to apply layers to, if applicable. 
+        #: Upon initialization, Stack.model may be None or a str path pointing 
+        #: to where a model exists that may be loaded. Stack relies on Layers 
+        #: that implement the :class:`ModelLayerBase <layerstack.layer.ModelLayerBase>` 
+        #: interface for model loading and saving.
         self.model = model
-        # if loading from disk, this will be overridden
+
+        #: uuid.uuid4: unique identifier for the stack. Initialized in __init__, 
+        #: but if loading from disk, the newly created UUID will be overridden.
         self.__uuid = uuid4()
 
+        #: list of :class:`layerstack.layer.Layer`
         self.__layers = []
         if len(layers):
             for layer in layers:
-                self.__checkValue(layer)
+                self.__checkLayer(layer)
             self.__layers.extend(layers)
 
     @staticmethod
-    def __checkValue(value):
+    def __checkLayer(value):
         """
         Check to ensure value is a Layer class object
 
         Parameters
         ----------
-        value : 'Layer'
+        value : Layer
             New layer to add to stack
         """
         if not isinstance(value, Layer):
-            raise LayerStackError("Stacks only hold Layers. You passed a {}."
-                                  .format(type(value)))
+            raise LayerStackError("Stacks only hold layerstack.layer.Layer "
+                "objects. You passed a {type(value)}.")                
 
     def __getitem__(self, i):
         """
@@ -143,7 +149,7 @@ class Stack(MutableSequence):
         layer : 'Layer'
             Layer to place at ith position in stack
         """
-        self.__checkValue(layer)
+        self.__checkLayer(layer)
         self.__layers.insert(i, layer)
 
     def __delitem__(self, i):
@@ -168,7 +174,7 @@ class Stack(MutableSequence):
         layer : 'Layer'
             Layer to insert into stack
         """
-        self.__checkValue(layer)
+        self.__checkLayer(layer)
         self.__layers.insert(i, layer)
 
     def append(self, layer):
@@ -181,7 +187,7 @@ class Stack(MutableSequence):
             Layer to append to end of stack
         """
         logger.debug("Appending Layer {!r}".format(layer.name))
-        self.__checkValue(layer)
+        self.__checkLayer(layer)
         self.__layers.append(layer)
 
     def __str__(self):
@@ -231,12 +237,12 @@ class Stack(MutableSequence):
 
         Parameters
         ----------
-        path : 'str'
+        path : str
             file path to convert
 
         Returns
         -------
-        'Path'
+        Path
             Path class object to handle file path
         """
         if '\\' in path:
@@ -289,7 +295,7 @@ class Stack(MutableSequence):
 
         Returns
         -------
-        'str'
+        None or pathlib.Path
             Run directory for stack
         """
         return self._run_dir
@@ -301,10 +307,10 @@ class Stack(MutableSequence):
 
         Parameters
         ----------
-        value : 'str'
+        value : None, str, or pathlib.Path
             Stack run directory
         """
-        self._run_dir = value
+        self._run_dir = value if None else Path(value)
 
     @property
     def runnable(self):
@@ -357,7 +363,7 @@ runnable.".format(layer.name))
             file path to save stack to
         """
         if filename is None:
-            filename = os.path.join(self.run_dir, 'stack.archive')
+            filename = self.run_dir / 'stack.archive'
         with TempJsonFilepath() as tmpjson:
             self.save(tmpjson)
             my_checksum = checksum(tmpjson)
@@ -441,23 +447,55 @@ serialization has {}".format(len(self), len(stack_layers))
 # the layer_library_dir arg should always be passed and handled such that the layer directory is repointed when load is called and layerstack is run in CLI
 # use nargs + functionality within the load function; add some additional code to main()
 
+    @classmethod
+    def get_layer_dir(cls, layer_dir, layer_library_dirs=[], original_preferred=True):
+        """
+        Determine the best path to the :class:`layerstack.layer.Layer` indicated 
+        by layer_dir, based on the user-provided options. This method may be 
+        helpful when :class:`Layers <layerstack.layer.Layer>` and 
+        :class:`Stacks <layerstack.stack.Stack>` are used by different people or 
+        on different systems.
+
+        Parameters
+        ----------
+        layer_dir : str or pathlib.Path
+            Location of the :class:`layerstack.layer.Layer` as originally 
+            represented
+        layer_library_dirs : list of str or pathlib.Path
+            Location(s) where the :class:`layerstack.layer.Layer` may now be 
+            found. If multiple locations are provided, it is assumed that they 
+            are listed in descending preference order. 
+        original_preferred : bool
+            If True and the original layer_dir path exists, it will be used 
+            directly. If False, the original layer_dir path will only be used if
+            the :class:`layerstack.layer.Layer` is not found in any of the 
+            locations listed in layer_library_dirs.
+
+        Returns
+        -------
+        pathlib.Path or None
+            If the :class:`layerstack.layer.Layer` is located, its path is 
+            returned and pathlib.Path.exists(). Otherwise, a warning is logged
+            and None is returned.
+        """
+        # TODO: Implement this method
 
     @classmethod
-    def load(cls, filename, layer_library_dir=None):
-    #def load(cls, run_list):
+    def load(cls, filename, layer_library_dir=None, original_layer_dir_preferred=True):
         """
         Load stack from given .json file
 
         Parameters
         ----------
-        filename : 'str'
+        filename : str or pathlib.Path
             File path from which to load stack
-        layer_library_dir : 'str'
-            Root directory containing layers to be loaded into stack
+        layer_library_dir : None, str, pathlib.Path, or list of str or pathlib.Path
+            If one or more paths are provided, these will be used to locate layer 
+            directories listed in the :class:`layerstack.stack.Stack` json file
 
         Returns
         -------
-        result : 'Stack'
+        result : Stack
             Instantiated Stack class instance
         """
 
@@ -470,26 +508,24 @@ serialization has {}".format(len(self), len(stack_layers))
 
         layers = []
         for json_layer in json_data['layers']:
-
             # load each layer, using layer_library_dir if not None
-            layer_dir = cls.convert_path(json_layer['layer_dir'])
+            
+            layer_dir = Path(json_layer['layer_dir'])
 
+            # always uses a not-None layer_library_dir
             if layer_library_dir is not None:
-                layer_dir = os.path.join(layer_library_dir,
-                                         os.path.basename(layer_dir))
-
+                layer_dir = layer_library_dir / layer_dir.name
 
             layer = Layer(layer_dir)
 
-            msg_begin = "Layer {!r} loaded by Stack {!r} ".format(layer.name,
-                                                                  stack_name)
+            msg_begin = f"Layer {layer.name!r} loaded by Stack {stack_name!r} "
 
             # inform the user about version changes
-            if layer.layer.uuid != UUID(json_layer['uuid']):
-                logger.warn(msg_begin +
-                            'has unexpected uuid. Expected {!r}, got {!r}.'
-                            .format(UUID(json_layer['uuid']),
-                                    layer.layer.uuid))
+            # TODO: Continue streamlining log text
+            expected_uuid = UUID(json_layer['uuid'])
+            if layer.layer.uuid != expected_uuid:
+                logger.warning(f"{msg_begin} has unexpected uuid. Expected "
+                    f"{expected_uuid!r}, got {layer.layer.uuid!r}.")
             if layer.name != json_layer['name']:
                 logger.info(msg_begin +
                             'has different serialized name, {!r}'

@@ -42,22 +42,19 @@ class LayerBase(object):
     """
     Abstract base class for user-defined layers. All attributes and methods are
     class level.
-
-    Attributes
-    ----------
-    name : str
-        layer name, expected to be human-readable (spaces are okay and even 
-        preferred)
-    uuid : uuid.uuid4
-        unique identifier for the layer
-    version : str
-        human readable version number for the layer (defaults to '0.1.0')
-    desc : str
-        layer description
     """
+
+    #: str: layer name, expected to be human-readable (spaces are okay and even 
+    #: preferred)
     name = None
+
+    #: uuid.uuid4: unique identifier for the layer
     uuid = None
+
+    #: str: human readable version number for the layer (defaults to '0.1.0')
     version = None
+
+    #: str: layer description
     desc = None
 
     @classmethod
@@ -395,7 +392,7 @@ class Layer(object):
     ----------
     layer_dir : 'str'
         Directory containing the layer
-    _layer : 'LayerBase|ModelLayerBase'
+    _layer : LayerBase or ModelLayerBase
         Layer object
     _checksum : 'str'
         Checksum for layer
