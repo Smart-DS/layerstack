@@ -36,10 +36,17 @@ jobs:
     - name: run pytests
       continue-on-error: true
       run: |
-        pip install pytest pytest-ordering
+        pip install pytest pytest-ordering pytest-cov
         pytest -vvv
-    - name: upload codecov
+    - name: Generate coverage report
       run: |
-        pip install pytest codacy-coverage
-        export CODACY_PROJECT_TOKEN=${{ secrets.codecay_token }}
-        python-codacy-coverage -r coverage.xml
+        pytest --cov=./ -m --cov-report=xml:unit.coverage.xml
+    - name: Upload unit test coverage to Codecov
+      uses: codecov/codecov-action@v1.0.7
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: ./unit.coverage.xml
+        flags: unit
+        env_vars: PYTHON
+        name: codecov-unit
+        fail_ci_if_error: false
