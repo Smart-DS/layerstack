@@ -355,7 +355,7 @@ runnable.".format(layer.name))
         Archives this stack by computing the .json checksum on the
         without-checksum json file, and then saving a json with the checksum
         data added in. Called by the run method with with default filename
-        os.path.join(self.run_dir, 'stack.archive').
+        self.run_dir / 'stack.archive'.
 
         Parameters
         ----------
@@ -647,8 +647,8 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
         if save_path is not None:
             save_path = Path(save_path).absolute()
 
-        if not os.path.exists(self.run_dir):
-            os.mkdir(self.run_dir)
+        if not self.run_dir.exists():
+            self.run_dir.mkdir()
 
         # change directory to run_dir
         old_cur_dir = os.getcwd()
