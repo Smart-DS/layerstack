@@ -34,7 +34,6 @@ jobs:
         python -m pip install -U pip
         pip install . 
     - name: run pytests
-      continue-on-error: true
       run: |
         pip install pytest pytest-ordering pytest-cov
         pytest -vvv
