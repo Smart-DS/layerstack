@@ -40,7 +40,7 @@ jobs:
         pytest -vvv
     - name: Generate coverage report
       run: |
-        pytest --cov=./ -m --cov-report=xml:unit.coverage.xml
+        pytest --cov=./ --cov-report=xml:unit.coverage.xml
     - name: Upload unit test coverage to Codecov
       uses: codecov/codecov-action@v1.0.7
       with:
