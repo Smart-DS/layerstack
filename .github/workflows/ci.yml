@@ -19,8 +19,7 @@ jobs:
           - macOS-latest
           - ubuntu-latest
           - windows-latest
-        python-version: [ '3.x' ]
-
+        python-version: [ '3.6','3.7','3.8' ]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -30,6 +29,17 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-        
-    - name: Display Python version
-      run: python -c "import sys; print(sys.version)"
+    - name: Install dependencies
+      run: |
+        python -m pip install -U pip
+        pip install . 
+    - name: run pytests
+      continue-on-error: true
+      run: |
+        pip install pytest pytest-ordering
+        pytest --cov=layerstack --cov-report=xml --rootdir=./layerstack tests
+    - name: upload codecov
+      run: |
+        pip install pytest codacy-coverage
+        export CODACY_PROJECT_TOKEN=${{ secrets.codecay_token }}
+        python-codacy-coverage -r coverage.xml
