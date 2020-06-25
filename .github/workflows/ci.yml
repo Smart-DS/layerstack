@@ -37,7 +37,7 @@ jobs:
       continue-on-error: true
       run: |
         pip install pytest pytest-ordering
-        pytest --cov=layerstack --cov-report=xml --rootdir=./layerstack tests
+        pytest -vvv
     - name: upload codecov
       run: |
         pip install pytest codacy-coverage
