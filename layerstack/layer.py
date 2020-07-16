@@ -384,24 +384,24 @@ model".format(cls.name)
 
 class Layer(object):
     """
-    Base class to interact with layers:
-    - Create
-    - Load
-    - Run
+    Base class to interact with layers. Basic functions:
+    - Create from template
+    - Load from disk
+    - Run after setting argument values
 
     Attributes
     ----------
-    layer_dir : 'str'
+    layer_dir : str
         Directory containing the layer
-    _layer : 'LayerBase|ModelLayerBase'
-        Layer object
-    _checksum : 'str'
+    _layer : class derived from LayerBase
+        Layer class
+    _checksum : str
         Checksum for layer
-    _name : 'str'
+    _name : str
         Layer name
-    _args : 'ArgList'
+    _args : 'rgList
         Layer's args
-    _kwargs : 'KwargDict'
+    _kwargs : KwargDict
         Layer's kwargs
 
     Parameters
@@ -411,22 +411,27 @@ class Layer(object):
     """
 
     def __init__(self, layer_dir):
+        """
+        Load a layer from disk and make it ready to be used.
+        """
+        # identify and load the layer
         self.layer_dir = layer_dir
-        # load the layer.py module and find the LayerBase class
-        # self._layer = the LayerBase class we found
-        logger.debug("Loading layer from {}".format(layer_dir))
         self._layer = self.load_layer(layer_dir)
+                
+        # pull out key information
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
+
+        # instantiate arguments and prepare them to have their values set
         self._args = self._layer.args()
-        self._args.mode = ArgMode.DESC
+        self.args.mode = ArgMode.USE
         self._kwargs = self._layer.kwargs()
-        self._kwargs.mode = ArgMode.DESC
+        self.kwargs.mode = ArgMode.USE
 
     @classmethod
     def create(cls, name, parent_dir, desc=None, layer_base_class=LayerBase):
         """
-        Create new layer
+        Create new layer from template
 
         Parameters
         ----------
@@ -451,9 +456,8 @@ class Layer(object):
         dir_name = name.lower().replace(" ", "_")
         dir_path = os.path.join(parent_dir, dir_name)
         if os.path.exists(dir_path):
-            raise LayerStackError("The new directory to be created, {}, \
-already exists."
-                                  .format(dir_path))
+            raise LayerStackError("The new directory to be created, "
+                    f"{dir_path}, already exists.")
         os.mkdir(dir_path)
 
         # Create the layer.py file
@@ -558,40 +562,59 @@ already exists."
 
         Parameters
         ----------
-        layer_dir : 'str'
-            Parent directory for layer
+        layer_dir : str
+            Parent directory for layer.py
 
         Returns
         -------
-        'Layer'
-            Layer class object
+        type
+            Layer class that is lowest in the LayerBase inheritance hierarchy 
+            when we load the layer_dir / 'layer.py' module
         """
+        logger.debug("Loading layer from {}".format(layer_dir))
+        
+        # import the layer.py file into unique namespace
         module = imp.load_source('loaded_layer_{}'.format(uuid4()),
                                  Layer.layer_filename(layer_dir))
+
+        # find the LayerBase class lowest in the inheritance hierarchy--that's 
+        # the layer we are loading
         candidate = None
         base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):
             try:
                 temp = getattr(module, item)
                 if issubclass(temp, LayerBase):
+                    # this item is a subclass of LayerBase
                     if item not in [x.__name__ for x in base_classes]:
+                        # this item is not a class that we have already 
+                        # identified as a base class in the LayerBase hierarchy
                         if (candidate is not None) and (candidate != temp):
                             if issubclass(temp, candidate):
+                                # temp is lower in the hierarchy than candidate
+                                # temp is now our best canddiate; and
+                                # candidate becomes a known base class
                                 base_classes.append(candidate)
                                 candidate = temp
                             else:
-                                assert issubclass(candidate, temp), "Layer in \
-{!r} contains LayerBase classes on different branches of the inheritance \
-hierarchy tree.".format(layer_dir)
+                                # candidate is lower in the hierarchy than temp
+                                assert issubclass(candidate, temp), ("Layer in "
+                                    f"{layer_dir!r} contains LayerBase classes "
+                                    "on different branches of the inheritance "
+                                    "hierarchy tree")
+                                # keep candidate as the candidate and add temp
+                                # to our list of base classes
                                 base_classes.append(temp)
                         else:
+                            # this is our first candidate class
                             candidate = temp
             except:
+                # item is not a subclass of LayerBase
                 continue
-        if candidate is not None:
-            return candidate
-        raise LayerStackError("No LayerBase subclass found in {!r}. Module \
-dir:\n{}".format(layer_dir, dir(module)))
+        if candidate is None:
+            raise LayerStackError(f"No LayerBase subclass found in {layer_dir!r}. "
+                "Module dir:\n{dir(module)}")
+        return candidate
 
     @property
     def name(self):
@@ -600,7 +623,7 @@ dir:\n{}".format(layer_dir, dir(module)))
 
         Returns
         -------
-        'str'
+        str
             layer name
         """
         return self._name
@@ -612,8 +635,8 @@ dir:\n{}".format(layer_dir, dir(module)))
 
         Returns
         -------
-        'Layer'
-            layer class object
+        type
+            class that derives from LayerBase
         """
         return self._layer
 

@@ -473,6 +473,8 @@ the stack was saved (Version {}), but the checksum has \
 changed.'.format(layer.layer.version))
 
             # set arg and kwarg values based on the json file
+            layer.args.mode = ArgMode.DESC
+            layer.kwargs.mode = ArgMode.DESC
 
             # try to handle shifts in argument order and naming
             actual_args = {}
@@ -537,6 +539,10 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
                     logger.warn("Kwarg {!r} is no longer in Layer {!r}, so the\
  information serialized for it in Stack {!r} will not be used."
                                 .format(name, layer.name, stack_name))
+
+            # default mode is ArgMode.USE, so values can be easily set
+            layer.args.mode = ArgMode.USE
+            layer.kwargs.mode = ArgMode.USE
 
             layers.append(layer)
 

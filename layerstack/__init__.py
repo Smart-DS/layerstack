@@ -1,4 +1,7 @@
 '''
+layerstack is a Python package for assembling workflows, especially those 
+associated with modifying, running, and analyzing simulation models.
+
 [LICENSE]
 Copyright (c) 2019 Alliance for Sustainable Energy, LLC, All Rights Reserved
 
@@ -18,10 +21,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 
 [/LICENSE]
 '''
-"""
-layerstack is a Python package for assembling workflows, especially those 
-associated with modifying, running, and analyzing simulation models
-"""
 
 __author__ = """Elaine Hale, Michael Rossol"""
 __email__ = 'michael.rossol@nrel.gov'
@@ -112,6 +111,7 @@ def start_file_log(filename, log_level=logging.WARN,log_format=DEFAULT_LOG_FORMA
     logging.getLogger().addHandler(logfile)
     return logfile
 
+
 def checksum(filename):
     """
     Computes the checksum of a file.
@@ -132,6 +132,7 @@ def checksum(filename):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
+
 class TempJsonFilepath():
     """
     Creates a temporary json filename. Usage::
@@ -151,3 +152,9 @@ class TempJsonFilepath():
     def __exit__(self, ctx_type, ctx_value, ctx_traceback):
         os.remove(self.filename)
 
+
+# import objects required for basic use so they can be imported directly 
+# from layerstack
+from .args import ArgMode
+from .layer import Layer
+from .stack import Stack
