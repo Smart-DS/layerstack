@@ -26,6 +26,8 @@ from builtins import super
 import imp
 import logging
 import os
+
+#from pathlib import Path
 import sys
 from uuid import uuid4
 
@@ -144,17 +146,24 @@ class LayerBase(object):
         log_level = logging.DEBUG if cli_args.debug else logging.INFO
         start_console_log(log_level=log_level, log_format=log_format)
 
+        #if not Path.isdir(cli_args.run_dir):
+        #.format(Path.resolve(cli_args.run_dir)))
         if not os.path.isdir(cli_args.run_dir):
-            raise LayerStackError("The run directory '{}' does not exist."
-                                  .format(os.path.abspath(cli_args.run_dir)))
+            raise LayerStackError(f"The run directory '{cli_args.run_dir}' does not exist.")
+
+        print(os.getcwd())
+        #old_cur_dir = Path.cwd()
         old_cur_dir = os.getcwd()
+        #Path.replace(cli_args.run_dir) # os.chdir(cli_args.run_dir) TLS - still unsure if Path.replace is equivalent to chdir, need to test further
         os.chdir(cli_args.run_dir)
 
         try:
             cls._main_apply(cli_args, arg_list, kwarg_dict)
         # switch back to initial directory
+            #Path.replace(old_cur_dir) # Path.replace put in place of os.chdir
             os.chdir(old_cur_dir)
         except:
+            #Path.replace(old_cur_dir)
             os.chdir(old_cur_dir)
             raise
 
@@ -413,7 +422,7 @@ class Layer(object):
         self.layer_dir = layer_dir
         # load the layer.py module and find the LayerBase class
         # self._layer = the LayerBase class we found
-        logger.debug("Loading layer from {}".format(layer_dir))
+        logger.debug(f"Loading layer from {layer_dir}")
         self._layer = self.load_layer(layer_dir)
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
@@ -446,14 +455,11 @@ class Layer(object):
         """
         # Create the directory
         if not os.path.exists(parent_dir):
-            raise LayerStackError("The parent_dir {} does not exist."
-                                  .format(parent_dir))
+            raise LayerStackError(f"The parent_dir {parent_dir} does not exist.") # maynot need the msg_begin here
         dir_name = name.lower().replace(" ", "_")
         dir_path = os.path.join(parent_dir, dir_name)
         if os.path.exists(dir_path):
-            raise LayerStackError("The new directory to be created, {}, \
-already exists."
-                                  .format(dir_path))
+            raise LayerStackError(f"The new directory to be created, {dir_path}, already exists.")
         os.mkdir(dir_path)
 
         # Create the layer.py file
@@ -593,8 +599,7 @@ hierarchy tree.".format(layer_dir)
                 continue
         if candidate is not None:
             return candidate
-        raise LayerStackError("No LayerBase subclass found in {!r}. Module \
-dir:\n{}".format(layer_dir, dir(module)))
+        raise LayerStackError(f"No LayerBase subclass found in {layer_dir!r}. Module dir:\n{dir(module)}")
 
     @property
     def name(self):

@@ -30,6 +30,7 @@ from collections import MutableSequence, OrderedDict
 import json
 import logging
 from pathlib import Path
+import os
 from uuid import UUID, uuid4
 
 logger = logging.getLogger(__name__)
@@ -298,7 +299,10 @@ class Stack(MutableSequence):
         None or pathlib.Path
             Run directory for stack
         """
-        return self._run_dir
+        print('@@@@@  in run_dir')
+        print(self._run_dir)
+        print('TYPE IN RUN_DIR: ', type(self._run_dir))
+        return self._run_dir  # preserves the pathlib.PosixPath type even after conversion to str in JSON
 
     @run_dir.setter
     def run_dir(self, value):
@@ -310,7 +314,18 @@ class Stack(MutableSequence):
         value : None, str, or pathlib.Path
             Stack run directory
         """
-        self._run_dir = value if None else Path(value)
+        print('****************')
+        print(value) # *** what is the type?
+        print('!!!! TYPE !!!!')
+        print(type(value))
+        # *** try doing something like Path(str(value))
+        self._run_dir = value if value is None else Path(value)  # TLS - not sure why Path(value) was used as this causes error when run_dir in stack JSON is empty; I think Elaine meant this to be cwd?
+        #self._run_dir = value
+        print('<<<$$$')
+        print(self._run_dir)
+        print('!!!! TYPE run_dir !!!!')
+        print(type(self._run_dir))
+        #self._run_dir = value
 
     @property
     def runnable(self):
@@ -324,13 +339,11 @@ class Stack(MutableSequence):
             All args are set for all layers in stack, stack can be run
         """
         if not self.run_dir:
-            logger.info("The run_dir must be assigned for this stack to be \
-runnable.")
+            logger.info("The run_dir must be assigned for this stack to be runnable.")
             return False
         for layer in self.layers:
             if not layer.runnable:
-                logger.info("Set arguments on layer '{}' to make this stack \
-runnable.".format(layer.name))
+                logger.info(f"Set arguments on layer '{layer.name}' to make this stack runnable.")
                 return False
         return True
 
@@ -343,6 +356,9 @@ runnable.".format(layer.name))
         filename : 'str'
             file path to save stack to
         """
+        print('~~~~~~~~~~~~~~~~~~~')
+        print(filename)
+
         json_data = self._json_data()
 
         with open(filename, 'w') as f:
@@ -363,7 +379,9 @@ runnable.".format(layer.name))
             file path to save stack to
         """
         if filename is None:
-            filename = self.run_dir / 'stack.archive'
+            filename = os.path.join(self.run_dir, 'stack.archive')
+            print('ARCHIVE FN: ', filename, 'wwwwwwwwwwwwwwww')
+            # filename = self.run_dir / 'stack.archive' # *** path implementation 
         with TempJsonFilepath() as tmpjson:
             self.save(tmpjson)
             my_checksum = checksum(tmpjson)
@@ -390,7 +408,8 @@ runnable.".format(layer.name))
         json_data['name'] = self.name
         json_data['uuid'] = str(self.uuid)
         json_data['version'] = self.version
-        json_data['run_dir'] = self.run_dir
+        # json_data['run_dir'] = self.run_dir
+        json_data['run_dir'] = str(self.run_dir)
         json_data['model'] = self.model
         stack_layers = []
         for layer in self.layers:
@@ -437,11 +456,6 @@ serialization has {}".format(len(self), len(stack_layers))
         json_data['layers'] = stack_layers
         return json_data
 
-# *** TLS thoughts, 5.14.20 ***
-# if filename is needed then I think issue 14 pertaining to the layer_library_dir may be a separate task from the directory search elaine mentioned, unless
-# filename is made optional or is removed and the load function is changed such that when opening the layer file it will always search through a passed
-# list of layer directories and there repsective nested layer filenames
-
 
 # *** TLS: Revised Thoughts after check-in w/ Elaine ***
 # the layer_library_dir arg should always be passed and handled such that the layer directory is repointed when load is called and layerstack is run in CLI
@@ -458,9 +472,8 @@ serialization has {}".format(len(self), len(stack_layers))
 
         Parameters
         ----------
-        layer_dir : str or pathlib.Path
-            Location of the :class:`layerstack.layer.Layer` as originally 
-            represented
+        layer_dir : str or pathlib.Path # (should always be string to avoid issues where first elmt fails)
+            Location of the :class:`layerstack.layer.Layer` as originally represented
         layer_library_dirs : list of str or pathlib.Path
             Location(s) where the :class:`layerstack.layer.Layer` may now be 
             found. If multiple locations are provided, it is assumed that they 
@@ -478,7 +491,31 @@ serialization has {}".format(len(self), len(stack_layers))
             returned and pathlib.Path.exists(). Otherwise, a warning is logged
             and None is returned.
         """
-        # TODO: Implement this method
+        # Test Dirs are: ['/Desktop/scratch/layerstack_cooling_devsets/layerstack-library/layers/create_buildstock_devicesets', '/Downloads/layerstack_library_dir_test/', '/Documents/dsgrid-flex/layerstack-library/']
+
+        # TODO: Implement this method 
+
+        if original_preferred == True:
+            layer_dir = Path(layer_dir)
+            if layer_dir.exists():
+                return layer_dir
+            else:
+                # for each dir in list, check if it exists and upon first dir that does exist (assuming ordering is same as preference)
+                # assign as the new layer_dir
+                for tmp_dir in layer_library_dirs:
+                    layer_dir = Path(tmp_dir)
+                    if layer_dir.exists(): #checks that it's a valid path
+                        return layer_dir
+        else:
+            for tmp_dir in layer_library_dirs:
+                layer_dir = Path(tmp_dir)
+                if layer_dir.exists(): # assumes is Path object? May need to assert this here as it might have been passed as a string
+                    return layer_dir
+                else:
+                    print('Invalid directory specified in directory list. Trying next directory in list.')
+
+        return layer_dir
+
 
     @classmethod
     def load(cls, filename, layer_library_dir=None, original_layer_dir_preferred=True):
@@ -499,6 +536,7 @@ serialization has {}".format(len(self), len(stack_layers))
             Instantiated Stack class instance
         """
 
+        print(filename)
         with open(filename) as json_file:
             json_data = json.load(json_file, object_pairs_hook=OrderedDict)
 
@@ -508,13 +546,22 @@ serialization has {}".format(len(self), len(stack_layers))
 
         layers = []
         for json_layer in json_data['layers']:
-            # load each layer, using layer_library_dir if not None
-            
-            layer_dir = Path(json_layer['layer_dir'])
 
-            # always uses a not-None layer_library_dir
-            if layer_library_dir is not None:
-                layer_dir = layer_library_dir / layer_dir.name
+            if layer_library_dir is None:
+                if original_layer_dir_preferred:
+                    layer_dir = Path(json_layer['layer_dir'])
+                    if layer_dir.exists(): # Assert that the path actually exists or is valid input
+                        print('Using original layer-library directory')
+                else:
+                    print('Please pass in list of other layer library directories to use in preferential order.')
+
+            else:        
+                if json_layer['layer_dir'] is not None:    
+                    # case where it's populated but wrong or not desired, pass str in case doesn't exist
+                    layer_dir = Stack.get_layer_dir(json_layer['layer_dir'], layer_library_dir, original_layer_dir_preferred) # check it
+                else:
+                    # assumes the first element of list passed will be preferred & will be checked first, pass str in case doesn't exist
+                    layer_dir = Stack.get_layer_dir(layer_library_dir[0], layer_library_dir, original_layer_dir_preferred) # check it
 
             layer = Layer(layer_dir)
 
@@ -527,19 +574,13 @@ serialization has {}".format(len(self), len(stack_layers))
                 logger.warning(f"{msg_begin} has unexpected uuid. Expected "
                     f"{expected_uuid!r}, got {layer.layer.uuid!r}.")
             if layer.name != json_layer['name']:
-                logger.info(msg_begin +
-                            'has different serialized name, {!r}'
-                            .format(json_layer['name']))
+                logger.info(f"{msg_begin} has different serialized name, got {json_layer['name']!r}.")
             if layer.layer.version != json_layer['version']:
-                logger.info(msg_begin + 'is Version {}, whereas the stack was \
-saved at Version {}.'.format(layer.layer.version, json_layer['version']))
+                logger.info(f"{msg_begin} is Version {layer.layer.version}, whereas the stack was saved at Version {json_layer['version']}.")
             elif layer.checksum != json_layer['checksum']:
-                logger.info(msg_begin + 'has same version identifier as when \
-the stack was saved (Version {}), but the checksum has \
-changed.'.format(layer.layer.version))
+                logger.info(f"{msg_begin} has same version identifier as when the stack was saved (Version {layer.layer.version!r}), but the checksum has changed.")
 
             # set arg and kwarg values based on the json file
-
             # try to handle shifts in argument order and naming
             actual_args = {}
             for i, arg in enumerate(layer.args):
@@ -558,10 +599,8 @@ changed.'.format(layer.layer.version))
                 if (arg['name'] in actual_args) and (actual_args[arg['name']] not in assigned_args):
                     serialized_to_actual_map[i] = actual_args[arg['name']]
                     assigned_args.append(actual_args[arg['name']])
-                    logger.info("Position of Layer {!r} argument {!r} moved \
-from {} to {} since serialization of Stack {!r}."
-                                .format(layer.name, arg['name'], i,
-                                        actual_args[arg['name']], stack_name))
+                    logger.info(f"{msg_begin} Position of Layer {layer.name!r} argument {arg['name']!r} moved "
+                        f"from {i} to {actual_args[arg['name']]!r} since serialization of Stack {stack_name!r}.")
                     continue
                 serialized_to_actual_map[i] = None
                 unassigned_sargs.append(i)
@@ -570,46 +609,39 @@ from {} to {} since serialization of Stack {!r}."
                 if (i < nargs) and (i not in assigned_args):
                     serialized_to_actual_map[i] = i
                     assigned_args.append(i)
-                    logger.warn("Setting the value of Layer {!r}s {}'th \
-argument based on argument in same position in Stack {!r} even though names \
-are different. Serialized argument name: {!r} Current argument name: {!r}"
-                                .format(layer.name, i, stack_name,
-                                        json_layer['args'][i]['name'],
-                                        layer.args[i].name))
+                    logger.warn(f"{msg_begin} Setting the value of Layer {layer.name!r}s {i}'th "
+                        f"argument based on argument in same position in Stack {stack_name!r} even though names "
+                        f"are different. Serialized argument name: {json_layer['args'][i]['name']!r} Current argument name: {layer.args[i].name!r}.")
                     continue
-                logger.warn("Argument {!r}'s serialized information will not \
-be used in loading Layer {!r} in Stack {!r}.".format(json_layer['args'][i],
-                                                     layer.name, stack_name))
+                logger.warn(f"{msg_begin} Argument {json_layer['args'][i]!r}'s serialized information will not "
+                    f"be used in loading Layer {layer.name!r} in Stack {stack_name!r}.")
 
             for i, j in serialized_to_actual_map.items():
                 if j is not None:
                     try:
                         layer.args[j].value = json_layer['args'][i]['value']
                     except Exception as e:
-                        logger.error("Unable to set the value of Layer {!r}'s \
-{}'th argument {!r} to {}, because {}."
-                                     .format(layer.name, j, layer.args[j].name,
-                                             json_layer['args'][i]['value'],
-                                             e))
+                        logger.error(f"{msg_begin} Unable to set the value of Layer {layer.name!r}'s "
+                        f"{j}'th argument {layer.args[j].name!r} to {json_layer['args'][i]['value']!r}, because {e}.")
 
             for name, kwarg in json_layer['kwargs'].items():
                 if name in layer.kwargs:
                     try:
                         layer.kwargs[name].value = kwarg['value']
                     except Exception as e:
-                        logger.error("Unable to set the value of Layer {!r}'s \
-kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
+                        logger.error(f"{msg_begin} Unable to set the value of Layer {layer.name!r}'s "
+                        f"kwarg {name!r} to {kwarg['value']}, because {e}.")
                 else:
-                    logger.warn("Kwarg {!r} is no longer in Layer {!r}, so the\
- information serialized for it in Stack {!r} will not be used."
-                                .format(name, layer.name, stack_name))
+                    logger.warn(f"{msg_begin} Kwarg {name!r} is no longer in Layer {layer.name!r}, so "
+                    f"the information serialized for it in Stack {stack_name!r} will not be used.")
 
             layers.append(layer)
 
         result = cls(layers=layers, name=json_data['name'],
                      version=json_data['version'],
-                     run_dir=json_data['run_dir'], model=json_data['model'])
+                     run_dir=json_data['run_dir'], model=json_data['model'])  
         result._uuid = UUID(json_data['uuid'])
+        # # OG: run_dir=json_data['run_dir'], Path: run_dir=Path(json_data['run_dir'])
         return result
 
     def run(self, save_path=None, new_layer_library_dir=None, log_level=logging.INFO, archive=True):
@@ -625,6 +657,8 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
         archive : 'bool'
             Archive stack before running
         """
+
+        print('^^^^^^^^^^ IN RUN() ^^^^^^^^^^^^^^^^')
 
         # change the layer_library_dir 
         lib_check_layer = self.layers[-1].layer
@@ -647,12 +681,25 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
         if save_path is not None:
             save_path = Path(save_path).absolute()
 
+        # tmp_path = Path('.')
+        # print(tmp_path)
+
         if not os.path.exists(self.run_dir):
             os.mkdir(self.run_dir)
+        #if not Path.exists(self.run_dir):
+        #     Path.mkdir(self.run_dir)
+
+        print('============================')
 
         # change directory to run_dir
         old_cur_dir = os.getcwd()
-        os.chdir(self.run_dir)
+        os.chdir(self.run_dir) # can keep this or possibly use: path_obj('/new/path').cd()
+        # old_cur_dir = Path.cwd()
+        # print(old_cur_dir)
+        #Path.replace(self.run_dir) # TLS - changed from: os.chdir(self.run_dir), but this may not be necessary or there might be a better method for this 
+
+        print('============================')
+
 
         # set up logging
         start_file_log('stack.log',log_level=log_level)
@@ -672,7 +719,7 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
                     raise LayerStackError('Layer must be a ModelLayer but is a {:}'
                                         .format(type(Layer)))
             for layer in self.layers:
-                logger.info("Running {}".format(layer.name))
+                logger.info(f"Running {layer.name}") # may not need msg_begin here
                 if issubclass(layer.layer, ModelLayerBase):
                     if self.model is None:
                         raise LayerStackError('Model not initialized')
@@ -690,12 +737,14 @@ kwarg {!r} to {}, because {}.".format(layer.name, name, kwarg['value'], e))
                                         .format(type(layer)))
             # switch back to initial directory
             os.chdir(old_cur_dir)
+            #Path.replace(old_cur_dir) # os.chdir(old_cur_dir), see above comment from TLS on this method... might want to us Path.is_dir() instead
         except:
             os.chdir(old_cur_dir)
+            #Path.replace(old_cur_dir) # os.chdir(old_cur_dir), see above comment from TLS on this method
             raise        
 
 
-def repoint_stack(p, layer_library_dir=None, run_dir=None, model=None, outfile=None):
+def repoint_stack(p, layer_library_dir=None, original_layer_dir_preferred=True, run_dir=None, model=None, outfile=None):
     """
     Load Stack from p, update run_dir and/or model, and save to outfile or to the
     same folder but with the file name prepended with an underscore.
@@ -715,7 +764,8 @@ def repoint_stack(p, layer_library_dir=None, run_dir=None, model=None, outfile=N
         the same directory but with the filename prepended with an underscore
     """
 
-    stack = Stack.load(p, layer_library_dir)
+    # layer_library_dir) is either none or is a list of the dirs desired to be passed 
+    stack = Stack.load(p, layer_library_dir, original_layer_dir_preferred)
     
     if run_dir is not None:
         stack.run_dir = run_dir
@@ -756,12 +806,16 @@ def main():
     # TLS 5.29.20; BELOW: can repoint the layer_libbrary_dir like this which will create a new stack with an underscore appended to the front of the file name
     # per 5.21.20 checkin, a new run argument was added that default to change the layer_library_dir, otherwise will use existing path
     # --> this seems redundant as the user could just repoint...it seems like th only benefit is in not having a new stack created w/ the underscore 
-    parser_repoint.add_argument('-ld', '--layer-library-dir', help="""new layer library directory to run the stack with.""")    
+    parser_repoint.add_argument('-ld', '--layer-library-dir', help="""list of layer library directories to use.""") 
+    parser_repoint.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this flag is True such that the existing directory
+        specified in the stack layer_dir argument is used.""", action='store_true')    
 
-    # run arguments
-    parser_run.add_argument('-dd', '--layer-library-dir', help="""Default is for this
+    # run arguments --> need to make sure -ld can be used for both repoint and run args
+    parser_run.add_argument('-ld', '--layer-library-dir', type=str, nargs='+', help="""Default is for this
         flag to be set to false, in which case the stack uses the existing
         layer_library_dir""")
+    parser_run.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this flag is True such that the existing directory
+        specified in the stack layer_dir argument is used.""", action='store_true')
     parser_run.add_argument('-sp', '--save-path', help="""Where the results of 
         running this stack should be saved. This is an output path for the 
         stack's final model.""")
@@ -789,13 +843,16 @@ def main():
     elif args.mode == 'repoint':
         repoint_stack(args.stack_file, 
                       layer_library_dir=args.layer_library_dir,
+                      original_layer_dir_preferred=args.original_layer_dir_preferred,
                       run_dir=args.run_dir, 
                       model=args.model_path, 
                       outfile=args.outfile)
     elif args.mode == 'run':
-        # added line 747 and 748 for changing default dir
-        new_layer_library_dir=args.layer_library_dir
-        stack = Stack.load(args.stack_file, new_layer_library_dir)
+        layer_library_dir_list = args.layer_library_dir
+        print('+++++++', layer_library_dir_list)
+        original_layer_dir_preferred = args.original_layer_dir_preferred
+        print('------------------ ', original_layer_dir_preferred)
+        stack = Stack.load(args.stack_file, layer_library_dir_list, original_layer_dir_preferred)
         stack.run(save_path=args.save_path, log_level=log_level, archive=args.archive)
     else:
         assert False, 'Unknown mode {}'.format(args.mode)
