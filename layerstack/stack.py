@@ -371,7 +371,7 @@ class Stack(MutableSequence):
         Archives this stack by computing the .json checksum on the
         without-checksum json file, and then saving a json with the checksum
         data added in. Called by the run method with with default filename
-        os.path.join(self.run_dir, 'stack.archive').
+        self.run_dir / 'stack.archive'.
 
         Parameters
         ----------
@@ -690,6 +690,8 @@ serialization has {}".format(len(self), len(stack_layers))
         #     Path.mkdir(self.run_dir)
 
         print('============================')
+        # if not self.run_dir.exists():
+        #     self.run_dir.mkdir()
 
         # change directory to run_dir
         old_cur_dir = os.getcwd()
@@ -849,9 +851,7 @@ def main():
                       outfile=args.outfile)
     elif args.mode == 'run':
         layer_library_dir_list = args.layer_library_dir
-        print('+++++++', layer_library_dir_list)
         original_layer_dir_preferred = args.original_layer_dir_preferred
-        print('------------------ ', original_layer_dir_preferred)
         stack = Stack.load(args.stack_file, layer_library_dir_list, original_layer_dir_preferred)
         stack.run(save_path=args.save_path, log_level=log_level, archive=args.archive)
     else:
