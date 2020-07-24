@@ -456,11 +456,6 @@ serialization has {}".format(len(self), len(stack_layers))
         json_data['layers'] = stack_layers
         return json_data
 
-
-# *** TLS: Revised Thoughts after check-in w/ Elaine ***
-# the layer_library_dir arg should always be passed and handled such that the layer directory is repointed when load is called and layerstack is run in CLI
-# use nargs + functionality within the load function; add some additional code to main()
-
     @classmethod
     def get_layer_dir(cls, layer_dir, layer_library_dirs=[], original_preferred=True):
         """
@@ -786,8 +781,6 @@ def repoint_stack(p, layer_library_dir=None, original_layer_dir_preferred=True, 
 
 def main():
     parser = argparse.ArgumentParser("Load and optionally run a stack.")
-    # TLS 5.29.20 - per 5.21 meeting, will implement a flag to either use the path specified in the device set JSON or to use
-    # a new library_dir path that is passed in at runtime in the CLI  
     parser.add_argument('stack_file', help="Stack json file to load and optionally a new layer library directory to reassign.")
     parser.add_argument('-d','--debug', action='store_true', default=False)
     parser.add_argument('-w','--warning-only', action='store_true', default=False)
@@ -805,14 +798,11 @@ def main():
         should be run.""")
     parser_repoint.add_argument('-mp', '--model-path', help="""Model this stack 
         should be run on.""")
-    # TLS 5.29.20; BELOW: can repoint the layer_libbrary_dir like this which will create a new stack with an underscore appended to the front of the file name
-    # per 5.21.20 checkin, a new run argument was added that default to change the layer_library_dir, otherwise will use existing path
-    # --> this seems redundant as the user could just repoint...it seems like th only benefit is in not having a new stack created w/ the underscore 
     parser_repoint.add_argument('-ld', '--layer-library-dir', help="""list of layer library directories to use.""") 
     parser_repoint.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this flag is True such that the existing directory
         specified in the stack layer_dir argument is used.""", action='store_true')    
 
-    # run arguments --> need to make sure -ld can be used for both repoint and run args
+    # run arguments 
     parser_run.add_argument('-ld', '--layer-library-dir', type=str, nargs='+', help="""Default is for this
         flag to be set to false, in which case the stack uses the existing
         layer_library_dir""")
