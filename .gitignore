@@ -71,3 +71,6 @@ tests/outputs/
 
 # Packaging
 MANIFEST
+
+# jupyter notebooks
+.ipynb_checkpoints
