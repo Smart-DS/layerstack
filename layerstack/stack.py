@@ -315,13 +315,9 @@ class Stack(MutableSequence):
             Stack run directory
         """
         print('****************')
-        print(value) # *** what is the type?
-        print('!!!! TYPE !!!!')
-        print(type(value))
+
         # *** try doing something like Path(str(value))
-        self._run_dir = value if value is None else Path(value)  # TLS - not sure why Path(value) was used as this causes error when run_dir in stack JSON is empty; I think Elaine meant this to be cwd?
-        #self._run_dir = value
-        print('<<<$$$')
+        self._run_dir = value if value is None else Path(value) 
         print(self._run_dir)
         print('!!!! TYPE run_dir !!!!')
         print(type(self._run_dir))
@@ -408,8 +404,8 @@ class Stack(MutableSequence):
         json_data['name'] = self.name
         json_data['uuid'] = str(self.uuid)
         json_data['version'] = self.version
-        # json_data['run_dir'] = self.run_dir
-        json_data['run_dir'] = str(self.run_dir)
+        #json_data['run_dir'] = self.run_dir
+        json_data['run_dir'] = str(self.run_dir) # changed above line to this due to Path JSON issue
         json_data['model'] = self.model
         stack_layers = []
         for layer in self.layers:
@@ -486,30 +482,14 @@ serialization has {}".format(len(self), len(stack_layers))
             returned and pathlib.Path.exists(). Otherwise, a warning is logged
             and None is returned.
         """
-        # Test Dirs are: ['/Desktop/scratch/layerstack_cooling_devsets/layerstack-library/layers/create_buildstock_devicesets', '/Downloads/layerstack_library_dir_test/', '/Documents/dsgrid-flex/layerstack-library/']
 
-        # TODO: Implement this method 
-
-        if original_preferred == True:
-            layer_dir = Path(layer_dir)
-            if layer_dir.exists():
+        for tmp_dir in layer_library_dirs:
+            layer_lib_dir_elmt = Path(tmp_dir)
+            if layer_lib_dir_elmt.exists(): 
+                layer_dir = layer_lib_dir_elmt / layer_dir.name
                 return layer_dir
             else:
-                # for each dir in list, check if it exists and upon first dir that does exist (assuming ordering is same as preference)
-                # assign as the new layer_dir
-                for tmp_dir in layer_library_dirs:
-                    layer_dir = Path(tmp_dir)
-                    if layer_dir.exists(): #checks that it's a valid path
-                        return layer_dir
-        else:
-            for tmp_dir in layer_library_dirs:
-                layer_dir = Path(tmp_dir)
-                if layer_dir.exists(): # assumes is Path object? May need to assert this here as it might have been passed as a string
-                    return layer_dir
-                else:
-                    print('Invalid directory specified in directory list. Trying next directory in list.')
-
-        return layer_dir
+                print('Invalid directory specified in directory list. Trying next directory in list.')
 
 
     @classmethod
@@ -531,7 +511,6 @@ serialization has {}".format(len(self), len(stack_layers))
             Instantiated Stack class instance
         """
 
-        print(filename)
         with open(filename) as json_file:
             json_data = json.load(json_file, object_pairs_hook=OrderedDict)
 
@@ -540,23 +519,17 @@ serialization has {}".format(len(self), len(stack_layers))
             stack_name = json_data['name']
 
         layers = []
+
         for json_layer in json_data['layers']:
 
-            if layer_library_dir is None:
-                if original_layer_dir_preferred:
-                    layer_dir = Path(json_layer['layer_dir'])
-                    if layer_dir.exists(): # Assert that the path actually exists or is valid input
-                        print('Using original layer-library directory')
-                else:
-                    print('Please pass in list of other layer library directories to use in preferential order.')
+            layer_dir = Path(json_layer['layer_dir'])
 
-            else:        
-                if json_layer['layer_dir'] is not None:    
-                    # case where it's populated but wrong or not desired, pass str in case doesn't exist
-                    layer_dir = Stack.get_layer_dir(json_layer['layer_dir'], layer_library_dir, original_layer_dir_preferred) # check it
+            if layer_library_dir is not None:
+                if original_layer_dir_preferred is False:
+                    layer_dir = Stack.get_layer_dir(layer_dir, layer_library_dir, original_layer_dir_preferred) # check it
                 else:
-                    # assumes the first element of list passed will be preferred & will be checked first, pass str in case doesn't exist
-                    layer_dir = Stack.get_layer_dir(layer_library_dir[0], layer_library_dir, original_layer_dir_preferred) # check it
+                    if layer_dir.exists():
+                        print('Using original layer-library directory')
 
             layer = Layer(layer_dir)
 
@@ -571,9 +544,11 @@ serialization has {}".format(len(self), len(stack_layers))
             if layer.name != json_layer['name']:
                 logger.info(f"{msg_begin} has different serialized name, got {json_layer['name']!r}.")
             if layer.layer.version != json_layer['version']:
-                logger.info(f"{msg_begin} is Version {layer.layer.version}, whereas the stack was saved at Version {json_layer['version']}.")
+                logger.info(f"{msg_begin} is Version {layer.layer.version}, whereas the stack was "
+                f"saved at Version {json_layer['version']}.")
             elif layer.checksum != json_layer['checksum']:
-                logger.info(f"{msg_begin} has same version identifier as when the stack was saved (Version {layer.layer.version!r}), but the checksum has changed.")
+                logger.info(f"{msg_begin} has same version identifier as when the stack was saved"
+                f"(Version {layer.layer.version!r}), but the checksum has changed.")
 
             # set arg and kwarg values based on the json file
             # try to handle shifts in argument order and naming
