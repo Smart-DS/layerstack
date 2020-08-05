@@ -221,7 +221,6 @@ class ModelLayerBase(LayerBase):
     .. automethod:: _load_model
     .. automethod:: _save_model
     """
-    print('MODEL LAYER BASE ++++++++')
 
     @classmethod
     def args(cls, model=None, **kwargs):
