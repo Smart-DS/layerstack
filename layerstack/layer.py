@@ -27,7 +27,7 @@ import imp
 import logging
 import os
 
-#from pathlib import Path
+from pathlib import Path
 import sys
 from uuid import uuid4
 
@@ -114,6 +114,7 @@ class LayerBase(object):
     # parser-part for workflows.
     @classmethod
     def main(cls, log_format=DEFAULT_LOG_FORMAT):
+
         """
         Single-layer command-line interface entry point.
 
@@ -146,21 +147,20 @@ class LayerBase(object):
         log_level = logging.DEBUG if cli_args.debug else logging.INFO
         start_console_log(log_level=log_level, log_format=log_format)
 
+
         #if not Path.isdir(cli_args.run_dir):
         #.format(Path.resolve(cli_args.run_dir)))
         if not os.path.isdir(cli_args.run_dir):
             raise LayerStackError(f"The run directory '{cli_args.run_dir}' does not exist.")
 
-        print(os.getcwd())
+        #print(os.getcwd())
         #old_cur_dir = Path.cwd()
         old_cur_dir = os.getcwd()
-        #Path.replace(cli_args.run_dir) # os.chdir(cli_args.run_dir) TLS - still unsure if Path.replace is equivalent to chdir, need to test further
         os.chdir(cli_args.run_dir)
 
         try:
             cls._main_apply(cli_args, arg_list, kwarg_dict)
         # switch back to initial directory
-            #Path.replace(old_cur_dir) # Path.replace put in place of os.chdir
             os.chdir(old_cur_dir)
         except:
             #Path.replace(old_cur_dir)
@@ -221,6 +221,7 @@ class ModelLayerBase(LayerBase):
     .. automethod:: _load_model
     .. automethod:: _save_model
     """
+    print('MODEL LAYER BASE ++++++++')
 
     @classmethod
     def args(cls, model=None, **kwargs):
@@ -453,6 +454,7 @@ class Layer(object):
         dir_path : 'str'
             Directory containing new layer
         """
+
         # Create the directory
         if not os.path.exists(parent_dir):
             raise LayerStackError(f"The parent_dir {parent_dir} does not exist.") # maynot need the msg_begin here

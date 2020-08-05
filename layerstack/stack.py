@@ -41,7 +41,7 @@ from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
 # TODO:
-#  - Convert from using os to using pathlib.Path
+#  - Convert from using os to using pathlib.Path 
 #  - Verify tests pass again
 #  - Implement continuous integration -- testing and docs
 #  - Implement get_layer_dir
@@ -299,10 +299,7 @@ class Stack(MutableSequence):
         None or pathlib.Path
             Run directory for stack
         """
-        print('@@@@@  in run_dir')
-        print(self._run_dir)
-        print('TYPE IN RUN_DIR: ', type(self._run_dir))
-        return self._run_dir  # preserves the pathlib.PosixPath type even after conversion to str in JSON
+        return self._run_dir 
 
     @run_dir.setter
     def run_dir(self, value):
@@ -314,14 +311,7 @@ class Stack(MutableSequence):
         value : None, str, or pathlib.Path
             Stack run directory
         """
-        print('****************')
-
-        # *** try doing something like Path(str(value))
         self._run_dir = value if value is None else Path(value) 
-        print(self._run_dir)
-        print('!!!! TYPE run_dir !!!!')
-        print(type(self._run_dir))
-        #self._run_dir = value
 
     @property
     def runnable(self):
@@ -352,8 +342,6 @@ class Stack(MutableSequence):
         filename : 'str'
             file path to save stack to
         """
-        print('~~~~~~~~~~~~~~~~~~~')
-        print(filename)
 
         json_data = self._json_data()
 
@@ -375,9 +363,7 @@ class Stack(MutableSequence):
             file path to save stack to
         """
         if filename is None:
-            filename = os.path.join(self.run_dir, 'stack.archive')
-            print('ARCHIVE FN: ', filename, 'wwwwwwwwwwwwwwww')
-            # filename = self.run_dir / 'stack.archive' # *** path implementation 
+            filename = self.run_dir / 'stack.archive' 
         with TempJsonFilepath() as tmpjson:
             self.save(tmpjson)
             my_checksum = checksum(tmpjson)
@@ -404,8 +390,7 @@ class Stack(MutableSequence):
         json_data['name'] = self.name
         json_data['uuid'] = str(self.uuid)
         json_data['version'] = self.version
-        #json_data['run_dir'] = self.run_dir
-        json_data['run_dir'] = str(self.run_dir) # changed above line to this due to Path JSON issue
+        json_data['run_dir'] = str(self.run_dir) # convert to str due to Path JSON issue
         json_data['model'] = self.model
         stack_layers = []
         for layer in self.layers:
@@ -580,11 +565,12 @@ serialization has {}".format(len(self), len(stack_layers))
                     serialized_to_actual_map[i] = i
                     assigned_args.append(i)
                     logger.warn(f"{msg_begin} Setting the value of Layer {layer.name!r}s {i}'th "
-                        f"argument based on argument in same position in Stack {stack_name!r} even though names "
-                        f"are different. Serialized argument name: {json_layer['args'][i]['name']!r} Current argument name: {layer.args[i].name!r}.")
+                        f"argument based on argument in same position in Stack {stack_name!r} even "
+                        f"though names are different. Serialized argument name: "
+                        f"{json_layer['args'][i]['name']!r} Current argument name: {layer.args[i].name!r}.")
                     continue
-                logger.warn(f"{msg_begin} Argument {json_layer['args'][i]!r}'s serialized information will not "
-                    f"be used in loading Layer {layer.name!r} in Stack {stack_name!r}.")
+                logger.warn(f"{msg_begin} Argument {json_layer['args'][i]!r}'s serialized information "
+                    f"won't be used in loading Layer {layer.name!r} in Stack {stack_name!r}.")
 
             for i, j in serialized_to_actual_map.items():
                 if j is not None:
@@ -592,7 +578,8 @@ serialization has {}".format(len(self), len(stack_layers))
                         layer.args[j].value = json_layer['args'][i]['value']
                     except Exception as e:
                         logger.error(f"{msg_begin} Unable to set the value of Layer {layer.name!r}'s "
-                        f"{j}'th argument {layer.args[j].name!r} to {json_layer['args'][i]['value']!r}, because {e}.")
+                        f"{j}'th argument {layer.args[j].name!r} to "
+                        f"{json_layer['args'][i]['value']!r}, because {e}.")
 
             for name, kwarg in json_layer['kwargs'].items():
                 if name in layer.kwargs:
@@ -611,7 +598,6 @@ serialization has {}".format(len(self), len(stack_layers))
                      version=json_data['version'],
                      run_dir=json_data['run_dir'], model=json_data['model'])  
         result._uuid = UUID(json_data['uuid'])
-        # # OG: run_dir=json_data['run_dir'], Path: run_dir=Path(json_data['run_dir'])
         return result
 
     def run(self, save_path=None, new_layer_library_dir=None, log_level=logging.INFO, archive=True):
@@ -627,8 +613,6 @@ serialization has {}".format(len(self), len(stack_layers))
         archive : 'bool'
             Archive stack before running
         """
-
-        print('^^^^^^^^^^ IN RUN() ^^^^^^^^^^^^^^^^')
 
         # change the layer_library_dir 
         lib_check_layer = self.layers[-1].layer
@@ -651,27 +635,11 @@ serialization has {}".format(len(self), len(stack_layers))
         if save_path is not None:
             save_path = Path(save_path).absolute()
 
-        # tmp_path = Path('.')
-        # print(tmp_path)
+        if not self.run_dir.exists():
+            self.run_dir.mkdir()
 
-        if not os.path.exists(self.run_dir):
-            os.mkdir(self.run_dir)
-        #if not Path.exists(self.run_dir):
-        #     Path.mkdir(self.run_dir)
-
-        print('============================')
-        # if not self.run_dir.exists():
-        #     self.run_dir.mkdir()
-
-        # change directory to run_dir
-        old_cur_dir = os.getcwd()
-        os.chdir(self.run_dir) # can keep this or possibly use: path_obj('/new/path').cd()
-        # old_cur_dir = Path.cwd()
-        # print(old_cur_dir)
-        #Path.replace(self.run_dir) # TLS - changed from: os.chdir(self.run_dir), but this may not be necessary or there might be a better method for this 
-
-        print('============================')
-
+        old_cur_dir = Path.cwd()
+        os.chdir(self.run_dir) 
 
         # set up logging
         start_file_log('stack.log',log_level=log_level)
@@ -691,14 +659,13 @@ serialization has {}".format(len(self), len(stack_layers))
                     raise LayerStackError('Layer must be a ModelLayer but is a {:}'
                                         .format(type(Layer)))
             for layer in self.layers:
-                logger.info(f"Running {layer.name}") # may not need msg_begin here
+                logger.info(f"Running {layer.name}")
                 if issubclass(layer.layer, ModelLayerBase):
                     if self.model is None:
                         raise LayerStackError('Model not initialized')
                     self.model = layer.run_layer(self, model=self.model)
                 else:
                     self.result = layer.run_layer(self)
-
 
             if save_path is not None:
                 layer = self.layers[-1].layer
@@ -709,10 +676,8 @@ serialization has {}".format(len(self), len(stack_layers))
                                         .format(type(layer)))
             # switch back to initial directory
             os.chdir(old_cur_dir)
-            #Path.replace(old_cur_dir) # os.chdir(old_cur_dir), see above comment from TLS on this method... might want to us Path.is_dir() instead
         except:
             os.chdir(old_cur_dir)
-            #Path.replace(old_cur_dir) # os.chdir(old_cur_dir), see above comment from TLS on this method
             raise        
 
 
@@ -756,7 +721,8 @@ def repoint_stack(p, layer_library_dir=None, original_layer_dir_preferred=True, 
 
 def main():
     parser = argparse.ArgumentParser("Load and optionally run a stack.")
-    parser.add_argument('stack_file', help="Stack json file to load and optionally a new layer library directory to reassign.")
+    parser.add_argument('stack_file', help="""Stack json file to load and optionally a new layer 
+        library directory to reassign.""")
     parser.add_argument('-d','--debug', action='store_true', default=False)
     parser.add_argument('-w','--warning-only', action='store_true', default=False)
     
@@ -773,15 +739,18 @@ def main():
         should be run.""")
     parser_repoint.add_argument('-mp', '--model-path', help="""Model this stack 
         should be run on.""")
-    parser_repoint.add_argument('-ld', '--layer-library-dir', help="""list of layer library directories to use.""") 
-    parser_repoint.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this flag is True such that the existing directory
-        specified in the stack layer_dir argument is used.""", action='store_true')    
+    parser_repoint.add_argument('-ld', '--layer-library-dir', help="""list of layer library 
+        directories to use.""") 
+    parser_repoint.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this 
+        flag is True such that the existing directoryspecified in the stack layer_dir argument is 
+        used.""", action='store_true')    
 
     # run arguments 
-    parser_run.add_argument('-ld', '--layer-library-dir', type=str, nargs='+', help="""Default is for this
-        flag to be set to false, in which case the stack uses the existing
+    parser_run.add_argument('-ld', '--layer-library-dir', type=str, nargs='+', help="""Default is 
+        for this flag to be set to false, in which case the stack uses the existing
         layer_library_dir""")
-    parser_run.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this flag is True such that the existing directory
+    parser_run.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this flag 
+        is True such that the existing directory
         specified in the stack layer_dir argument is used.""", action='store_true')
     parser_run.add_argument('-sp', '--save-path', help="""Where the results of 
         running this stack should be saved. This is an output path for the 
