@@ -114,7 +114,6 @@ class LayerBase(object):
     # parser-part for workflows.
     @classmethod
     def main(cls, log_format=DEFAULT_LOG_FORMAT):
-
         """
         Single-layer command-line interface entry point.
 
@@ -147,15 +146,12 @@ class LayerBase(object):
         log_level = logging.DEBUG if cli_args.debug else logging.INFO
         start_console_log(log_level=log_level, log_format=log_format)
 
+        cli_args.run_dir = Path(cli_args.run_dir)
 
-        #if not Path.isdir(cli_args.run_dir):
-        #.format(Path.resolve(cli_args.run_dir)))
-        if not os.path.isdir(cli_args.run_dir):
+        if not cli_args.run_dir.is_dir():
             raise LayerStackError(f"The run directory '{cli_args.run_dir}' does not exist.")
 
-        #print(os.getcwd())
-        #old_cur_dir = Path.cwd()
-        old_cur_dir = os.getcwd()
+        old_cur_dir = Path.cwd()
         os.chdir(cli_args.run_dir)
 
         try:
@@ -434,6 +430,8 @@ class Layer(object):
     @classmethod
     def create(cls, name, parent_dir, desc=None, layer_base_class=LayerBase):
 
+        print('>>>>>>>>>>>>')
+
         """
         Create new layer
 
@@ -455,18 +453,20 @@ class Layer(object):
         """
 
         # Create the directory
-        if not os.path.exists(parent_dir):
+        if not parent_dir.exists():
             raise LayerStackError(f"The parent_dir {parent_dir} does not exist.") # maynot need the msg_begin here
         dir_name = name.lower().replace(" ", "_")
-        dir_path = os.path.join(parent_dir, dir_name)
-        if os.path.exists(dir_path):
+        dir_path = parent_dir / dir_name
+
+        if dir_path.exists():
             raise LayerStackError(f"The new directory to be created, {dir_path}, already exists.")
-        os.mkdir(dir_path)
+        dir_path.mkdir()
 
         # Create the layer.py file
         j2env = Environment(loader=FileSystemLoader(os.path.dirname(__file__)))
+
         template = j2env.get_template('layer.template')
-        with open(os.path.join(dir_path, 'layer.py'), 'w') as f:
+        with open((dir_path / 'layer.py'), 'w') as f:
             f.write(template.render(**cls._template_kwargs(name,
                                                            layer_base_class,
                                                            desc)))
@@ -474,6 +474,8 @@ class Layer(object):
 
     @classmethod
     def _template_kwargs(cls, name, layer_base_class, desc):
+
+        print(layer_base_class)
 
         """
         Kwargs for layer template
@@ -531,6 +533,9 @@ class Layer(object):
 
         main_opts = ""
         lead = None
+        
+        # below code is grabbing docstring and main parser options from LayerBase
+        # to be added to end of the new layer.py file 
         for ln in LayerBase.main.__doc__.split("\n"):
             if not lead and not ln:
                 continue
