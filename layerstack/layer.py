@@ -429,9 +429,6 @@ class Layer(object):
 
     @classmethod
     def create(cls, name, parent_dir, desc=None, layer_base_class=LayerBase):
-
-        print('>>>>>>>>>>>>')
-
         """
         Create new layer
 
@@ -474,9 +471,6 @@ class Layer(object):
 
     @classmethod
     def _template_kwargs(cls, name, layer_base_class, desc):
-
-        print(layer_base_class)
-
         """
         Kwargs for layer template
 
