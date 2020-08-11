@@ -111,7 +111,7 @@ class LayerBase(object):
         pass
 
     # TODO: Split main into parser and execution. Should be able to re-use
-    # parser-part for workflows.
+    # parser-part for workflows. Execution part should call Stack.run.
     @classmethod
     def main(cls, log_format=DEFAULT_LOG_FORMAT):
         """
@@ -148,8 +148,10 @@ class LayerBase(object):
 
         cli_args.run_dir = Path(cli_args.run_dir)
 
+        if not cli_args.run_dir.exists():
+            cli_args.run_dir.mkdir()
         if not cli_args.run_dir.is_dir():
-            raise LayerStackError(f"The run directory '{cli_args.run_dir}' does not exist.")
+           raise LayerStackError(f"The run directory '{cli_args.run_dir}' does not exist.")
 
         old_cur_dir = Path.cwd()
         os.chdir(cli_args.run_dir)
@@ -199,7 +201,8 @@ class LayerBase(object):
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
         # TODO: Fix KwargDict so **kwarg_dict works natively
-        return cls.apply(Stack(), *arg_list, **{k: v for k, v in kwarg_dict.items()})
+        return cls.apply(Stack(run_dir=cli_args.run_dir), 
+            *arg_list, **{k: v for k, v in kwarg_dict.items()})
 
     @classmethod
     def _add_positional_arguments(cls, parser): 
@@ -350,7 +353,8 @@ model".format(cls.name)
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
         # TODO: Fix KwargDict so **kwarg_dict works natively
-        return cls.apply(Stack(), model, *arg_list, **{k: v for k, v in kwarg_dict.items()})
+        return cls.apply(Stack(run_dir=cli_args.run_dir, model=model), 
+                         model, *arg_list, **{k: v for k, v in kwarg_dict.items()})
 
     @classmethod
     def _load_model(cls, model_path):
@@ -556,7 +560,6 @@ class Layer(object):
         'str'
             Path to layer.py file
         """
-
         return os.path.join(str(layer_dir), 'layer.py')
 
     @staticmethod
@@ -711,6 +714,7 @@ hierarchy tree.".format(layer_dir)
         -------
             updated model
         """
+        # ETH@20200810 - This method seems redundant/unused. Deprecate?
 
         layer = Layer(layer_dir)
         layer.args.mode = ArgMode.USE
