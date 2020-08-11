@@ -31,6 +31,7 @@ import json
 import logging
 from pathlib import Path
 import os
+from timeit import default_timer as timer
 from uuid import UUID, uuid4
 
 logger = logging.getLogger(__name__)
@@ -333,6 +334,15 @@ class Stack(MutableSequence):
                 return False
         return True
 
+    def set_arg_mode(self, arg_mode):
+        """
+        Convenience function for setting all args and kwargs objects to the same
+        ArgMode.
+        """
+        for layer in self.layers:
+            layer.args.mode = arg_mode
+            layer.kwargs.mode = arg_mode
+
     def save(self, filename):
         """
         Save stack
@@ -400,12 +410,12 @@ class Stack(MutableSequence):
                 arg_dict = OrderedDict()
                 arg_dict['name'] = arg.name
                 if arg.set:
-                    arg_dict['value'] = arg.value
+                    arg_dict['value'] = arg.value_to_save
                 else:
                     arg_dict['value'] = None
                 arg_dict['description'] = arg.description
                 arg_dict['parser'] = repr(arg.parser)
-                arg_dict['choices'] = arg.choices
+                arg_dict['choices'] = arg.choices_to_save
                 arg_dict['nargs'] = arg.nargs
                 arg_dict['list_parser'] = repr(arg.list_parser)
                 args.append(arg_dict)
@@ -414,11 +424,11 @@ class Stack(MutableSequence):
             kwargs = OrderedDict()
             for name, kwarg in layer.kwargs.items():
                 kwarg_dict = OrderedDict()
-                kwarg_dict['value'] = kwarg.value
-                kwarg_dict['default'] = kwarg.default
+                kwarg_dict['value'] = kwarg.value_to_save
+                kwarg_dict['default'] = kwarg.default_to_save
                 kwarg_dict['description'] = kwarg.description
                 kwarg_dict['parser'] = repr(kwarg.parser)
-                kwarg_dict['choices'] = kwarg.choices
+                kwarg_dict['choices'] = kwarg.choices_to_save
                 kwarg_dict['nargs'] = kwarg.nargs
                 kwarg_dict['list_parser'] = repr(kwarg.list_parser)
                 kwargs[name] = kwarg_dict
@@ -614,15 +624,33 @@ serialization has {}".format(len(self), len(stack_layers))
             Archive stack before running
         """
 
+        start = timer()
+        def timer_str(elapsed_seconds):
+            result = ''; sep = ''
+            days, remainder = divmod(elapsed_seconds, 60*60*24)
+            if days:
+                result += sep + f'{days:0.0f} d'; sep = ' '
+            hours, remainder = divmod(remainder, 60*60)
+            if hours: 
+                result += sep + f'{hours:0.0f} h'; sep = ' '
+            minutes, remainder = divmod(remainder, 60)
+            if minutes:
+                result += sep + f'{minutes:0.0f} m'; sep = ' '
+            if days or hours:
+                result += sep + f'{remainder:0.0f} s'
+            elif minutes:
+                result += sep + f'{remainder:0.1f} s'
+            else:
+                result += sep + f'{remainder} s'
+            return result
+
         # change the layer_library_dir 
         lib_check_layer = self.layers[-1].layer
         if new_layer_library_dir is not None:
             lib_check_layer.layer_dir = new_layer_library_dir
 
         if not self.runnable:
-            msg = "Stack is not runnable. Be sure run_dir and arguments are set."
-            logger.error(msg)
-            raise LayerStackError(msg)
+            raise LayerStackError("Stack is not runnable. Be sure run_dir and arguments are set.")
 
         # get absolute paths
         model_path = None
@@ -656,8 +684,10 @@ serialization has {}".format(len(self), len(stack_layers))
                     self.model = layer._load_model(model_path)
                     layer._check_model_type(self.model)
                 else:
-                    raise LayerStackError('Layer must be a ModelLayer but is a {:}'
-                                        .format(type(Layer)))
+                    raise LayerStackError(f"To use non-None model_path {model_path}, "
+                        "Layer must be a ModelLayer, but this Stack's first layer "
+                        f"is a {type(layer)}")
+
             for layer in self.layers:
                 logger.info(f"Running {layer.name}")
                 if issubclass(layer.layer, ModelLayerBase):
@@ -672,12 +702,16 @@ serialization has {}".format(len(self), len(stack_layers))
                 if issubclass(layer, ModelLayerBase):
                     layer._save_model(self.model, save_path)
                 else:
-                    raise LayerStackError('Layer must be a ModelLayer but is a {:}'
-                                        .format(type(layer)))
+                    raise LayerStackError(f"To use non-None save_path {save_path}, "
+                        "Layer must be a ModelLayer, but this Stack's last Layer "
+                        f"is a {type(layer)}")
+
             # switch back to initial directory
             os.chdir(old_cur_dir)
+            logger.info(f"Stack ran successfully in {timer_str(timer() - start)}")
         except:
             os.chdir(old_cur_dir)
+            logger.info(f"Stack failed after {timer_str(timer() - start)}")
             raise        
 
 
