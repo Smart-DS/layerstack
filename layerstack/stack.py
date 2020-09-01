@@ -401,7 +401,7 @@ class Stack(MutableSequence):
         json_data['uuid'] = str(self.uuid)
         json_data['version'] = self.version
         json_data['run_dir'] = str(self.run_dir) # convert to str due to Path JSON issue
-        json_data['model'] = self.model
+        json_data['model'] = str(self.model) # model can be all sorts of things--write out as str
         stack_layers = []
         for layer in self.layers:
             layer.args.mode = ArgMode.DESC
