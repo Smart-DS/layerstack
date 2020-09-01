@@ -25,7 +25,7 @@ import argparse
 from builtins import super
 import imp
 import logging
-import os
+from os import chdir
 
 from pathlib import Path
 import sys
@@ -154,15 +154,15 @@ class LayerBase(object):
            raise LayerStackError(f"The run directory '{cli_args.run_dir}' does not exist.")
 
         old_cur_dir = Path.cwd()
-        os.chdir(cli_args.run_dir)
+        chdir(cli_args.run_dir)
 
         try:
             cls._main_apply(cli_args, arg_list, kwarg_dict)
         # switch back to initial directory
-            os.chdir(old_cur_dir)
+            chdir(old_cur_dir)
         except:
             #Path.replace(old_cur_dir)
-            os.chdir(old_cur_dir)
+            chdir(old_cur_dir)
             raise
 
         sys.exit()
@@ -464,7 +464,7 @@ class Layer(object):
         dir_path.mkdir()
 
         # Create the layer.py file
-        j2env = Environment(loader=FileSystemLoader(os.path.dirname(__file__)))
+        j2env = Environment(loader=FileSystemLoader(str(Path(__file__).parent)))
 
         template = j2env.get_template('layer.template')
         with open((dir_path / 'layer.py'), 'w') as f:
@@ -552,15 +552,15 @@ class Layer(object):
 
         Parameters
         ----------
-        layer_dir : 'str'
+        layer_dir : str
             Parent directory for layer
 
         Returns
         -------
-        'str'
+        str
             Path to layer.py file
         """
-        return os.path.join(str(layer_dir), 'layer.py')
+        return str(Path(layer_dir) / 'layer.py')
 
     @staticmethod
     def load_layer(layer_dir):

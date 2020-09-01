@@ -29,7 +29,7 @@ __email__ = 'michael.rossol@nrel.gov'
 
 import hashlib
 import logging
-import os
+from os import remove
 from uuid import uuid4
 
 from ._version import __version__
@@ -149,5 +149,5 @@ class TempJsonFilepath():
         return self.filename
 
     def __exit__(self, ctx_type, ctx_value, ctx_traceback):
-        os.remove(self.filename)
+        remove(self.filename)
 

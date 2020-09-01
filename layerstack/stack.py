@@ -30,7 +30,7 @@ from collections import MutableSequence, OrderedDict
 import json
 import logging
 from pathlib import Path
-import os
+from os import chdir
 from timeit import default_timer as timer
 from uuid import UUID, uuid4
 
@@ -42,8 +42,6 @@ from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
 # TODO:
-#  - Convert from using os to using pathlib.Path 
-#  - Verify tests pass again
 #  - Implement continuous integration -- testing and docs
 #  - Implement get_layer_dir
 #  - Test implementation of get_layer_dir
@@ -667,7 +665,7 @@ serialization has {}".format(len(self), len(stack_layers))
             self.run_dir.mkdir()
 
         old_cur_dir = Path.cwd()
-        os.chdir(self.run_dir) 
+        chdir(self.run_dir) 
 
         # set up logging
         start_file_log('stack.log',log_level=log_level)
@@ -707,10 +705,10 @@ serialization has {}".format(len(self), len(stack_layers))
                         f"is a {type(layer)}")
 
             # switch back to initial directory
-            os.chdir(old_cur_dir)
+            chdir(old_cur_dir)
             logger.info(f"Stack ran successfully in {timer_str(timer() - start)}")
         except:
-            os.chdir(old_cur_dir)
+            chdir(old_cur_dir)
             logger.info(f"Stack failed after {timer_str(timer() - start)}")
             raise        
 

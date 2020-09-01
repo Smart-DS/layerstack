@@ -20,7 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 '''
 from __future__ import print_function, division, absolute_import
 
-import os
 import subprocess
 
 import pytest
@@ -40,4 +39,4 @@ def create_layer_library_dir(manage_outdir):
 def test_layer_base():
     layer_dir = Layer.create('Test Layer Base',layer_library_dir)
     # should be able to run the layer as-is
-    subprocess.check_call(['python',os.path.join(layer_dir,'layer.py'),'dummy_arg'])
+    subprocess.check_call(['python', str(layer_library_dir / 'test_layer_base' / 'layer.py'), 'dummy_arg'])
