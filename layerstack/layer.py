@@ -23,7 +23,6 @@ from __future__ import print_function, division, absolute_import
 
 import argparse
 from builtins import super
-import imp
 import logging
 from os import chdir
 
@@ -34,7 +33,7 @@ from uuid import uuid4
 from jinja2 import Environment, FileSystemLoader
 from layerstack.args import ArgList, KwargDict, ArgMode
 from layerstack import (DEFAULT_LOG_FORMAT, LayerStackError, checksum, 
-    start_console_log)
+    load_module_from_file, start_console_log)
 
 
 logger = logging.getLogger(__name__)
@@ -92,7 +91,7 @@ class LayerBase(object):
 
     @classmethod
     def apply(cls, stack, *args, **kwargs):
-        """
+        r"""
         Run this layer in the context of the stack, with positional and keyword
         arguments. In general in user-defined layers (classes derived from 
         LayerBase), \*args and \*\*kwargs should be replaced by the actual 
@@ -276,7 +275,7 @@ class ModelLayerBase(LayerBase):
 
     @classmethod
     def apply(cls, stack, model, *args, **kwargs):
-        """
+        r"""
         Run this layer in the context of the stack, with positional and keyword
         arguments. In general in user-defined layers (classes derived from 
         LayerBase), \*args and \*\*kwargs should be replaced by the actual 
@@ -299,7 +298,6 @@ class ModelLayerBase(LayerBase):
         model
             Updated model
         """
-
         if isinstance(model, str):
             model = cls._load_model(model)
         cls._check_model_type(model)
@@ -578,8 +576,8 @@ class Layer(object):
             Layer class object
         """
 
-        module = imp.load_source('loaded_layer_{}'.format(uuid4()),
-                                 Layer.layer_filename(layer_dir))
+        module = load_module_from_file('loaded_layer_{}'.format(uuid4()),
+                                       Layer.layer_filename(layer_dir))
         candidate = None
         base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):

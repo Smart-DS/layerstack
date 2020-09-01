@@ -48,7 +48,7 @@ class KwArgBase(object):
         argument in the argparse add_argument method 
     choices : None or list
         list of allowable values
-    nargs: None, int, str
+    nargs : None, int, str
         analogous to the nargs argument in the argparse add_argument method
     list_parser : callable
         function to parse a [keyword] argument value list     
@@ -69,14 +69,6 @@ class KwArgBase(object):
 
     @property
     def nargs(self):
-        """
-        settable attribute
-
-        Returns
-        -------
-        None, int, str
-            analogous to the nargs argument in the argparse add_argument method
-        """
         return self._nargs
 
     @nargs.setter

@@ -42,7 +42,6 @@ from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
 # TODO:
-#  - Implement continuous integration -- testing and docs
 #  - Implement get_layer_dir
 #  - Test implementation of get_layer_dir
 #  - Update Stack.load accordingly
