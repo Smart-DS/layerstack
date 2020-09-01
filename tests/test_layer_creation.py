@@ -37,6 +37,6 @@ def create_layer_library_dir(manage_outdir):
     layer_library_dir.mkdir()
 
 def test_layer_base():
-    layer_dir = Layer.create('Test Layer Base',layer_library_dir)
+    _layer_dir = Layer.create('Test Layer Base',layer_library_dir)
     # should be able to run the layer as-is
     subprocess.check_call(['python', str(layer_library_dir / 'test_layer_base' / 'layer.py'), 'dummy_arg'])

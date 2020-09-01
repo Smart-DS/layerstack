@@ -196,3 +196,24 @@ def load_module_from_file(module_name, module_path):
         module = imp.load_source(module_name, module_path)
 
     return module
+
+
+def timer_str(elapsed_seconds):
+            result = ''; sep = ''
+            days, remainder = divmod(elapsed_seconds, 60*60*24)
+            if days:
+                result += sep + f'{days:0.0f} d'; sep = ' '
+            hours, remainder = divmod(remainder, 60*60)
+            if hours: 
+                result += sep + f'{hours:0.0f} h'; sep = ' '
+            minutes, remainder = divmod(remainder, 60)
+            if minutes:
+                result += sep + f'{minutes:0.0f} m'; sep = ' '
+            if days or hours:
+                result += sep + f'{remainder:0.0f} s'
+            elif minutes:
+                result += sep + f'{remainder:0.1f} s'
+            else:
+                result += sep + f'{remainder} s'
+            return result
+                

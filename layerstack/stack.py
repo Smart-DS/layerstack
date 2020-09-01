@@ -37,7 +37,7 @@ from uuid import UUID, uuid4
 logger = logging.getLogger(__name__)
 
 from layerstack import (LayerStackError, TempJsonFilepath, checksum, 
-    start_console_log, start_file_log)
+    start_console_log, start_file_log, timer_str)
 from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
@@ -229,26 +229,6 @@ class Stack(MutableSequence):
         """
         return len(self.__layers)
 
-    @staticmethod
-    def convert_path(path):
-        """
-        Convert windows file paths to linux path format
-
-        Parameters
-        ----------
-        path : str
-            file path to convert
-
-        Returns
-        -------
-        Path
-            Path class object to handle file path
-        """
-        if '\\' in path:
-            path = path.replace('\\', '/')
-
-        return Path(path)
-
     @property
     def suggested_filename(self):
         """
@@ -439,13 +419,12 @@ class Stack(MutableSequence):
                 'checksum': layer.checksum,
                 'args': args, 'kwargs': kwargs})
 
-        assert len(stack_layers) == len(self), "I have {} layers, but \
-serialization has {}".format(len(self), len(stack_layers))
+        assert len(stack_layers) == len(self), f"I have {len(self)} layers, but serialization has {len(stack_layers)}"
         json_data['layers'] = stack_layers
         return json_data
 
     @classmethod
-    def get_layer_dir(cls, layer_dir, layer_library_dirs=[], original_preferred=True):
+    def get_layer_dir(cls, layer_dir, layer_library_dirs=[], original_preferred=True, hard_fail=False):
         """
         Determine the best path to the :class:`layerstack.layer.Layer` indicated 
         by layer_dir, based on the user-provided options. This method may be 
@@ -455,8 +434,9 @@ serialization has {}".format(len(self), len(stack_layers))
 
         Parameters
         ----------
-        layer_dir : str or pathlib.Path # (should always be string to avoid issues where first elmt fails)
-            Location of the :class:`layerstack.layer.Layer` as originally represented
+        layer_dir : str or pathlib.Path
+            Location of the :class:`layerstack.layer.Layer` as originally 
+            represented
         layer_library_dirs : list of str or pathlib.Path
             Location(s) where the :class:`layerstack.layer.Layer` may now be 
             found. If multiple locations are provided, it is assumed that they 
@@ -466,36 +446,63 @@ serialization has {}".format(len(self), len(stack_layers))
             directly. If False, the original layer_dir path will only be used if
             the :class:`layerstack.layer.Layer` is not found in any of the 
             locations listed in layer_library_dirs.
+        hard_fail : bool
+            If True, raises LayerStackError if the layer cannot be located.
 
         Returns
         -------
         pathlib.Path or None
             If the :class:`layerstack.layer.Layer` is located, its path is 
             returned and pathlib.Path.exists(). Otherwise, a warning is logged
-            and None is returned.
-        """
+            and None is returned, unless hard_fail, in which case a 
+            LayerStackError is raised instead.
 
-        for tmp_dir in layer_library_dirs:
-            layer_lib_dir_elmt = Path(tmp_dir)
-            if layer_lib_dir_elmt.exists(): 
-                layer_dir = layer_lib_dir_elmt / layer_dir.name
-                return layer_dir
-            else:
-                print('Invalid directory specified in directory list. Trying next directory in list.')
+        Raises
+        ------
+        LayerStackError
+            If the :class:`layerstack.layer.Layer` cannot be located and 
+            hard_fail is True.
+        """
+        layer_dir = Path(layer_dir)
+
+        candidate_locations = [Path(dirname) for dirname in layer_library_dirs]
+        if original_preferred:
+            candidate_locations.insert(0, layer_dir.parent)
+        else:
+            candidate_locations.append(layer_dir.parent)
+
+        for candidate_location in candidate_locations:
+            candidate = candidate_location / layer_dir.name
+            if candidate.exists():
+                return candidate
+        
+        msg = (f"Unable to find the layer {layer_dir.name} in any of the locations\n  " +
+            "\n  ".join([str(candidate_location) for candidate_location in candidate_locations]))
+        if hard_fail:
+            raise LayerStackError(msg)
+        logger.warning(msg)
+        return None
 
 
     @classmethod
-    def load(cls, filename, layer_library_dir=None, original_layer_dir_preferred=True):
+    def load(cls, filename, layer_library_dir=None, original_locations_preferred=True):
         """
         Load stack from given .json file
 
         Parameters
         ----------
         filename : str or pathlib.Path
-            File path from which to load stack
+            .json file path from which to load :class:`layerstack.stack.Stack`
         layer_library_dir : None, str, pathlib.Path, or list of str or pathlib.Path
             If one or more paths are provided, these will be used to locate layer 
-            directories listed in the :class:`layerstack.stack.Stack` json file
+            directories listed in the :class:`layerstack.stack.Stack` json file. 
+            If multiple directories are provided, they will be checked in order.
+        original_locations_preferred : bool
+            If True, the original locations of the layers listed in the 
+            :class:`layerstack.stack.Stack` json file will be preferred and use
+            if they exist on the current file system. If False, any location(s) 
+            passed in through layer_library_dir will be preferred and checked 
+            first
 
         Returns
         -------
@@ -510,18 +517,27 @@ serialization has {}".format(len(self), len(stack_layers))
         if json_data['name'] is not None:
             stack_name = json_data['name']
 
-        layers = []
+        # list of places where we will look for Layers
+        layer_library_dirs = [] 
+        if layer_library_dir is not None:
+            if isinstance(layer_library_dir, (str, Path)):
+                layer_library_dirs.append(layer_library_dir)
+            else:
+                try:
+                    layer_library_dirs = [Path(dirname) for dirname in layer_library_dir]
+                except Exception as e:
+                    raise LayerStackError(f"Unexpected layer_library_dir = {layer_library_dir}. "
+                        f"Was expecting str, pathlib.Path, or list thereof. Failed because, {e}.")
 
+        # now process each layer
+        layers = []
         for json_layer in json_data['layers']:
 
-            layer_dir = Path(json_layer['layer_dir'])
-
-            if layer_library_dir is not None:
-                if original_layer_dir_preferred is False:
-                    layer_dir = Stack.get_layer_dir(layer_dir, layer_library_dir, original_layer_dir_preferred) # check it
-                else:
-                    if layer_dir.exists():
-                        print('Using original layer-library directory')
+            layer_dir = cls.get_layer_dir(
+                json_layer['layer_dir'], 
+                layer_library_dirs = layer_library_dirs, 
+                original_preferred = original_locations_preferred,
+                hard_fail=True)
 
             layer = Layer(layer_dir)
 
@@ -607,44 +623,20 @@ serialization has {}".format(len(self), len(stack_layers))
         result._uuid = UUID(json_data['uuid'])
         return result
 
-    def run(self, save_path=None, new_layer_library_dir=None, log_level=logging.INFO, archive=True):
+    def run(self, save_path=None, log_level=logging.INFO, archive=True):
         """
         Run stack
 
         Parameters
         ----------
-        save_path : 'str'
+        save_path : str
             Path to which results from running stack should be saved
-        log_level : 'logging'
+        log_level : logging
             Level of logging to be used while running stack
-        archive : 'bool'
+        archive : bool
             Archive stack before running
         """
-
         start = timer()
-        def timer_str(elapsed_seconds):
-            result = ''; sep = ''
-            days, remainder = divmod(elapsed_seconds, 60*60*24)
-            if days:
-                result += sep + f'{days:0.0f} d'; sep = ' '
-            hours, remainder = divmod(remainder, 60*60)
-            if hours: 
-                result += sep + f'{hours:0.0f} h'; sep = ' '
-            minutes, remainder = divmod(remainder, 60)
-            if minutes:
-                result += sep + f'{minutes:0.0f} m'; sep = ' '
-            if days or hours:
-                result += sep + f'{remainder:0.0f} s'
-            elif minutes:
-                result += sep + f'{remainder:0.1f} s'
-            else:
-                result += sep + f'{remainder} s'
-            return result
-
-        # change the layer_library_dir 
-        lib_check_layer = self.layers[-1].layer
-        if new_layer_library_dir is not None:
-            lib_check_layer.layer_dir = new_layer_library_dir
 
         if not self.runnable:
             raise LayerStackError("Stack is not runnable. Be sure run_dir and arguments are set.")
@@ -653,13 +645,14 @@ serialization has {}".format(len(self), len(stack_layers))
         model_path = None
 
         if isinstance(self.model, (str, Path)):
-            temp_path = Path(self.model).absolute()
-            if temp_path.exists():
-                model_path = Path(self.model).absolute()
+            model_path = Path(self.model)
+            if model_path.exists():
+                model_path = model_path.absolute()
 
         if save_path is not None:
             save_path = Path(save_path).absolute()
 
+        # set up and switch into the run directory
         if not self.run_dir.exists():
             self.run_dir.mkdir()
 
@@ -672,24 +665,22 @@ serialization has {}".format(len(self), len(stack_layers))
         if archive:
             self.archive()
 
-        # #run the stack
-        logger.debug('run try-except')
+        # run the stack
         try:
-            if model_path is not None:
+            if self.model is not None:
                 layer = self.layers[0]._layer
                 if issubclass(layer, ModelLayerBase):
-                    self.model = layer._load_model(model_path)
+                    if model_path is not None:
+                        self.model = layer._load_model(model_path)
                     layer._check_model_type(self.model)
                 else:
-                    raise LayerStackError(f"To use non-None model_path {model_path}, "
+                    raise LayerStackError(f"To use non-None model {self.model}, "
                         "Layer must be a ModelLayer, but this Stack's first layer "
                         f"is a {type(layer)}")
 
             for layer in self.layers:
-                logger.info(f"Running {layer.name}")
+                logger.info(f"Running {layer.name!r} layer")
                 if issubclass(layer.layer, ModelLayerBase):
-                    if self.model is None:
-                        raise LayerStackError('Model not initialized')
                     self.model = layer.run_layer(self, model=self.model)
                 else:
                     self.result = layer.run_layer(self)
@@ -712,7 +703,8 @@ serialization has {}".format(len(self), len(stack_layers))
             raise        
 
 
-def repoint_stack(p, layer_library_dir=None, original_layer_dir_preferred=True, run_dir=None, model=None, outfile=None):
+def repoint_stack(p, layer_library_dir=None, original_locations_preferred=True, 
+                  run_dir=None, model=None, outfile=None):
     """
     Load Stack from p, update run_dir and/or model, and save to outfile or to the
     same folder but with the file name prepended with an underscore.
@@ -721,8 +713,16 @@ def repoint_stack(p, layer_library_dir=None, original_layer_dir_preferred=True, 
     ----------
     p : str
         path to Stack .json file
-    lyr_lib_dir : str or None
-        layer library directory to use if not specified or if needing to be changed
+    layer_library_dir : None, str, pathlib.Path, or list of str or pathlib.Path
+        If one or more paths are provided, these will be used to locate layer 
+        directories listed in the :class:`layerstack.stack.Stack` json file. 
+        If multiple directories are provided, they will be checked in order.
+    original_locations_preferred : bool
+        If True, the original locations of the layers listed in the 
+        :class:`layerstack.stack.Stack` json file will be preferred and use
+        if they exist on the current file system. If False, any location(s) 
+        passed in through layer_library_dir will be preferred and checked 
+        first
     run_dir : str or None
         run directory to use
     model : str or None
@@ -731,9 +731,9 @@ def repoint_stack(p, layer_library_dir=None, original_layer_dir_preferred=True, 
         where to save modified stack. If not provided, will save the result to 
         the same directory but with the filename prepended with an underscore
     """
-
-    # layer_library_dir) is either none or is a list of the dirs desired to be passed 
-    stack = Stack.load(p, layer_library_dir, original_layer_dir_preferred)
+    stack = Stack.load(p, 
+        layer_library_dir=layer_library_dir, 
+        original_locations_preferred=original_locations_preferred)
     
     if run_dir is not None:
         stack.run_dir = run_dir
@@ -752,13 +752,26 @@ def repoint_stack(p, layer_library_dir=None, original_layer_dir_preferred=True, 
 
 def main():
     parser = argparse.ArgumentParser("Load and optionally run a stack.")
-    parser.add_argument('stack_file', help="""Stack json file to load and optionally a new layer 
-        library directory to reassign.""")
+    
+    # all CLI options require loading a Stack json file
+    parser.add_argument('stack_file', help="""Stack json file to load""")
+    parser.add_argument('-ld', '--layer-library-dirs', help="""List of layer 
+        parent directories where the layers listed in the Stack .json file may 
+        be found on this file system.""", nargs='*') 
+    parser.add_argument('-nop', '--non-original-locations-preferred', 
+        help="""Set this flag if the original layer locations listed in the 
+            .json file should be checked last instead of first (after the 
+            layer-library-dirs instead of before).""", 
+        action='store_false', dest='original_locations_preferred')
+    parser.set_defaults(original_locations_preferred=True)
+
+    # all CLI options also involve configuring logging (at least console)
     parser.add_argument('-d','--debug', action='store_true', default=False)
     parser.add_argument('-w','--warning-only', action='store_true', default=False)
-    
+
+    # CLI options    
     mode_parsers = parser.add_subparsers(title='mode', dest='mode', help='sub-command')
-    parser_list = mode_parsers.add_parser('list')
+    _parser_list = mode_parsers.add_parser('list')
     parser_repoint = mode_parsers.add_parser('repoint')
     parser_run = mode_parsers.add_parser('run')
 
@@ -770,33 +783,20 @@ def main():
         should be run.""")
     parser_repoint.add_argument('-mp', '--model-path', help="""Model this stack 
         should be run on.""")
-    parser_repoint.add_argument('-ld', '--layer-library-dir', help="""list of layer library 
-        directories to use.""") 
-    parser_repoint.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this 
-        flag is True such that the existing directoryspecified in the stack layer_dir argument is 
-        used.""", action='store_true')    
 
     # run arguments 
-    parser_run.add_argument('-ld', '--layer-library-dir', type=str, nargs='+', help="""Default is 
-        for this flag to be set to false, in which case the stack uses the existing
-        layer_library_dir""")
-    parser_run.add_argument('-op', '--original-layer-dir-preferred', help="""Default for this flag 
-        is True such that the existing directory
-        specified in the stack layer_dir argument is used.""", action='store_true')
     parser_run.add_argument('-sp', '--save-path', help="""Where the results of 
         running this stack should be saved. This is an output path for the 
         stack's final model.""")
-    parser_run.add_argument('-a', '--archive', help="""Default is for this 
-        flag to be set to true, in which case the stack is archived to the run 
-        directory.""", dest='archive', default=True, action='store_true')
     parser_run.add_argument('-na', '--no-archive', help="""Set this flag to 
         turn off stack archiving.""", dest='archive', action='store_false')
+    parser_run.set_defaults(archive=True)
 
     args = parser.parse_args()
 
     # determine log level
     log_level = logging.INFO
-    if args.warning_only:
+    if args.warning_only and (args.mode != 'list'):
         log_level = logging.WARNING
     if args.debug:
         log_level = logging.DEBUG
@@ -805,22 +805,26 @@ def main():
     start_console_log(log_level=log_level)
 
     if args.mode == 'list':
-        stack = Stack.load(args.stack_file)
-        print(stack)
+        stack = Stack.load(
+            args.stack_file, 
+            layer_library_dir=args.layer_library_dirs, 
+            original_locations_preferred=args.original_locations_preferred)
+        logger.info(f"Stack loaded from {args.stack_file}:\n{stack}")
     elif args.mode == 'repoint':
         repoint_stack(args.stack_file, 
                       layer_library_dir=args.layer_library_dir,
-                      original_layer_dir_preferred=args.original_layer_dir_preferred,
+                      original_locations_preferred=args.original_locations_preferred,
                       run_dir=args.run_dir, 
                       model=args.model_path, 
                       outfile=args.outfile)
     elif args.mode == 'run':
-        layer_library_dir_list = args.layer_library_dir
-        original_layer_dir_preferred = args.original_layer_dir_preferred
-        stack = Stack.load(args.stack_file, layer_library_dir_list, original_layer_dir_preferred)
+        stack = Stack.load(
+            args.stack_file, 
+            layer_library_dir=args.layer_library_dirs, 
+            original_locations_preferred=args.original_locations_preferred)
         stack.run(save_path=args.save_path, log_level=log_level, archive=args.archive)
     else:
-        assert False, 'Unknown mode {}'.format(args.mode)
+        assert False, f'Unknown mode {args.mode}'
     
     return
 
