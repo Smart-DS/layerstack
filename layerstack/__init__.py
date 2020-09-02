@@ -114,6 +114,11 @@ def start_file_log(filename, log_level=logging.WARN,log_format=DEFAULT_LOG_FORMA
     return logfile
 
 
+def end_file_log(logfile):
+    logfile.close()
+    logging.getLogger().removeHandler(logfile)
+
+
 def checksum(filename):
     """
     Computes the checksum of a file.
@@ -199,21 +204,27 @@ def load_module_from_file(module_name, module_path):
 
 
 def timer_str(elapsed_seconds):
-            result = ''; sep = ''
-            days, remainder = divmod(elapsed_seconds, 60*60*24)
-            if days:
-                result += sep + f'{days:0.0f} d'; sep = ' '
-            hours, remainder = divmod(remainder, 60*60)
-            if hours: 
-                result += sep + f'{hours:0.0f} h'; sep = ' '
-            minutes, remainder = divmod(remainder, 60)
-            if minutes:
-                result += sep + f'{minutes:0.0f} m'; sep = ' '
-            if days or hours:
-                result += sep + f'{remainder:0.0f} s'
-            elif minutes:
-                result += sep + f'{remainder:0.1f} s'
-            else:
-                result += sep + f'{remainder} s'
-            return result
-                
+    result = ''; sep = ''
+    days, remainder = divmod(elapsed_seconds, 60*60*24)
+    if days:
+        result += sep + f'{days:0.0f} d'; sep = ' '
+    hours, remainder = divmod(remainder, 60*60)
+    if hours: 
+        result += sep + f'{hours:0.0f} h'; sep = ' '
+    minutes, remainder = divmod(remainder, 60)
+    if minutes:
+        result += sep + f'{minutes:0.0f} m'; sep = ' '
+    if days or hours:
+        result += sep + f'{remainder:0.0f} s'
+    elif minutes:
+        result += sep + f'{remainder:0.1f} s'
+    else:
+        result += sep + f'{remainder} s'
+    return result
+
+
+# import objects required for basic use so they can be imported directly 
+# from layerstack
+from .args import ArgMode
+from .layer import Layer
+from .stack import Stack

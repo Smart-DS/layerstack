@@ -37,7 +37,7 @@ from uuid import UUID, uuid4
 logger = logging.getLogger(__name__)
 
 from layerstack import (LayerStackError, TempJsonFilepath, checksum, 
-    start_console_log, start_file_log, timer_str)
+    start_console_log, start_file_log, end_file_log, timer_str)
 from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
@@ -119,7 +119,7 @@ class Stack(MutableSequence):
         """
         if not isinstance(value, Layer):
             raise LayerStackError("Stacks only hold layerstack.layer.Layer "
-                "objects. You passed a {type(value)}.")                
+                f"objects. You passed a {type(value)}.")                
 
     def __getitem__(self, i):
         """
@@ -149,7 +149,9 @@ class Stack(MutableSequence):
             Layer to place at ith position in stack
         """
         self.__checkLayer(layer)
-        self.__layers.insert(i, layer)
+        # ETH@20200901 - This was self.__layers.insert(i, layer), but we have 
+        # an insert method, so changing this to behave more as expected
+        self.__layers[i] = layer
 
     def __delitem__(self, i):
         """
@@ -660,7 +662,7 @@ class Stack(MutableSequence):
         chdir(self.run_dir) 
 
         # set up logging
-        start_file_log('stack.log',log_level=log_level)
+        logfile = start_file_log('stack.log',log_level=log_level)
         # also archive
         if archive:
             self.archive()
@@ -697,9 +699,11 @@ class Stack(MutableSequence):
             # switch back to initial directory
             chdir(old_cur_dir)
             logger.info(f"Stack ran successfully in {timer_str(timer() - start)}")
+            end_file_log(logfile)
         except:
             chdir(old_cur_dir)
             logger.info(f"Stack failed after {timer_str(timer() - start)}")
+            end_file_log(logfile)
             raise        
 
 
