@@ -1,0 +1,38 @@
+tests package
+=============
+
+Submodules
+----------
+
+tests.test\_layer\_creation module
+----------------------------------
+
+.. automodule:: tests.test_layer_creation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tests.test\_layers\_args module
+-------------------------------
+
+.. automodule:: tests.test_layers_args
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+tests.test\_session module
+--------------------------
+
+.. automodule:: tests.test_session
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: tests
+    :members:
+    :undoc-members:
+    :show-inheritance:
