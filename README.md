@@ -13,7 +13,7 @@ pip install layerstack
 or
 
 ```
-pip install git+https://github.com/Smart-DS/layerstack.git@v0.2.0
+pip install git+https://github.com/Smart-DS/layerstack.git@v0.3.0
 ```
 
 or 
