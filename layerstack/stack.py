@@ -41,13 +41,6 @@ from layerstack import (LayerStackError, TempJsonFilepath, checksum,
 from layerstack.layer import Layer, ModelLayerBase
 from layerstack.args import ArgMode, Arg, Kwarg
 
-# TODO:
-#  - Implement get_layer_dir
-#  - Test implementation of get_layer_dir
-#  - Update Stack.load accordingly
-#  - Update Stack.main accordingly
-#  - Test layer_library_dir functionality as used in main
-#  - Iterate on documentation
 
 class Stack(MutableSequence):
     """
