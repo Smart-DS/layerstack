@@ -1,6 +1,4 @@
 '''
-This module contains items that pertain to the entire test session.
-
 [LICENSE]
 Copyright (c) 2020 Alliance for Sustainable Energy, LLC, All Rights Reserved
 
@@ -21,31 +19,57 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 [/LICENSE]
 '''
 
+import pytest
 import shutil
 
-import pytest
+from layerstack import ArgMode, LayerStackError, Layer, Stack
+from layerstack.tests import layer_library_dir, outdir
 
-from tests import outdir
 
-STARTUP = True
+def test_layer_types():
+    layer = Layer(layer_library_dir / 'test_list_args')
+    with pytest.raises(LayerStackError) as excinfo:
+        Stack(layers = [layer, 1])
 
-@pytest.fixture(scope="session",autouse=True)
-def manage_outdir(request, clean_up):
-    """
-    At the beginning of the session, creates the test outdir. If tests.clean_up,
-    deletes this folder after the tests have finished running.
+    assert 'int' in str(excinfo.value), str(excinfo.value)
 
-    Arguments
-    - request contains the pytest session, including collected tests
-    """
-    global STARTUP
-    if STARTUP:
-        if outdir.exists():
-            # create clean space for running tests
-            shutil.rmtree(outdir)
-        STARTUP = False
-        outdir.mkdir()
-    def finalize_outdir():
-        if outdir.exists() and clean_up:
-            shutil.rmtree(outdir)
-    request.addfinalizer(finalize_outdir)
+    with pytest.raises(LayerStackError):
+        Stack(layers = [layer.layer_dir])
+
+
+def test_basic_compose_and_run():
+    layer = Layer(layer_library_dir / 'test_list_args')
+    stack = Stack(layers = [layer], 
+                  name='Basic Test', 
+                  run_dir = outdir / 'test_basic_compose_and_run')
+    stack.set_arg_mode(ArgMode.USE)
+    stack[0].args[0] = [1, 2, 3]
+    stack.run()
+
+
+def test_get_layer_dir():
+    alt_layer_library_dir = outdir / 'test_get_layer_dir'
+    alt_layer_library_dir.mkdir()
+
+    orig_layer_dir = layer_library_dir / 'test_list_args' 
+    new_layer_dir = alt_layer_library_dir / 'test_list_args'
+    shutil.copytree(orig_layer_dir, new_layer_dir)
+
+    test_layer_dir = Stack.get_layer_dir(
+        orig_layer_dir, 
+        layer_library_dirs=[alt_layer_library_dir], 
+        original_preferred=True)
+    assert test_layer_dir == orig_layer_dir
+
+    test_layer_dir = Stack.get_layer_dir(
+        orig_layer_dir, 
+        layer_library_dirs=[alt_layer_library_dir], 
+        original_preferred=False)
+    assert test_layer_dir == new_layer_dir
+
+    fake_layer_dir = layer_library_dir / 'my_nonexistent_layer'
+    test_layer_dir = Stack.get_layer_dir(
+        fake_layer_dir, 
+        layer_library_dirs=[alt_layer_library_dir], 
+        original_preferred=True)
+    assert test_layer_dir is None

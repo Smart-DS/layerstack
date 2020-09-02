@@ -24,7 +24,7 @@ pip install git+https://github.com/Smart-DS/layerstack.git@master
 
 ## use
 
-[documentation](http://smart-ds.github.io/layerstack)
+[documentation](https://smart-ds.github.io/layerstack/)
 
 ## uninstall
 

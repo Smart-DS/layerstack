@@ -27,8 +27,8 @@ from layerstack.args import ArgMode
 from layerstack.layer import Layer
 from layerstack.stack import Stack
 
-from tests import layer_library_dir, outdir
-from tests.test_session import manage_outdir
+from layerstack.tests import layer_library_dir, outdir
+from layerstack.tests.test_session import manage_outdir
 
 
 def test_stack_list_args_layer():

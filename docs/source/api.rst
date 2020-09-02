@@ -6,4 +6,3 @@ API
 
    api/modules
    api/layerstack
-   api/tests
