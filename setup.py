@@ -24,8 +24,10 @@ setuptools.setup(
     description = 'Python package for assembling, sharing, and running workflows, especially those associated with modifying, running, and analyzing simulation models',
     long_description = long_description,
     package_data = {
+        '': ['LICENSE'],
         'layerstack': ['*.template'],
-        '': ['LICENSE']
+        'layerstack.tests': ['layer_library/*/layer.py',
+                             'stack_library/*.json']
     },
     install_requires=[
         'jinja2'
