@@ -23,16 +23,17 @@ from __future__ import print_function, division, absolute_import
 
 import argparse
 from builtins import super
-import imp
 import logging
-import os
+from os import chdir
+
+from pathlib import Path
 import sys
 from uuid import uuid4
 
 from jinja2 import Environment, FileSystemLoader
 from layerstack.args import ArgList, KwargDict, ArgMode
 from layerstack import (DEFAULT_LOG_FORMAT, LayerStackError, checksum, 
-    start_console_log)
+    load_module_from_file, start_console_log)
 
 
 logger = logging.getLogger(__name__)
@@ -42,22 +43,19 @@ class LayerBase(object):
     """
     Abstract base class for user-defined layers. All attributes and methods are
     class level.
-
-    Attributes
-    ----------
-    name : str
-        layer name, expected to be human-readable (spaces are okay and even 
-        preferred)
-    uuid : uuid.uuid4
-        unique identifier for the layer
-    version : str
-        human readable version number for the layer (defaults to '0.1.0')
-    desc : str
-        layer description
     """
+
+    #: str: layer name, expected to be human-readable (spaces are okay and even 
+    #: preferred)
     name = None
+
+    #: uuid.uuid4: unique identifier for the layer
     uuid = None
+
+    #: str: human readable version number for the layer (defaults to '0.1.0')
     version = None
+
+    #: str: layer description
     desc = None
 
     @classmethod
@@ -93,7 +91,7 @@ class LayerBase(object):
 
     @classmethod
     def apply(cls, stack, *args, **kwargs):
-        """
+        r"""
         Run this layer in the context of the stack, with positional and keyword
         arguments. In general in user-defined layers (classes derived from 
         LayerBase), \*args and \*\*kwargs should be replaced by the actual 
@@ -112,7 +110,7 @@ class LayerBase(object):
         pass
 
     # TODO: Split main into parser and execution. Should be able to re-use
-    # parser-part for workflows.
+    # parser-part for workflows. Execution part should call Stack.run.
     @classmethod
     def main(cls, log_format=DEFAULT_LOG_FORMAT):
         """
@@ -147,18 +145,23 @@ class LayerBase(object):
         log_level = logging.DEBUG if cli_args.debug else logging.INFO
         start_console_log(log_level=log_level, log_format=log_format)
 
-        if not os.path.isdir(cli_args.run_dir):
-            raise LayerStackError("The run directory '{}' does not exist."
-                                  .format(os.path.abspath(cli_args.run_dir)))
-        old_cur_dir = os.getcwd()
-        os.chdir(cli_args.run_dir)
+        cli_args.run_dir = Path(cli_args.run_dir)
+
+        if not cli_args.run_dir.exists():
+            cli_args.run_dir.mkdir()
+        if not cli_args.run_dir.is_dir():
+           raise LayerStackError(f"The run directory '{cli_args.run_dir}' does not exist.")
+
+        old_cur_dir = Path.cwd()
+        chdir(cli_args.run_dir)
 
         try:
             cls._main_apply(cli_args, arg_list, kwarg_dict)
         # switch back to initial directory
-            os.chdir(old_cur_dir)
+            chdir(old_cur_dir)
         except:
-            os.chdir(old_cur_dir)
+            #Path.replace(old_cur_dir)
+            chdir(old_cur_dir)
             raise
 
         sys.exit()
@@ -197,7 +200,8 @@ class LayerBase(object):
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
         # TODO: Fix KwargDict so **kwarg_dict works natively
-        return cls.apply(Stack(), *arg_list, **{k: v for k, v in kwarg_dict.items()})
+        return cls.apply(Stack(run_dir=cli_args.run_dir), 
+            *arg_list, **{k: v for k, v in kwarg_dict.items()})
 
     @classmethod
     def _add_positional_arguments(cls, parser): 
@@ -271,7 +275,7 @@ class ModelLayerBase(LayerBase):
 
     @classmethod
     def apply(cls, stack, model, *args, **kwargs):
-        """
+        r"""
         Run this layer in the context of the stack, with positional and keyword
         arguments. In general in user-defined layers (classes derived from 
         LayerBase), \*args and \*\*kwargs should be replaced by the actual 
@@ -347,7 +351,8 @@ model".format(cls.name)
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
         # TODO: Fix KwargDict so **kwarg_dict works natively
-        return cls.apply(Stack(), model, *arg_list, **{k: v for k, v in kwarg_dict.items()})
+        return cls.apply(Stack(run_dir=cli_args.run_dir, model=model), 
+                         model, *arg_list, **{k: v for k, v in kwarg_dict.items()})
 
     @classmethod
     def _load_model(cls, model_path):
@@ -379,6 +384,7 @@ model".format(cls.name)
         model_path : 'str'
             Path to save model to
         """
+
         pass
 
 
@@ -414,7 +420,7 @@ class Layer(object):
         self.layer_dir = layer_dir
         # load the layer.py module and find the LayerBase class
         # self._layer = the LayerBase class we found
-        logger.debug("Loading layer from {}".format(layer_dir))
+        logger.debug(f"Loading layer from {layer_dir}")
         self._layer = self.load_layer(layer_dir)
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
@@ -444,22 +450,22 @@ class Layer(object):
         dir_path : 'str'
             Directory containing new layer
         """
+
         # Create the directory
-        if not os.path.exists(parent_dir):
-            raise LayerStackError("The parent_dir {} does not exist."
-                                  .format(parent_dir))
+        if not parent_dir.exists():
+            raise LayerStackError(f"The parent_dir {parent_dir} does not exist.") # maynot need the msg_begin here
         dir_name = name.lower().replace(" ", "_")
-        dir_path = os.path.join(parent_dir, dir_name)
-        if os.path.exists(dir_path):
-            raise LayerStackError("The new directory to be created, {}, \
-already exists."
-                                  .format(dir_path))
-        os.mkdir(dir_path)
+        dir_path = parent_dir / dir_name
+
+        if dir_path.exists():
+            raise LayerStackError(f"The new directory to be created, {dir_path}, already exists.")
+        dir_path.mkdir()
 
         # Create the layer.py file
-        j2env = Environment(loader=FileSystemLoader(os.path.dirname(__file__)))
+        j2env = Environment(loader=FileSystemLoader(str(Path(__file__).parent)))
+
         template = j2env.get_template('layer.template')
-        with open(os.path.join(dir_path, 'layer.py'), 'w') as f:
+        with open((dir_path / 'layer.py'), 'w') as f:
             f.write(template.render(**cls._template_kwargs(name,
                                                            layer_base_class,
                                                            desc)))
@@ -523,6 +529,9 @@ already exists."
 
         main_opts = ""
         lead = None
+        
+        # below code is grabbing docstring and main parser options from LayerBase
+        # to be added to end of the new layer.py file 
         for ln in LayerBase.main.__doc__.split("\n"):
             if not lead and not ln:
                 continue
@@ -541,15 +550,15 @@ already exists."
 
         Parameters
         ----------
-        layer_dir : 'str'
+        layer_dir : str
             Parent directory for layer
 
         Returns
         -------
-        'str'
+        str
             Path to layer.py file
         """
-        return os.path.join(str(layer_dir), 'layer.py')
+        return str(Path(layer_dir) / 'layer.py')
 
     @staticmethod
     def load_layer(layer_dir):
@@ -566,8 +575,9 @@ already exists."
         'Layer'
             Layer class object
         """
-        module = imp.load_source('loaded_layer_{}'.format(uuid4()),
-                                 Layer.layer_filename(layer_dir))
+
+        module = load_module_from_file('loaded_layer_{}'.format(uuid4()),
+                                       Layer.layer_filename(layer_dir))
         candidate = None
         base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):
@@ -590,8 +600,7 @@ hierarchy tree.".format(layer_dir)
                 continue
         if candidate is not None:
             return candidate
-        raise LayerStackError("No LayerBase subclass found in {!r}. Module \
-dir:\n{}".format(layer_dir, dir(module)))
+        raise LayerStackError(f"No LayerBase subclass found in {layer_dir!r}. Module dir:\n{dir(module)}")
 
     @property
     def name(self):
@@ -703,6 +712,8 @@ dir:\n{}".format(layer_dir, dir(module)))
         -------
             updated model
         """
+        # ETH@20200810 - This method seems redundant/unused. Deprecate?
+
         layer = Layer(layer_dir)
         layer.args.mode = ArgMode.USE
         for i, arg in enumerate(args):
@@ -727,6 +738,7 @@ dir:\n{}".format(layer_dir, dir(module)))
         return self._args.set
 
     def run_layer(self, stack, model=None):
+
         """
         Run layer
 
@@ -741,10 +753,13 @@ dir:\n{}".format(layer_dir, dir(module)))
         -------
             updated model
         """
+
         assert self.runnable
         self._args.mode = ArgMode.USE
         self._kwargs.mode = ArgMode.USE
         kwargs = dict(self._kwargs.items())
+
         if model is None:
             return self._layer.apply(stack, *self._args, **kwargs)
+
         return self._layer.apply(stack, model, *self._args, **kwargs)

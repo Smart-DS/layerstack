@@ -29,7 +29,8 @@ __email__ = 'michael.rossol@nrel.gov'
 
 import hashlib
 import logging
-import os
+from os import remove
+import sys
 from uuid import uuid4
 
 from ._version import __version__
@@ -112,6 +113,12 @@ def start_file_log(filename, log_level=logging.WARN,log_format=DEFAULT_LOG_FORMA
     logging.getLogger().addHandler(logfile)
     return logfile
 
+
+def end_file_log(logfile):
+    logfile.close()
+    logging.getLogger().removeHandler(logfile)
+
+
 def checksum(filename):
     """
     Computes the checksum of a file.
@@ -132,6 +139,7 @@ def checksum(filename):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
+
 class TempJsonFilepath():
     """
     Creates a temporary json filename. Usage::
@@ -149,5 +157,74 @@ class TempJsonFilepath():
         return self.filename
 
     def __exit__(self, ctx_type, ctx_value, ctx_traceback):
-        os.remove(self.filename)
+        remove(self.filename)
 
+
+def load_module_from_file(module_name, module_path):
+    """
+    Loads a python module from the path of the corresponding file. (Adapted 
+    from https://github.com/epfl-scitas/spack/blob/af6a3556c4c861148b8e1adc2637685932f4b08a/lib/spack/llnl/util/lang.py#L595-L622)
+
+    Parameters
+    ----------
+    module_name : str
+        namespace where the python module will be loaded
+    module_path : str
+        path of the python file containing the module
+    
+    Returns
+    -------
+    module
+        A valid module object
+    
+    Raises
+    ------    
+    ImportError 
+        when the module can't be loaded
+    FileNotFoundError
+        when module_path doesn't exist
+    """
+    if sys.version_info[0] == 3 and sys.version_info[1] >= 5:
+        # Python 3, 3.5 or less
+        import importlib.util
+        spec = importlib.util.spec_from_file_location(module_name, module_path)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+    elif sys.version_info[0] == 3 and sys.version_info[1] < 5:
+        # Python 3, 3.6 or higher
+        import importlib.machinery
+        loader = importlib.machinery.SourceFileLoader(module_name, module_path)
+        module = loader.load_module()
+    elif sys.version_info[0] == 2:
+        # Python 2
+        import imp
+        module = imp.load_source(module_name, module_path)
+
+    return module
+
+
+def timer_str(elapsed_seconds):
+    result = ''; sep = ''
+    days, remainder = divmod(elapsed_seconds, 60*60*24)
+    if days:
+        result += sep + f'{days:0.0f} d'; sep = ' '
+    hours, remainder = divmod(remainder, 60*60)
+    if hours: 
+        result += sep + f'{hours:0.0f} h'; sep = ' '
+    minutes, remainder = divmod(remainder, 60)
+    if minutes:
+        result += sep + f'{minutes:0.0f} m'; sep = ' '
+    if days or hours:
+        result += sep + f'{remainder:0.0f} s'
+    elif minutes:
+        result += sep + f'{remainder:0.1f} s'
+    else:
+        result += sep + f'{remainder} s'
+    return result
+
+
+# import objects required for basic use so they can be imported directly 
+# from layerstack
+from .args import ArgMode
+from .layer import Layer
+from .stack import Stack

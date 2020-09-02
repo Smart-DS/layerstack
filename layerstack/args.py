@@ -37,20 +37,6 @@ class KwArgBase(object):
     Base class for expressing json- and CLI-compatible arguments. Builds off of
     the patterns established by argparse.
 
-    Parameters
-    ----------
-    description : str
-        optional description text for this [keyword] argument
-    parser : callable
-        function to parse the [keyword] argument value. analogous to the 
-        type argument in the argparse add_argument method
-    choices : None or list
-        list of allowable values
-    nargs: None, int, str
-        analogous to the nargs argument in the argparse add_argument method
-    list_parser : callable
-        function to parse a [keyword] argument value list
-
     Attributes
     ----------
     name : str or None
@@ -62,32 +48,27 @@ class KwArgBase(object):
         argument in the argparse add_argument method 
     choices : None or list
         list of allowable values
+    nargs : None, int, str
+        analogous to the nargs argument in the argparse add_argument method
     list_parser : callable
-        function to parse a [keyword] argument value list       
+        function to parse a [keyword] argument value list     
+    save_parser : callable
+        function to convert a [keyword] argument value to json-serializable form  
     """
 
     def __init__(self, description='', parser=None, choices=None, nargs=None,
-                 list_parser=None):
+                 list_parser=None, save_parser=None):
         self.name = None
-        self.description = description # optional description text
-        # function to parse the [keyword] argument value, e.g. int, float. 
-        # analogous to the type argument in the argparse add_argument method.
+        self.description = description
         self.parser = parser           
         self.choices = choices
         self._is_list = False
         self.nargs = nargs
         self.list_parser = list_parser
+        self.save_parser = save_parser
 
     @property
     def nargs(self):
-        """
-        settable attribute
-
-        Returns
-        -------
-        None, int, str
-            analogous to the nargs argument in the argparse add_argument method
-        """
         return self._nargs
 
     @nargs.setter
@@ -97,6 +78,12 @@ class KwArgBase(object):
             self._is_list = True
         self._nargs = value
         self._is_list = self._nargs in ['+', '*']
+
+    @property
+    def choices_to_save(self):
+        if (self.choices is not None) and (self.save_parser is not None):
+            return [self.save_parser(choice) for choice in self.choices]
+        return self.choices
 
     @property
     def is_list(self):
@@ -180,12 +167,15 @@ class Arg(KwArgBase):
         analogous to the nargs argument in the argparse add_argument method
     list_parser : callable
         function to parse an argument value list
+    save_parser : callable
+        function to convert a [keyword] argument value to json-serializable form
     """
 
     def __init__(self, name, description='', parser=None, choices=None,
-                 nargs=None, list_parser=None):
+                 nargs=None, list_parser=None, save_parser=None):
         super().__init__(description=description, parser=parser,
-                         choices=choices, nargs=nargs, list_parser=list_parser)
+                         choices=choices, nargs=nargs, list_parser=list_parser,
+                         save_parser=save_parser)
         self.name = name
 
     @property
@@ -217,12 +207,21 @@ class Arg(KwArgBase):
     def value(self, value):
         self._set_value(value)
 
+    @property
+    def value_to_save(self):
+        """
+        JSON-serializable form of the argument value. Uses save_parser if provided.
+        """
+        if self.save_parser is None:
+            return self.value
+        return self.save_parser(self.value)
+
 
 class Kwarg(KwArgBase):
     """
     Defines an optional or defaulted keyword argument.
 
-    Parameters
+    Attributes
     ----------
     default : None or any
         default value to be used if no explicit value has been set. is parsed 
@@ -241,20 +240,15 @@ class Kwarg(KwArgBase):
     action : str
         analogous to the action argument in the argparse add_argument method. 
         allows, e.g., command-line boolean flags.
-
-    Attributes
-    ----------
-    default : None or any
-        default value to be used if no explicit value has been set
-    action : str
-        analogous to the action argument in the argparse add_argument method. 
-        allows, e.g., command-line boolean flags.
+    save_parser : callable
+        function to convert a [keyword] argument value to json-serializable form
     """
 
     def __init__(self, default=None, description='', parser=None, choices=None,
-                 nargs=None, list_parser=None, action=None):
+                 nargs=None, list_parser=None, action=None, save_parser=None):
         super().__init__(description=description, parser=parser,
-                         choices=choices, nargs=nargs, list_parser=list_parser)
+                         choices=choices, nargs=nargs, list_parser=list_parser,
+                         save_parser=save_parser)
         self.action = action
         self.default = self._process_value(default,none_allowed=True)
 
@@ -293,6 +287,26 @@ class Kwarg(KwArgBase):
             assert self.defaulted
             return
         self._set_value(value)
+
+    @property
+    def value_to_save(self):
+        """
+        JSON-serializable form of the keyword argument value. Uses save_parser 
+        if provided and self.value is not None.
+        """
+        if (self.save_parser is None) or (self.value is None):
+            return self.value
+        return self.save_parser(self.value)
+
+    @property
+    def default_to_save(self):
+        """
+        JSON-serializable form of the keyword argument default value. Uses 
+        save_parser if provided and self.default is not None.
+        """
+        if (self.save_parser is None) or (self.default is None):
+            return self.default
+        return self.save_parser(self.default)
 
     def add_argument_kwargs(self):
         kwargs = super().add_argument_kwargs()
@@ -683,12 +697,24 @@ class KwargDict(OrderedDict):
 
         def get_short_name(name):
             short_name = None; n = 0
+
+            # first try splitting on '_' to get good letters
+            n = 0
+            chars = "".join([x[0] for x in name.split('_')])
+            while not short_name:
+                n += 1
+                if chars[:n] not in short_names:
+                    short_name = chars[:n]
+
+            # now just use all characters
+            n = 1
             while not short_name:
                 n += 1
                 if name[:n] not in short_names:
                     short_name = name[:n]
-                    short_names.append(short_name)
+            
             assert short_name
+            short_names.append(short_name)
             return short_name
 
         for name, kwarg in self.items():

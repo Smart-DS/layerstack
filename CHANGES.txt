@@ -1,2 +1,3 @@
+v0.3.0, 09/02/20 -- Stack.load and CLI functions can look in alternate locations for Layers; ArgMode, Layer and Stack can be imported directly from layerstack; testing and documentation improvements
 v0.2.0, 10/30/19 -- adding layerstack_stack CLI, ArgMode can be set with str, bug and documentation fixes
 v0.1.0, 05/22/18 -- initial release

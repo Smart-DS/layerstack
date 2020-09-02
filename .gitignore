@@ -70,3 +70,9 @@ tests/outputs/
 
 # Packaging
 MANIFEST
+
+# macs
+.DS_Store
+
+# VS Code
+.env

@@ -22,7 +22,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 This module contains items that pertain to the entire test session.
 """
 
-import os
 import shutil
 
 import pytest
