@@ -19,15 +19,16 @@ import sphinx_rtd_theme
 
 
 # -- Project information -----------------------------------------------------
+import layerstack
 
 project = 'layerstack'
 copyright = '2018, Elaine Hale, Michael Rossol'
 author = 'Elaine Hale, Michael Rossol'
 
 # The short X.Y version
-version = ''
+version = layerstack.__version__
 # The full version, including alpha/beta/rc tags
-release = '0.1.0'
+release = layerstack.__version__
 
 
 # -- General configuration ---------------------------------------------------
