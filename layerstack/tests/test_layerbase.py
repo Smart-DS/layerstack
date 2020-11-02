@@ -43,6 +43,5 @@ def test_layer_cli():
     assert stderr[-15:] == str(test_list), f"stdout:\n{stdout}\nstderr:\n{stderr}"
 
 
-# *** specific functions here to tet the uncovered lines of code in main() withi LayerBase class
-# check stting of variables and paths specifically in main as well as run and run_layer
+# *** perform similar split to main and parser as in stack.py for layer.py? ***
 

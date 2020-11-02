@@ -60,33 +60,3 @@ def test_kwarg_creation():
 
     with pytest.raises(Exception):
         KwargDict(kwargs['max_pv'])
-
-# *** Here, create test for add_argument_kwargs in args.py
-# *** the function definition is covered but not the code (if statememts) within
-
-
-
-
-
-
-# *** Here, create test for add_arguments in ArgList() in args.py
-# *** the function definition is covered but not the code (if statememts) within
-
-
-
-
-
-# *** Here, create test for add_arguments in KwargDict() in args.py
-# *** the function definition is covered but not the code (if statememts) within
-
-
-
-
-
-# *** Here, create test for set_wargs in KwargDict() in args.py
-# *** the function definition is covered but not the code (if statememts) within
-
-
-
-
-

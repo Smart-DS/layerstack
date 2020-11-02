@@ -25,7 +25,7 @@ from pathlib import Path
 import logging
 from layerstack import ArgMode, LayerStackError, Layer, Stack
 from layerstack.tests import layer_library_dir, outdir
-from layerstack.stack import repoint_stack
+from layerstack.stack import repoint_stack, parse_args_helper
 
 import subprocess
 from subprocess import Popen, PIPE
@@ -105,6 +105,21 @@ def test_repointing_run_dir():
     np = stack_library_dir / '_test_stack_repoint_layer_1.json'
     check_stack = Stack.load(np)
     assert str(check_stack.run_dir) == str(new_run_dir) 
+
+
+def test_parser():
+    cli_arg_list = ['test_hw_amc_5min_simple.json', 'run', '-sp', str(outdir)]
+    args = parse_args_helper(cli_arg_list)
+
+    assert args.stack_file == 'test_hw_amc_5min_simple.json'
+    assert args.mode == 'run'
+    assert args.save_path == str(outdir)
+    assert args.layer_library_dirs == None
+    assert args.original_locations_preferred == True
+    assert args.debug == False
+    assert args.warning_only == False
+    assert args.archive == True
+
 
 
 
