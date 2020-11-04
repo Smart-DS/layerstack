@@ -90,3 +90,7 @@ def test_stack_library_dirs():
         Stack.load(p)
 
     assert "Unable to find the layer test_list_args" in str(excinfo.value), str(excinfo.value)
+
+
+# *** add more tests to cover if/else and try/excepts in load function 
+# also kwargs_dict vars in in _json_data(), the for name, kwarg in layer.kwargs.items(): function

@@ -60,5 +60,3 @@ def test_kwarg_creation():
 
     with pytest.raises(Exception):
         KwargDict(kwargs['max_pv'])
-
-

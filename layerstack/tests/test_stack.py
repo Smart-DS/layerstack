@@ -21,9 +21,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 
 import pytest
 import shutil
-
+from pathlib import Path
+import logging
 from layerstack import ArgMode, LayerStackError, Layer, Stack
 from layerstack.tests import layer_library_dir, outdir
+from layerstack.stack import repoint_stack, parse_args_helper
+
+import subprocess
+from subprocess import Popen, PIPE
+
+logger = logging.getLogger(__name__)
 
 
 def test_layer_types():
@@ -73,3 +80,48 @@ def test_get_layer_dir():
         layer_library_dirs=[alt_layer_library_dir], 
         original_preferred=True)
     assert test_layer_dir is None
+
+# *** create new stack and test repointing ***
+def test_repointing_run_dir():
+    
+    stack_library_dir = outdir / 'test_stack_repoint'
+    if not stack_library_dir.exists():
+        stack_library_dir.mkdir()
+
+    layer = Layer(layer_library_dir / 'test_list_args')
+    stack = Stack(layers = [layer], 
+                  name='Basic Test', 
+                  run_dir = outdir / 'test_basic_repoint')
+    
+    p = stack_library_dir / 'test_stack_repoint_layer_1.json'
+    stack.save(p)
+
+    assert stack.run_dir is not None
+
+    new_run_dir = outdir / 'new_run_dir'
+
+    repoint_stack(p, run_dir = new_run_dir)
+
+    np = stack_library_dir / '_test_stack_repoint_layer_1.json'
+    check_stack = Stack.load(np)
+    assert str(check_stack.run_dir) == str(new_run_dir) 
+
+
+def test_parser():
+    cli_arg_list = ['test_hw_amc_5min_simple.json', 'run', '-sp', str(outdir)]
+    args = parse_args_helper(cli_arg_list)
+
+    assert args.stack_file == 'test_hw_amc_5min_simple.json'
+    assert args.mode == 'run'
+    assert args.save_path == str(outdir)
+    assert args.layer_library_dirs == None
+    assert args.original_locations_preferred == True
+    assert args.debug == False
+    assert args.warning_only == False
+    assert args.archive == True
+
+
+
+
+
+

@@ -42,3 +42,6 @@ def test_layer_cli():
     logger.debug(f"In test_layer_cli, stdout:\n{stdout}\nstderr:\n{stderr}")
     assert stderr[-15:] == str(test_list), f"stdout:\n{stdout}\nstderr:\n{stderr}"
 
+
+# *** perform similar split to main and parser as in stack.py for layer.py? ***
+

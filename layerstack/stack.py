@@ -33,6 +33,7 @@ from pathlib import Path
 from os import chdir
 from timeit import default_timer as timer
 from uuid import UUID, uuid4
+import sys
 
 logger = logging.getLogger(__name__)
 
@@ -747,7 +748,7 @@ def repoint_stack(p, layer_library_dir=None, original_locations_preferred=True,
     return    
 
 
-def main():
+def parse_args_helper(args):
     parser = argparse.ArgumentParser("Load and optionally run a stack.")
     
     # all CLI options require loading a Stack json file
@@ -789,7 +790,12 @@ def main():
         turn off stack archiving.""", dest='archive', action='store_false')
     parser_run.set_defaults(archive=True)
 
-    args = parser.parse_args()
+    return parser.parse_args(args)
+
+
+def main():
+
+    args = parse_args_helper(sys.argv[1:])
 
     # determine log level
     log_level = logging.INFO
@@ -824,7 +830,7 @@ def main():
         assert False, f'Unknown mode {args.mode}'
     
     return
-
+    
 
 if __name__ == '__main__':
     main()
