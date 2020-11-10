@@ -133,6 +133,7 @@ class LayerBase(object):
         arg_list = cls.args()
         arg_list.add_arguments(parser)
         kwarg_dict = cls.kwargs()
+        # *** issue 23, likely just need to add an h to this list
         kwarg_dict.add_arguments(parser, short_names=['r', 'd'])
 
         # Parse args and set values        
@@ -415,18 +416,31 @@ class Layer(object):
     layer_dir : 'str'
         Directory from which to load the layer
     """
-
-    def __init__(self, layer_dir):
+    # *** need optional model argument to be passed to __init__
+    def __init__(self, layer_dir, model=None):
         self.layer_dir = layer_dir
+        # *** TLS is this what's needed? will create test for this to show failure then fix
+        self._model = model
         # load the layer.py module and find the LayerBase class
         # self._layer = the LayerBase class we found
         logger.debug(f"Loading layer from {layer_dir}")
         self._layer = self.load_layer(layer_dir)
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
-        self._args = self._layer.args()
+
+        # *** when args is called we need to test whether this is a model layer base layer
+        # *** if it is then we need to pass the model to args and kwargs calls below?  
+        # *** but this won't work for a regular layer base, so need to have an if statement for this
+
+        model_layer_base_obj = isinstance(self._layer, ModelLayerBase)
+        if model_layer_base_obj:
+            self._args = self._layer.args(self._model)
+            self._kwargs = self._layer.kwargs(self.model)
+        else:
+            self._args = self._layer.args()
+            self._kwargs = self._layer.kwargs()
+
         self._args.mode = ArgMode.DESC
-        self._kwargs = self._layer.kwargs()
         self._kwargs.mode = ArgMode.DESC
 
     @classmethod
