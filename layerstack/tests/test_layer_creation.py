@@ -40,3 +40,10 @@ def test_layer_base():
     _layer_dir = Layer.create('Test Layer Base',layer_library_dir)
     # should be able to run the layer as-is
     subprocess.check_call(['python', str(layer_library_dir / 'test_layer_base' / 'layer.py'), 'dummy_arg'])
+
+
+# *** test issue 19: Layer.__init__ supports model keyword argument (passes newly added self._model)
+def test_model_kwarg_layer_init():
+    _layer_dir = Layer.create('Test Model Layer Base',layer_library_dir, ModelLayerBase)
+    # should be able to run the layer as-is
+    subprocess.check_call(['python', str(layer_library_dir / 'test_model_layer_base' / 'layer.py'), 'dummy_arg'])
