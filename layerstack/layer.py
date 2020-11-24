@@ -417,6 +417,8 @@ class Layer(object):
         Directory from which to load the layer
     """
 
+# not clear on what Elaine means by having the model passed in via command line... 
+# this init is currently meant for creating a new layer
     def __init__(self, layer_dir, model=None):
         self.layer_dir = layer_dir
         self._model = model
@@ -427,11 +429,22 @@ class Layer(object):
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
 
-        model_layer_base_obj = isinstance(self._layer, ModelLayerBase)
-        if model_layer_base_obj:
+        # print(isinstance(self._layer, LayerBase))
+        
+        print(type(self._layer))
+
+        print('initss')
+        print(dir(self._layer))
+        #print(self._layer.model)
+        print('@@@@')
+
+        if isinstance(self._layer, ModelLayerBase):
             self._args = self._layer.args(self._model)
             self._kwargs = self._layer.kwargs(self.model)
+            print('***')
+            print(self._layer.kwargs(self.model))
         else:
+            print('nahhh')
             self._args = self._layer.args()
             self._kwargs = self._layer.kwargs()
 
@@ -587,6 +600,11 @@ class Layer(object):
 
         module = load_module_from_file('loaded_layer_{}'.format(uuid4()),
                                        Layer.layer_filename(layer_dir))
+
+        print('$$$$')
+        print(print(dir(module)))
+
+        print('^^^^^')
         candidate = None
         base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):

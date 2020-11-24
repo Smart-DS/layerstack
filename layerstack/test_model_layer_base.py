@@ -21,22 +21,70 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 from __future__ import print_function, division, absolute_import
 
 import subprocess
-
 import pytest
-
 from layerstack.layer import Layer, LayerBase, ModelLayerBase
-from layerstack.tests import outdir
+import shutil
+
+from layerstack import ArgMode, Layer, LayerStackError, Stack
+from layerstack.args import ArgMode
+from layerstack.stack import Stack
+from layerstack.tests import layer_library_dir, outdir
 from layerstack.tests.test_session import manage_outdir
 
 layer_library_dir = outdir / 'test_layer_creation'
 
-@pytest.fixture(scope='module',autouse=True)
-def create_layer_library_dir(manage_outdir):
-    assert outdir.exists(), outdir
-    assert not layer_library_dir.exists()
-    layer_library_dir.mkdir()
 
-def test_layer_base():
-    _layer_dir = Layer.create('Test Layer Base',layer_library_dir)
+class simple_model(ModelLayerBase):
+    
+
+
+
+
+def test_model_kwarg_layer_init():
+
+    #create stack dir
+    stack_library_dir = outdir / 'test_model_layer_base'
+    if not stack_library_dir.exists():
+        stack_library_dir.mkdir()
+
+    layer = Layer(layer_library_dir / 'test_model_layer_base')
+    stack = Stack(layers = [layer], name = 'Test Model Layer Base')
+
+    p = stack_library_dir / 'test_model_layer_base_1.json'
+    stack.save(p)
+    stack = Stack.load(p)
+
+    # *** now need to add an arg or kwarg and alter one of these based on the model used/passed in
+
+    stack.layers[0].args.mode = ArgMode.USE
+    stack.layers[0].args[0] = ['a', 'b']
+
+    stack.layers[0].kwargs.mode = ArgMode.USE
+    stack.layers[0].kwargs['aws_db_name'] = 'eedr'
+
+    p = stack_library_dir / 'test_model_layer_base_2.json'
+    stack.save(p)
+    stack = Stack.load(p)
+
+    stack.layers[0].args.mode = ArgMode.USE
+    assert (stack.layers[0].args[0] == ['a', 'b']), stack.layers[0]
+
+
+# need to define a simple model class... I should think a buildstockDeviceset should be fine...
+
+
+
+# need to have two tests, one testing functionality when loading from disk and another when CLI
+
+
+
+
+
+
+
+
+# *** test issue 19: Layer.__init__ supports model keyword argument (passes newly added self._model)
+def test_model_kwarg_layer_init():
+    _layer_dir = Layer.create('Test Model Layer Base',layer_library_dir, ModelLayerBase)
     # should be able to run the layer as-is
-    subprocess.check_call(['python', str(layer_library_dir / 'test_layer_base' / 'layer.py'), 'dummy_arg'])
+    subprocess.check_call(['python', str(layer_library_dir / 'test_model_layer_base' / 'layer.py'), 'dummy_arg'])
