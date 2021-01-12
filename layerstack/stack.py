@@ -313,8 +313,7 @@ class Stack(MutableSequence):
         ArgMode.
         """
         for layer in self.layers:
-            layer.args.mode = arg_mode
-            layer.kwargs.mode = arg_mode
+            layer.set_arg_mode(arg_mode)
 
     def save(self, filename):
         """
