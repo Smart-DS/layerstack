@@ -133,6 +133,7 @@ class LayerBase(object):
         arg_list = cls.args()
         arg_list.add_arguments(parser)
         kwarg_dict = cls.kwargs()
+        # *** issue 23, likely just need to add an h to this list
         kwarg_dict.add_arguments(parser, short_names=['r', 'd'])
 
         # Parse args and set values        
@@ -416,7 +417,7 @@ class Layer(object):
         Directory from which to load the layer
     """
 
-    def __init__(self, layer_dir):
+    def __init__(self, layer_dir, model=None):
         self.layer_dir = layer_dir
         # load the layer.py module and find the LayerBase class
         # self._layer = the LayerBase class we found
@@ -424,9 +425,16 @@ class Layer(object):
         self._layer = self.load_layer(layer_dir)
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
-        self._args = self._layer.args()
+        
+        if issubclass(self._layer, ModelLayerBase):
+            logger.debug(f"Using {model} to populate args and kwargs")
+            self._args = self._layer.args(model = model)
+            self._kwargs = self._layer.kwargs(model = model)
+        else:
+            self._args = self._layer.args()
+            self._kwargs = self._layer.kwargs()
+
         self._args.mode = ArgMode.DESC
-        self._kwargs = self._layer.kwargs()
         self._kwargs.mode = ArgMode.DESC
 
     @classmethod
@@ -514,7 +522,11 @@ class Layer(object):
         def class_doc_str(aclass, doc_str=''):
             if issubclass(aclass, LayerBase):
                 result = '\n    {}\n    {}'.format(aclass.__name__, '=' * len(aclass.__name__))
-                result += aclass.__doc__
+                if aclass.__doc__ is not None:
+                    result += aclass.__doc__
+                else:
+                    logger.info("You may consider writing a doc string for "
+                        f"LayerBase derived class {aclass.__name__}")
 
                 for base_class in aclass.__bases__:
                     result = class_doc_str(base_class, doc_str=(result + doc_str))
@@ -578,6 +590,7 @@ class Layer(object):
 
         module = load_module_from_file('loaded_layer_{}'.format(uuid4()),
                                        Layer.layer_filename(layer_dir))
+
         candidate = None
         base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):
@@ -689,6 +702,14 @@ hierarchy tree.".format(layer_dir)
         self._kwargs.mode = ArgMode.USE
         for name, value in kwargs.items():
             self._kwargs[name] = value
+
+    def set_arg_mode(self, arg_mode):
+        """
+        Convenience function for setting args and kwargs objects to the same
+        ArgMode.
+        """
+        self.args.mode = arg_mode
+        self.kwargs.mode = arg_mode
 
     @classmethod
     def run(cls, layer_dir, stack, model, *args, **kwargs):

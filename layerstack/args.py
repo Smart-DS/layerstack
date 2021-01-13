@@ -75,7 +75,10 @@ class KwArgBase(object):
     def nargs(self, value):
         if value not in [None, '?', '+', '*']:
             self._nargs = int(value)
-            self._is_list = True
+            self._is_list = True # following argparse convention that if 
+                                 # nargs = 1, the single element is placed in a
+                                 # list
+            return
         self._nargs = value
         self._is_list = self._nargs in ['+', '*']
 
@@ -120,9 +123,19 @@ class KwArgBase(object):
             values = value
             if self.parser is not None:
                 values = [self.parser(value) for value in values]
-            return self.list_parser(values) if self.list_parser is not None else values
+            if self.list_parser is not None:
+                values = self.list_parser(values)
+            if self.choices is not None:
+                if not values in self.choices:
+                    for value in values:
+                        if value not in self.choices:
+                            raise LayerStackRuntimeError(f"{values} and {value} not in choices = {self.choices}")
+            return values
         assert not self.is_list
-        return self.parser(value) if self.parser is not None else value
+        value = self.parser(value) if self.parser is not None else value
+        if (self.choices is not None) and (value not in self.choices):
+            raise LayerStackRuntimeError(f"{value} not in the allowable choices: {self.choices}")
+        return value
 
     def add_argument_kwargs(self):
         """
@@ -177,6 +190,15 @@ class Arg(KwArgBase):
                          choices=choices, nargs=nargs, list_parser=list_parser,
                          save_parser=save_parser)
         self.name = name
+
+    def __repr__(self):
+        return (f"{self.__class__.__name__}({self.name!r},\n"
+            f"    description = {self.description!r},\n"
+            f"    parser = {self.parser!r},\n"
+            f"    choices = {self.choices!r},\n"
+            f"    nargs = {self.nargs!r},\n"
+            f"    list_parser = {self.list_parser!r},\n"
+            f"    save_parser = {self.save_parser!r})")
 
     @property
     def set(self):
@@ -251,6 +273,15 @@ class Kwarg(KwArgBase):
                          save_parser=save_parser)
         self.action = action
         self.default = self._process_value(default,none_allowed=True)
+
+    def __repr__(self):
+        return (f"{self.__class__.__name__}(default = {self.default!r},\n"
+            f"      description = {self.description!r},\n"
+            f"      parser = {self.parser!r},\n"
+            f"      choices = {self.choices!r},\n"
+            f"      nargs = {self.nargs!r},\n"
+            f"      list_parser = {self.list_parser!r},\n"
+            f"      save_parser = {self.save_parser!r})")
 
     @property
     def defaulted(self):
