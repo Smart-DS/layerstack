@@ -417,33 +417,16 @@ class Layer(object):
         Directory from which to load the layer
     """
 
-<<<<<<< HEAD
-    def __init__(self, layer_dir):
-        """
-        Load a layer from disk and make it ready to be used.
-        """
-        # identify and load the layer
-        self.layer_dir = layer_dir
-=======
     def __init__(self, layer_dir, model=None):
         self.layer_dir = layer_dir
         # load the layer.py module and find the LayerBase class
         # self._layer = the LayerBase class we found
         logger.debug(f"Loading layer from {layer_dir}")
->>>>>>> master
         self._layer = self.load_layer(layer_dir)
                 
         # pull out key information
         self._checksum = checksum(self.layer_filename(layer_dir))
         self._name = self._layer.name
-<<<<<<< HEAD
-
-        # instantiate arguments and prepare them to have their values set
-        self._args = self._layer.args()
-        self.args.mode = ArgMode.USE
-        self._kwargs = self._layer.kwargs()
-        self.kwargs.mode = ArgMode.USE
-=======
         
         if issubclass(self._layer, ModelLayerBase):
             logger.debug(f"Using {model} to populate args and kwargs")
@@ -455,7 +438,6 @@ class Layer(object):
 
         self._args.mode = ArgMode.DESC
         self._kwargs.mode = ArgMode.DESC
->>>>>>> master
 
     @classmethod
     def create(cls, name, parent_dir, desc=None, layer_base_class=LayerBase):
@@ -483,19 +465,11 @@ class Layer(object):
         if not parent_dir.exists():
             raise LayerStackError(f"The parent_dir {parent_dir} does not exist.") # maynot need the msg_begin here
         dir_name = name.lower().replace(" ", "_")
-<<<<<<< HEAD
-        dir_path = os.path.join(parent_dir, dir_name)
-        if os.path.exists(dir_path):
-            raise LayerStackError("The new directory to be created, "
-                    f"{dir_path}, already exists.")
-        os.mkdir(dir_path)
-=======
         dir_path = parent_dir / dir_name
 
         if dir_path.exists():
             raise LayerStackError(f"The new directory to be created, {dir_path}, already exists.")
         dir_path.mkdir()
->>>>>>> master
 
         # Create the layer.py file
         j2env = Environment(loader=FileSystemLoader(str(Path(__file__).parent)))
@@ -616,21 +590,10 @@ class Layer(object):
             Layer class that is lowest in the LayerBase inheritance hierarchy 
             when we load the layer_dir / 'layer.py' module
         """
-<<<<<<< HEAD
-        logger.debug("Loading layer from {}".format(layer_dir))
-        
-        # import the layer.py file into unique namespace
-        module = imp.load_source('loaded_layer_{}'.format(uuid4()),
-                                 Layer.layer_filename(layer_dir))
-
-        # find the LayerBase class lowest in the inheritance hierarchy--that's 
-        # the layer we are loading
-=======
 
         module = load_module_from_file('loaded_layer_{}'.format(uuid4()),
                                        Layer.layer_filename(layer_dir))
 
->>>>>>> master
         candidate = None
         base_classes = [LayerBase, ModelLayerBase]
         for item in dir(module):
@@ -663,16 +626,9 @@ class Layer(object):
             except:
                 # item is not a subclass of LayerBase
                 continue
-<<<<<<< HEAD
-        if candidate is None:
-            raise LayerStackError(f"No LayerBase subclass found in {layer_dir!r}. "
-                "Module dir:\n{dir(module)}")
-        return candidate
-=======
         if candidate is not None:
             return candidate
         raise LayerStackError(f"No LayerBase subclass found in {layer_dir!r}. Module dir:\n{dir(module)}")
->>>>>>> master
 
     @property
     def name(self):

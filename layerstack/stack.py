@@ -554,12 +554,6 @@ class Stack(MutableSequence):
                 f"(Version {layer.layer.version!r}), but the checksum has changed.")
 
             # set arg and kwarg values based on the json file
-<<<<<<< HEAD
-            layer.args.mode = ArgMode.DESC
-            layer.kwargs.mode = ArgMode.DESC
-
-=======
->>>>>>> master
             # try to handle shifts in argument order and naming
             actual_args = {}
             for i, arg in enumerate(layer.args):

@@ -72,13 +72,10 @@ layerstack/tests/outputs/
 # Packaging
 MANIFEST
 
-<<<<<<< HEAD
 # jupyter notebooks
 .ipynb_checkpoints
-=======
 # macs
 .DS_Store
 
 # VS Code
 .env
->>>>>>> master
