@@ -1,6 +1,6 @@
 # layerstack
 [![PyPI](https://img.shields.io/pypi/v/layerstack.svg)](https://pypi.python.org/pypi/layerstack/)
-[![Documentation](https://img.shields.io/badge/docs-ready-blue.svg)](http://smart-ds.github.io/layerstack)
+[![Documentation](https://img.shields.io/badge/docs-ready-blue.svg)](https://smart-ds.github.io/layerstack/)
 
 Python package for assembling, sharing, and running workflows, especially those associated with modifying, running, and analyzing simulation models
 
@@ -13,7 +13,7 @@ pip install layerstack
 or
 
 ```
-pip install git+https://github.com/Smart-DS/layerstack.git@v0.2.0
+pip install git+https://github.com/Smart-DS/layerstack.git@v0.3.1
 ```
 
 or 
@@ -22,9 +22,15 @@ or
 pip install git+https://github.com/Smart-DS/layerstack.git@master
 ```
 
+After installing, you can run the package tests (requires [pytest](https://pypi.org/project/pytest/)):
+
+```
+pytest --pyargs layerstack
+```
+
 ## use
 
-[documentation](http://smart-ds.github.io/layerstack)
+[documentation](https://smart-ds.github.io/layerstack/)
 
 ## uninstall
 

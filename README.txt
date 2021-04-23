@@ -6,7 +6,7 @@ pip install layerstack
 
 USE
 
-http://smart-ds.github.io/layerstack
+https://smart-ds.github.io/layerstack/
 
 UNINSTALL
 

@@ -10,18 +10,24 @@ Also, you will need to install
 
 - [pandoc](https://pandoc.org/installing.html)
 
-[release process overview](#release-process-overview) | [how to run tests](#how-to-run-tests) | [publish documentation](#publish-documentation) | [release on pypi](#release-on-pypi)
+[repository conventions](#repository-conventions) | [release process overview](#release-process-overview) | [how to run tests](#how-to-run-tests) | [publish documentation](#publish-documentation) | [create release](#create-release) | [release on pypi](#release-on-pypi)
+
+## repository conventions
+
+- Documentation is made using Sphinx, and follows NumPy docstring style conventions, please see [Example NumPy Style Python Docstrings on Sphinx site](https://www.sphinx-doc.org/en/master/usage/extensions/example_numpy.html). The NumPy docstrings are interpreted by [Napolean](https://sphinxcontrib-napoleon.readthedocs.io/en/latest/), which relies on sphinx.ext.autodoc. Some helpful tips for how to link to things in Sphinx are available [here](https://kevin.burke.dev/kevin/sphinx-interlinks/). The list of Python object types that can be cross-referenced is available [here](https://www.sphinx-doc.org/en/master/usage/restructuredtext/domains.html?highlight=info%20field%20lists#info-field-lists).
 
 ## release process overview
 
 1. Update version number, CHANGES.txt, setup.py, LICENSE and header as needed
-2. Run tests locally and fix any issues
-3. **Ideally we would** run tests on draft (master branch) package installed from github (`pip install git+https://github.com/Smart-DS/layerstack.git`) and fix any issues, **but tests cannot be installed in a runnable way using current structure**
-4. Uninstall the draft package
-5. Publish documentation
-6. Create release on github
-7. Release tagged version on pypi
-8. Install released package and re-run tests
+2. [Run tests](#how-to-run-tests) locally and fix any issues
+3. Push to github and ensure checks pass there
+4. Install the package from github (`pip install git+https://github.com/Smart-DS/layerstack.git`), run tests (`pytest --pyargs layerstack`) and fix any remaining issues
+5. Uninstall the draft package
+6. [Publish documentation](#publish-documentation)
+7. [Create release](#create-release) on github
+8. [Release tagged version on pypi](#release-on-pypi)
+9. Install released package and re-run tests
+10. Checkout master branch
 
 ## how to run tests
 
@@ -36,8 +42,15 @@ pytest
 To run tests on an installed package:
 
 ```
-# Still working on this. May need to wait for CI.
+pytest --pyargs layerstack
 ```
+
+pytest options that may be helpful:
+
+option flag | effect
+----------- | ------
+--no-clean-up | leaves the `layerstack/tests/outputs` file in place so the items made by tests can be visually inspected
+--log-cli-level=DEBUG | emits log messages to the console. level can be set to DEBUG, INFO, WARN, ERROR
 
 ## publish documentation
 
@@ -59,6 +72,8 @@ python ../../dev/md_to_rst.py md_files.txt
 
 ### Refresh API Documentation
 
+The API documentation is actually made when the HTML docs are built. This step just establishes the package structure, and so only needs to be done if the package structure changes.
+
 - Make sure layerstack is in your PYTHONPATH
 - Delete the contents of `source/api`.
 - Run `sphinx-apidoc -o source/api ..` from the `docs` folder.
@@ -68,7 +83,7 @@ python ../../dev/md_to_rst.py md_files.txt
 
 ### Building HTML Docs
 
-Run `make html` for Mac and Linux; `make.bat html` for Windows.
+Run `make html` for Mac and Linux; `make.bat html` for Windows. **layerstack** must be in your `PYTHONPATH` during this step for the API documentation to generate correctly.
 
 ### Pushing to GitHub Pages
 
@@ -95,14 +110,25 @@ git push origin gh-pages
 git checkout master # or whatever branch you were on
 ```
 
+## create release
+
+- Go to the [releases](https://github.com/Smart-DS/layerstack/releases) page
+- Click on the `Draft a new release` button
+- Follow these conventions:
+  - Name the tag following the convention `v0.3.1`, where the number after the 'v' matches the version number listed in `layerstack/_version.py`. The middle number is incremented when a new feature is added. The last number is incremented when a bug is fixed (only). The first number is only incremented when a major refactor changes the user interface.
+  - The name of the release follows the convention `Version 0.3.1`, where again the listed version number matches what's in `layerstack/_version.py`
+  - At a minimum the release description should replicate the list of items that was added to CHANGES.txt
+
 ## release on pypi
 
 1. [using testpyi](https://packaging.python.org/guides/using-testpypi/) has good instructions for setting up your user account on TestPyPI and PyPI, and configuring twine to know how to access both repositories.
+   
 2. Test the package
 
     ```
+    git checkout vX.X.X
     python setup.py sdist
-    twine upload --repository testpypi dist/*
+    twine upload --repository testpypi dist/layerstack-X.X.X.tar.gz
     # look at https://test.pypi.org/project/layerstack/
     pip install --index-url https://test.pypi.org/simple/ layerstack
     # check it out ... fix things ...
@@ -111,5 +137,6 @@ git checkout master # or whatever branch you were on
 3. Upload to pypi
 
     ```
-    twine upload --repository pypi dist/*
+    twine upload --repository pypi dist/layerstack-X.X.X.tar.gz
+    git checkout master
     ```

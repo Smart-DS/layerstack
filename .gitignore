@@ -63,7 +63,7 @@ target/
 
 # test outputs
 .pytest_cache
-tests/outputs/
+layerstack/tests/outputs/
 
 # Visual Studio Code
 .vscode
@@ -72,5 +72,13 @@ tests/outputs/
 # Packaging
 MANIFEST
 
+<<<<<<< HEAD
 # jupyter notebooks
 .ipynb_checkpoints
+=======
+# macs
+.DS_Store
+
+# VS Code
+.env
+>>>>>>> master

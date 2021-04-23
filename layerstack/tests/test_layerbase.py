@@ -1,6 +1,6 @@
 '''
 [LICENSE]
-Copyright (c) 2019 Alliance for Sustainable Energy, LLC, All Rights Reserved
+Copyright (c) 2020 Alliance for Sustainable Energy, LLC, All Rights Reserved
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
@@ -10,7 +10,7 @@ Redistribution and use in source and binary forms, with or without modification,
 
 3. The entire corresponding source code of any redistribution, with or without modification, by a research entity, including but not limited to any contracting manager/operator of a United States National Laboratory, any institution of higher learning, and any non-profit organization, must be made publicly available under this license for as long as the redistribution is made available by the research entity.
 
-4. Redistribution of this software, without modification, must refer to the software by the same designation. Redistribution of a modified version of this software (i) may not refer to the modified version by the same designation, or by any confusingly similar designation, and (ii) must refer to the underlying software originally provided by Alliance as �layerstack�. Except to comply with the foregoing, the term �layerstack�, or any confusingly similar designation may not be used to refer to any modified version of this software or any modified version of the underlying software originally provided by Alliance without the prior written consent of Alliance.
+4. Redistribution of this software, without modification, must refer to the software by the same designation. Redistribution of a modified version of this software (i) may not refer to the modified version by the same designation, or by any confusingly similar designation, and (ii) must refer to the underlying software originally provided by Alliance as "layerstack". Except to comply with the foregoing, the term "layerstack", or any confusingly similar designation may not be used to refer to any modified version of this software or any modified version of the underlying software originally provided by Alliance without the prior written consent of Alliance.
 
 5. The name of the copyright holder(s), any contributors, the United States Government, the United States Department of Energy, or any of their employees may not be used to endorse or promote products derived from this software without specific prior written permission from the respective party.
 
@@ -18,36 +18,30 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 
 [/LICENSE]
 '''
-"""
-This module contains items that pertain to the entire test session.
-"""
+import logging
+from pathlib import Path
+import subprocess
+from subprocess import Popen, PIPE
+import sys
 
-import os
-import shutil
+from layerstack.tests import layer_library_dir
 
-import pytest
+logger = logging.getLogger(__name__)
 
-from tests import outdir
 
-STARTUP = True
+def test_layer_cli():
+    test_list = ['1', '2', '3']
 
-@pytest.fixture(scope="session",autouse=True)
-def manage_outdir(request, clean_up):
-    """
-    At the beginning of the session, creates the test outdir. If tests.clean_up,
-    deletes this folder after the tests have finished running.
+    args = ['python', str(layer_library_dir / 'test_list_args' / 'layer.py')] 
+    args += test_list
 
-    Arguments
-    - request contains the pytest session, including collected tests
-    """
-    global STARTUP
-    if STARTUP:
-        if outdir.exists():
-            # create clean space for running tests
-            shutil.rmtree(outdir)
-        STARTUP = False
-        outdir.mkdir()
-    def finalize_outdir():
-        if outdir.exists() and clean_up:
-            shutil.rmtree(outdir)
-    request.addfinalizer(finalize_outdir)
+    out_list = subprocess.Popen(args, stdout=PIPE, stderr=PIPE)
+    stdout, stderr = out_list.communicate()
+
+    stderr = stderr.decode('ascii').rstrip()
+    logger.debug(f"In test_layer_cli, stdout:\n{stdout}\nstderr:\n{stderr}")
+    assert stderr[-15:] == str(test_list), f"stdout:\n{stdout}\nstderr:\n{stderr}"
+
+
+# *** perform similar split to main and parser as in stack.py for layer.py? ***
+

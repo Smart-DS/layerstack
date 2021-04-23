@@ -40,12 +40,12 @@ jobs:
     - name: Generate coverage report
       run: |
         pytest --cov=./ --cov-report=xml:unit.coverage.xml
-    - name: Upload unit test coverage to Codecov
-      uses: codecov/codecov-action@v1.0.7
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: ./unit.coverage.xml
-        flags: unit
-        env_vars: PYTHON
-        name: codecov-unit
-        fail_ci_if_error: false
+#    - name: Upload unit test coverage to Codecov
+#      uses: codecov/codecov-action@v1.0.14
+#      with:
+#        token: ${{ secrets.CODECOV_TOKEN }}
+#        file: ./unit.coverage.xml
+#        flags: unit
+#        env_vars: PYTHON
+#        name: codecov-unit
+#        fail_ci_if_error: false

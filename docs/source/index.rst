@@ -10,7 +10,7 @@ analyzing simulation models.
 .. |PyPI| image:: https://img.shields.io/pypi/v/layerstack.svg
    :target: https://pypi.python.org/pypi/layerstack/
 .. |Documentation| image:: https://img.shields.io/badge/docs-ready-blue.svg
-   :target: http://smart-ds.github.io/layerstack
+   :target: https://smart-ds.github.io/layerstack/
 
 .. toctree::
    :maxdepth: 2

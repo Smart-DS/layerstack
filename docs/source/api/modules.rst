@@ -5,4 +5,3 @@ layerstack
    :maxdepth: 4
 
    layerstack
-   tests

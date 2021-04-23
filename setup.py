@@ -1,14 +1,14 @@
 
 import setuptools
-import os
+from pathlib import Path
 
-here = os.path.abspath(os.path.dirname(__file__))
+here = Path(__file__).parent
 
 # Get the long description from the README file
-with open(os.path.join(here, './README.txt'), encoding='utf-8') as f:
+with open(here / 'README.txt', encoding='utf-8') as f:
     long_description = f.read()
 
-with open(os.path.join(here, 'layerstack', '_version.py'), encoding='utf-8') as f:
+with open(here / 'layerstack' / '_version.py', encoding='utf-8') as f:
     version = f.read()
 
 version = version.split()[2].strip('"').strip("'")
@@ -24,8 +24,10 @@ setuptools.setup(
     description = 'Python package for assembling, sharing, and running workflows, especially those associated with modifying, running, and analyzing simulation models',
     long_description = long_description,
     package_data = {
+        '': ['LICENSE'],
         'layerstack': ['*.template'],
-        '': ['LICENSE']
+        'layerstack.tests': ['layer_library/*/layer.py',
+                             'stack_library/*.json']
     },
     install_requires=[
         'jinja2'

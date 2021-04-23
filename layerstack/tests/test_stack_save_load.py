@@ -1,3 +1,5 @@
+'''
+[LICENSE]
 Copyright (c) 2020 Alliance for Sustainable Energy, LLC, All Rights Reserved
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
@@ -13,3 +15,82 @@ Redistribution and use in source and binary forms, with or without modification,
 5. The name of the copyright holder(s), any contributors, the United States Government, the United States Department of Energy, or any of their employees may not be used to endorse or promote products derived from this software without specific prior written permission from the respective party.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER(S), ANY CONTRIBUTORS, THE UNITED STATES GOVERNMENT, OR THE UNITED STATES DEPARTMENT OF ENERGY, NOR ANY OF THEIR EMPLOYEES, BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+[/LICENSE]
+'''
+
+import pytest
+import shutil
+
+from layerstack import ArgMode, Layer, LayerStackError, Stack
+from layerstack.args import ArgMode
+from layerstack.layer import Layer
+from layerstack.stack import Stack
+
+from layerstack.tests import layer_library_dir, outdir
+from layerstack.tests.test_session import manage_outdir
+
+
+def test_stack_list_args_layer():
+    stack_library_dir = outdir / 'test_stack_save_load'
+    if not stack_library_dir.exists():
+        stack_library_dir.mkdir()
+
+    layer = Layer(layer_library_dir / 'test_list_args')
+    stack = Stack(layers = [layer], name = 'Test List Args Layer')
+
+    p = stack_library_dir / 'test_stack_list_args_layer_1.json'
+    stack.save(p)
+    stack = Stack.load(p)
+
+    stack.layers[0].args.mode = ArgMode.USE
+    stack.layers[0].args[0] = ['a', 'b']
+
+    p = stack_library_dir / 'test_stack_list_args_layer_2.json'
+    stack.save(p)
+    stack = Stack.load(p)
+
+    stack.layers[0].args.mode = ArgMode.USE
+    assert (stack.layers[0].args[0] == ['a', 'b']), stack.layers[0]
+
+
+def test_stack_library_dirs():
+    stack_library_dir = outdir / 'test_stack_library_dirs'
+    if not stack_library_dir.exists():
+        stack_library_dir.mkdir()
+    
+    layer = Layer(layer_library_dir / 'test_list_args')
+    stack = Stack(layers = [layer], name = 'Test Layer Library Dirs Load')
+    p = stack_library_dir / 'test_stack_library_dirs_1'
+    stack.save(p)
+
+    # create alternate location
+    alt_layer_library_dir = outdir / 'test_stack_library_dirs'
+    orig_layer_dir = layer_library_dir / 'test_list_args' 
+    new_layer_dir = alt_layer_library_dir / 'test_list_args'
+    shutil.copytree(orig_layer_dir, new_layer_dir)
+
+    stack = Stack.load(
+        p, 
+        layer_library_dir=alt_layer_library_dir, 
+        original_locations_preferred=True)
+    stack[0].layer_dir == orig_layer_dir
+
+    stack = Stack.load(
+        p, 
+        layer_library_dir=alt_layer_library_dir, 
+        original_locations_preferred=False)
+    stack[0].layer_dir == new_layer_dir
+    p = stack_library_dir / 'test_stack_library_dirs_2'
+    stack.save(p)
+
+    shutil.rmtree(new_layer_dir)
+
+    with pytest.raises(LayerStackError) as excinfo:
+        Stack.load(p)
+
+    assert "Unable to find the layer test_list_args" in str(excinfo.value), str(excinfo.value)
+
+
+# *** add more tests to cover if/else and try/excepts in load function 
+# also kwargs_dict vars in in _json_data(), the for name, kwarg in layer.kwargs.items(): function
