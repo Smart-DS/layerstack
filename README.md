@@ -13,13 +13,13 @@ pip install layerstack
 or
 
 ```
-pip install git+https://github.com/Smart-DS/layerstack.git@v0.3.1
+pip install git+https://github.com/Smart-DS/layerstack.git@v0.4.0
 ```
 
 or 
 
 ```
-pip install git+https://github.com/Smart-DS/layerstack.git@master
+pip install git+https://github.com/Smart-DS/layerstack.git@main
 ```
 
 After installing, you can run the package tests (requires [pytest](https://pypi.org/project/pytest/)):
