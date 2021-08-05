@@ -27,7 +27,7 @@ Also, you will need to install
 7. [Create release](#create-release) on github
 8. [Release tagged version on pypi](#release-on-pypi)
 9. Install released package and re-run tests
-10. Checkout master branch
+10. Checkout main branch
 
 ## how to run tests
 
@@ -107,7 +107,7 @@ git push origin --delete gh-pages
 ghp-import -n -b gh-pages -m "Update documentation" ./build/html
 git checkout gh-pages
 git push origin gh-pages
-git checkout master # or whatever branch you were on
+git checkout main # or whatever branch you were on
 ```
 
 ## create release
@@ -138,5 +138,5 @@ git checkout master # or whatever branch you were on
 
     ```
     twine upload --repository pypi dist/layerstack-X.X.X.tar.gz
-    git checkout master
+    git checkout main
     ```
