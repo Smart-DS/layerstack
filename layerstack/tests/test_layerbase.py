@@ -20,8 +20,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER(S) AND ANY CONTRIBUTORS "AS IS
 '''
 import logging
 from pathlib import Path
-import subprocess
-from subprocess import Popen, PIPE
 import sys
 
 from layerstack.tests import layer_library_dir, run_command
