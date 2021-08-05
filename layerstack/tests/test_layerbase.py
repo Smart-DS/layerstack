@@ -43,5 +43,23 @@ def test_layer_cli():
     assert stderr[-15:] == str(test_list), f"stdout:\n{stdout}\nstderr:\n{stderr}"
 
 
-# *** perform similar split to main and parser as in stack.py for layer.py? ***
+def test_kwarg_name_clashes():
+    args = [sys.executable, str(layer_library_dir / 'test_kwarg_name_clashes' / 'layer.py')]
+
+    # run help
+    ret = subprocess.run(args + ["--help"], capture_output=True)
+    assert not ret.returncode, print(ret.stderr)
+    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{ret.stdout}\nstderr:\n"
+        f"{ret.stderr}\nafter calling --help")
+
+    to_call = [
+        "-hr", 0.2
+    ]
+
+    # run layer
+    ret = subprocess.Popen(args + to_call, stdout=PIPE, stderr=PIPE)
+    assert not ret.returncode, print(ret.stderr)
+    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{ret.stdout}\nstderr:\n"
+        f"{ret.stderr}\nafter calling with kwargs")
+
 
