@@ -22,8 +22,8 @@ import sphinx_rtd_theme
 import layerstack
 
 project = 'layerstack'
-copyright = '2018, Elaine Hale, Michael Rossol'
-author = 'Elaine Hale, Michael Rossol'
+copyright = '(c) 2021, Alliance for Sustainable Energy, LLC'
+author = 'NREL'
 
 # The short X.Y version
 version = layerstack.__version__
