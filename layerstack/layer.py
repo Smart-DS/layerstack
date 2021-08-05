@@ -133,8 +133,7 @@ class LayerBase(object):
         arg_list = cls.args()
         arg_list.add_arguments(parser)
         kwarg_dict = cls.kwargs()
-        # *** issue 23, likely just need to add an h to this list
-        kwarg_dict.add_arguments(parser, short_names=['r', 'd'])
+        kwarg_dict.add_arguments(parser, short_names=['r', 'd', 'h'])
 
         # Parse args and set values        
         cli_args = parser.parse_args()

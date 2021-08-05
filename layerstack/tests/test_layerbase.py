@@ -24,7 +24,7 @@ import subprocess
 from subprocess import Popen, PIPE
 import sys
 
-from layerstack.tests import layer_library_dir
+from layerstack.tests import layer_library_dir, get_output_str
 
 logger = logging.getLogger(__name__)
 
@@ -48,18 +48,18 @@ def test_kwarg_name_clashes():
 
     # run help
     ret = subprocess.run(args + ["--help"], capture_output=True)
-    assert not ret.returncode, print(ret.stderr)
-    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{ret.stdout}\nstderr:\n"
-        f"{ret.stderr}\nafter calling --help")
+    assert not ret.returncode, get_output_str(ret.stderr)
+    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\nstderr:\n"
+        f"{get_output_str(ret.stderr)}\nafter calling --help")
 
     to_call = [
-        "-hr", 0.2
+        "-hr", str(0.2)
     ]
 
     # run layer
     ret = subprocess.Popen(args + to_call, stdout=PIPE, stderr=PIPE)
-    assert not ret.returncode, print(ret.stderr)
-    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{ret.stdout}\nstderr:\n"
-        f"{ret.stderr}\nafter calling with kwargs")
+    assert not ret.returncode, get_output_str(ret.stderr)
+    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\nstderr:\n"
+        f"{get_output_str(ret.stderr)}\nafter calling with kwargs")
 
 
