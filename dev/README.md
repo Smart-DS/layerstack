@@ -75,8 +75,8 @@ python ../../dev/md_to_rst.py md_files.txt
 The API documentation is actually made when the HTML docs are built. This step just establishes the package structure, and so only needs to be done if the package structure changes.
 
 - Make sure layerstack is in your PYTHONPATH
-- Delete the contents of `source/api`.
-- Run `sphinx-apidoc -o source/api ..` from the `docs` folder.
+- Delete `source/api`.
+- Run `sphinx-apidoc -o source/api ../layerstack` from the `docs` folder.
 - Compare `source/api/modules.rst` to `source/api.rst`. Delete `setup.rst` and references to it.
 - 'git push' changes to the documentation source code as needed.
 - Make the documentation per below
