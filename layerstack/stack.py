@@ -26,7 +26,8 @@ Contents
 from __future__ import print_function, division, absolute_import
 
 import argparse
-from collections import MutableSequence, OrderedDict
+from collections import OrderedDict
+from collections.abc import MutableSequence
 import json
 import logging
 from pathlib import Path
