@@ -100,6 +100,11 @@ class KwArgBase(object):
         """
         return self._is_list
 
+    def get_name(self, cleaned=True):
+        if cleaned:
+            return self.name.replace("-", "_")
+        return self.name
+
     def _set_value(self, value):
         """
         Called by derived classes to set their _value attribute.
@@ -505,15 +510,16 @@ class ArgList(list):
             unexpected behavior.
         """
         if not self.mode == ArgMode.USE:
-            raise LayerStackRuntimeError("{} ".format(self.__class__.__name__) + 
+            raise LayerStackRuntimeError(f"{self.__class__.__name__} "
                 "must be in ArgMode.USE to set values.")
         try:
             self.mode = ArgMode.DESC
             for arg in self:
                 try:
-                    temp_value = eval('cli_args.' + arg.name) 
+                    temp_value = getattr(cli_args, arg.get_name(cleaned=False))
                 except Exception as e:
-                    raise LayerStackRuntimeError("{} not found in cli_args, {}".format(arg.name,e))
+                    raise LayerStackRuntimeError(f"{arg.get_name(cleaned=False)} not found in "
+                        f"cli_args:\n{cli_args},\nbecause {e}")
                 arg.value = temp_value # may throw if temp_value is bad per arg.parser, etc.
             self.mode = ArgMode.USE
         except Exception as e:
@@ -621,7 +627,7 @@ class KwargDict(OrderedDict):
             (if mode == ArgMode.DESC), or its .value (if mode == ArgMode.USE)
         """
         if self.mode == ArgMode.USE:
-            return [(name, kwarg.value) for name, kwarg in super().items()]
+            return [(kwarg.get_name(), kwarg.value) for kwarg in super().values()]
         return super().items()
 
     def iteritems(self):
@@ -636,7 +642,7 @@ class KwargDict(OrderedDict):
             ArgMode.USE)
         """
         for name, kwarg in super().items():
-            yield (name, kwarg) if self.mode == ArgMode.DESC else (name, kwarg.value)
+            yield (name, kwarg) if self.mode == ArgMode.DESC else (kwarg.get_name(), kwarg.value)
 
     def values(self):
         """
@@ -726,30 +732,8 @@ class KwargDict(OrderedDict):
             raise LayerStackRuntimeError("{} ".format(self.__class__.__name__) + 
                 "must be in ArgMode.DESC to add arguments to an argparse parser.")
 
-        def get_short_name(name):
-            short_name = None; n = 0
-
-            # first try splitting on '_' to get good letters
-            n = 0
-            chars = "".join([x[0] for x in name.split('_')])
-            while not short_name:
-                n += 1
-                if chars[:n] not in short_names:
-                    short_name = chars[:n]
-
-            # now just use all characters
-            n = 1
-            while not short_name:
-                n += 1
-                if name[:n] not in short_names:
-                    short_name = name[:n]
-            
-            assert short_name
-            short_names.append(short_name)
-            return short_name
-
         for name, kwarg in self.items():
-            short_name = get_short_name(name)
+            short_name = get_short_name(name, short_names=short_names)
             kwarg_kwargs = kwarg.add_argument_kwargs()
             try:
                 parser.add_argument('-' + short_name, '--' + name,
@@ -790,12 +774,67 @@ class KwargDict(OrderedDict):
             self.mode = ArgMode.DESC
             for key, kwarg in self.items():
                 try:
-                    temp_value = eval('cli_args.' + key) 
+                    temp_value = getattr(cli_args, kwarg.get_name())
                 except Exception as e:
-                    raise LayerStackRuntimeError("{} not found in cli_args, {}".format(key,e))
+                    raise LayerStackRuntimeError(f"{kwarg.get_name()} not found in "
+                        f"cli_args:\n{cli_args},\nbecause {e}")
                 kwarg.value = temp_value # may throw if temp_value is bad per kwarg.parser, etc.
             self.mode = ArgMode.USE
         except Exception as e:
             self.mode = ArgMode.USE
             raise e
         
+
+def get_short_name(name, short_names = [], seps = ['_', '-']):
+    short_name = None
+
+    def multisplit(astr, seps):
+        parts = None
+        for sep in seps:
+            if parts is None:
+                parts = astr.split(sep)
+                continue
+            tmp = []
+            for part in parts:
+                tmp.extend(part.split(sep))
+            parts = tmp
+        return parts
+
+    parts = multisplit(name, seps)
+    len_parts = [len(part) for part in parts]
+
+    M = 1; N = len(parts); candidates = set(); k = 0
+    logger.debug(parts)
+    while not short_name:
+        if k and (len(candidates) == k):
+            raise LayerStackRuntimeError("Unable to find a short name "
+                "for {name}. Current short names:\n[\n  {short_names}\n]"
+                "\nStarted with parts = {parts},\nevaluated "
+                "candidates:\n[\n  {candidates}\n]".format(
+                    name = name, 
+                    short_names = ",\n  ".join([repr(sn) for sn in short_names]),
+                    parts = parts,
+                    candidates = ",\n  ".join([repr(candi) for candi in candidates])
+                ))
+        n = 1; k = len(candidates)
+        logger.debug(f"M = {M}; N = {N}; k = {k}")
+        while n <= N:
+            candidate = ''
+            for i in range(n):
+                m = min(len_parts[i], M)
+                candidate += parts[i][:m]
+                logger.debug(f"  n = {n}; i = {i}; m = {m}; {candidate}")
+            for i in range(n,N):
+                mm1 = min(len_parts[i], M - 1)
+                candidate += parts[i][:mm1]
+                logger.debug(f"  n = {n}; N = {N}; i = {i}; mm1 = {mm1}; {candidate}")
+            if candidate not in short_names:
+                short_name = candidate
+                break
+            candidates.add(candidate)
+            n += 1
+        M += 1
+    
+    assert short_name
+    short_names.append(short_name)
+    return short_name

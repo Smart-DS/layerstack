@@ -133,8 +133,7 @@ class LayerBase(object):
         arg_list = cls.args()
         arg_list.add_arguments(parser)
         kwarg_dict = cls.kwargs()
-        # *** issue 23, likely just need to add an h to this list
-        kwarg_dict.add_arguments(parser, short_names=['r', 'd'])
+        kwarg_dict.add_arguments(parser, short_names=['r', 'd', 'h'])
 
         # Parse args and set values        
         cli_args = parser.parse_args()
@@ -200,7 +199,6 @@ class LayerBase(object):
         assert arg_list.mode == ArgMode.USE
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
-        # TODO: Fix KwargDict so **kwarg_dict works natively
         return cls.apply(Stack(run_dir=cli_args.run_dir), 
             *arg_list, **{k: v for k, v in kwarg_dict.items()})
 
@@ -444,13 +442,13 @@ class Layer(object):
 
         Parameters
         ----------
-        name : 'str'
+        name : str
             Layer name
-        parent_dir : 'str'
+        parent_dir : str or pathlib.Path
             Parent directory for layer
-        desc : 'str'
+        desc : str
             Layer description
-        layer_base_class : 'LayerBase|ModelLayerBase'
+        layer_base_class : LayerBase or child class
             Base class on which to build layer
 
         Returns
@@ -460,6 +458,7 @@ class Layer(object):
         """
 
         # Create the directory
+        parent_dir = Path(parent_dir)
         if not parent_dir.exists():
             raise LayerStackError(f"The parent_dir {parent_dir} does not exist.") # maynot need the msg_begin here
         dir_name = name.lower().replace(" ", "_")

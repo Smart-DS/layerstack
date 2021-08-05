@@ -41,7 +41,8 @@ setuptools.setup(
             'pytest-ordering',
             'sphinx',
             'sphinx_rtd_theme',
-            'twine'
+            'twine',
+            'wheel'
         ]
     },
     entry_points={

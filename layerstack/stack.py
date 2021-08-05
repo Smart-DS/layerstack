@@ -26,7 +26,8 @@ Contents
 from __future__ import print_function, division, absolute_import
 
 import argparse
-from collections import MutableSequence, OrderedDict
+from collections import OrderedDict
+from collections.abc import MutableSequence
 import json
 import logging
 from pathlib import Path
@@ -695,7 +696,7 @@ class Stack(MutableSequence):
             end_file_log(logfile)
         except:
             chdir(old_cur_dir)
-            logger.info(f"Stack failed after {timer_str(timer() - start)}")
+            logger.error(f"Stack failed after {timer_str(timer() - start)}")
             end_file_log(logfile)
             raise        
 
