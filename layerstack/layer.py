@@ -444,13 +444,13 @@ class Layer(object):
 
         Parameters
         ----------
-        name : 'str'
+        name : str
             Layer name
-        parent_dir : 'str'
+        parent_dir : str or pathlib.Path
             Parent directory for layer
-        desc : 'str'
+        desc : str
             Layer description
-        layer_base_class : 'LayerBase|ModelLayerBase'
+        layer_base_class : LayerBase or child class
             Base class on which to build layer
 
         Returns
@@ -460,6 +460,7 @@ class Layer(object):
         """
 
         # Create the directory
+        parent_dir = Path(parent_dir)
         if not parent_dir.exists():
             raise LayerStackError(f"The parent_dir {parent_dir} does not exist.") # maynot need the msg_begin here
         dir_name = name.lower().replace(" ", "_")
