@@ -199,7 +199,6 @@ class LayerBase(object):
         assert arg_list.mode == ArgMode.USE
         assert kwarg_dict.mode == ArgMode.USE
         from layerstack.stack import Stack
-        # TODO: Fix KwargDict so **kwarg_dict works natively
         return cls.apply(Stack(run_dir=cli_args.run_dir), 
             *arg_list, **{k: v for k, v in kwarg_dict.items()})
 

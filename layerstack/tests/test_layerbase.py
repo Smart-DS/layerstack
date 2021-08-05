@@ -48,18 +48,47 @@ def test_kwarg_name_clashes():
 
     # run help
     ret = subprocess.run(args + ["--help"], capture_output=True)
+    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\n"
+        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
+        "after calling --help")
     assert not ret.returncode, get_output_str(ret.stderr)
-    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\nstderr:\n"
-        f"{get_output_str(ret.stderr)}\nafter calling --help")
-
+    
     to_call = [
-        "-hr", str(0.2)
+        "-hr", str(0.2),
+        "-hrd", "Rufus",
+        "-her", str(85),
+        "-herd", "Anne"
     ]
 
     # run layer
-    ret = subprocess.Popen(args + to_call, stdout=PIPE, stderr=PIPE)
+    ret = subprocess.run(args + to_call, capture_output=True)
+    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\n"
+        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
+        "after calling with kwargs")
     assert not ret.returncode, get_output_str(ret.stderr)
-    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\nstderr:\n"
-        f"{get_output_str(ret.stderr)}\nafter calling with kwargs")
 
 
+def test_kwargs_with_dashes():
+    args = [sys.executable, str(layer_library_dir / 'test_kwargs_with_dashes' / 'layer.py')]
+
+    # run help
+    ret = subprocess.run(args + ["--help"], capture_output=True)
+    logger.debug(f"In test_kwargs_with_dashes, stdout:\n{get_output_str(ret.stdout)}\n"
+        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
+        "after calling --help")
+    assert not ret.returncode, get_output_str(ret.stderr)
+    
+    to_call = [
+        "-hr", str(0.2),
+        "-hrd", "Rufus",
+        "-her", str(85),
+        "-herd", "Anne",
+        str(734)
+    ]
+
+    # run layer
+    ret = subprocess.run(args + to_call, capture_output=True)
+    logger.debug(f"In test_kwargs_with_dashes, stdout:\n{get_output_str(ret.stdout)}\n"
+        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
+        "after calling with kwargs")
+    assert not ret.returncode, get_output_str(ret.stderr)
