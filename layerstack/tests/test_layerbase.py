@@ -24,7 +24,7 @@ import subprocess
 from subprocess import Popen, PIPE
 import sys
 
-from layerstack.tests import layer_library_dir, get_output_str
+from layerstack.tests import layer_library_dir, run_command
 
 logger = logging.getLogger(__name__)
 
@@ -35,23 +35,16 @@ def test_layer_cli():
     args = [sys.executable, str(layer_library_dir / 'test_list_args' / 'layer.py')] 
     args += test_list
 
-    out_list = subprocess.Popen(args, stdout=PIPE, stderr=PIPE)
-    stdout, stderr = out_list.communicate()
-
-    stderr = stderr.decode('ascii').rstrip()
-    logger.debug(f"In test_layer_cli, stdout:\n{stdout}\nstderr:\n{stderr}")
+    ret, stdout, stderr = run_command(args, logger, "test_layer_cli", "")
     assert stderr[-15:] == str(test_list), f"stdout:\n{stdout}\nstderr:\n{stderr}"
-
 
 def test_kwarg_name_clashes():
     args = [sys.executable, str(layer_library_dir / 'test_kwarg_name_clashes' / 'layer.py')]
 
     # run help
-    ret = subprocess.run(args + ["--help"], capture_output=True)
-    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\n"
-        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
-        "after calling --help")
-    assert not ret.returncode, get_output_str(ret.stderr)
+    ret, stdout, stderr = run_command(args + ["--help"], logger, 
+        "test_kwarg_name_clashes", "after calling --help")
+    assert not ret.returncode, stderr
     
     to_call = [
         "-hr", str(0.2),
@@ -61,22 +54,17 @@ def test_kwarg_name_clashes():
     ]
 
     # run layer
-    ret = subprocess.run(args + to_call, capture_output=True)
-    logger.debug(f"In test_kwarg_name_clashes, stdout:\n{get_output_str(ret.stdout)}\n"
-        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
-        "after calling with kwargs")
-    assert not ret.returncode, get_output_str(ret.stderr)
-
+    ret, stdout, stderr = run_command(args + to_call, logger, 
+        "test_kwarg_name_clashes", "after calling with kwargs")
+    assert not ret.returncode, ret.stderr
 
 def test_kwargs_with_dashes():
     args = [sys.executable, str(layer_library_dir / 'test_kwargs_with_dashes' / 'layer.py')]
 
     # run help
-    ret = subprocess.run(args + ["--help"], capture_output=True)
-    logger.debug(f"In test_kwargs_with_dashes, stdout:\n{get_output_str(ret.stdout)}\n"
-        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
-        "after calling --help")
-    assert not ret.returncode, get_output_str(ret.stderr)
+    ret, stdout, stderr = run_command(args + ["--help"], logger, 
+            "test_kwargs_with_dashes", "after calling --help")
+    assert not ret.returncode, ret.stderr
     
     to_call = [
         "-hr", str(0.2),
@@ -87,8 +75,6 @@ def test_kwargs_with_dashes():
     ]
 
     # run layer
-    ret = subprocess.run(args + to_call, capture_output=True)
-    logger.debug(f"In test_kwargs_with_dashes, stdout:\n{get_output_str(ret.stdout)}\n"
-        f"stderr:\n{get_output_str(ret.stderr)}\nreturncode = {ret.returncode}\n"
-        "after calling with kwargs")
-    assert not ret.returncode, get_output_str(ret.stderr)
+    ret, stdout, stderr = run_command(args + to_call, logger, 
+            "test_kwargs_with_dashes", "after calling with kwargs")
+    assert not ret.returncode, ret.stderr
