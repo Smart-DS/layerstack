@@ -696,7 +696,7 @@ class Stack(MutableSequence):
             end_file_log(logfile)
         except:
             chdir(old_cur_dir)
-            logger.info(f"Stack failed after {timer_str(timer() - start)}")
+            logger.error(f"Stack failed after {timer_str(timer() - start)}")
             end_file_log(logfile)
             raise        
 
