@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 def test_layer_cli():
     test_list = ['1', '2', '3']
 
-    args = ['python', str(layer_library_dir / 'test_list_args' / 'layer.py')] 
+    args = [sys.executable, str(layer_library_dir / 'test_list_args' / 'layer.py')] 
     args += test_list
 
     out_list = subprocess.Popen(args, stdout=PIPE, stderr=PIPE)

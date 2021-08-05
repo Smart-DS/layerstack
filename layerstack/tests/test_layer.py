@@ -22,6 +22,7 @@ from __future__ import print_function, division, absolute_import
 
 import json
 import subprocess
+import sys
 
 import pytest
 
@@ -77,7 +78,10 @@ def create_layer_library_dir(manage_outdir):
 def test_layer_base():
     _layer_dir = Layer.create('Test Layer Base', created_layers_library_dir)
     # should be able to run the layer as-is
-    subprocess.check_call(['python', str(created_layers_library_dir / 'test_layer_base' / 'layer.py'), 'dummy_arg'])
+    subprocess.check_call([
+        sys.executable, 
+        str(created_layers_library_dir / 'test_layer_base' / 'layer.py'), 
+        'dummy_arg'])
 
 
 def test_model_dependent_args_kwargs():
