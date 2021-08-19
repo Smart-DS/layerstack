@@ -1,0 +1,460 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>layerstack &mdash; layerstack 0.4.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> layerstack
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">layerstack overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#motivation">motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#a-layerstack-enabled-project">a layerstack-enabled project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/modules.html">layerstack</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#module-layerstack.args">layerstack.args module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#module-layerstack">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/layerstack.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.tests.html">layerstack.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/layerstack.html#module-layerstack.args">layerstack.args module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#layerstack-args">layerstack.args</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#layerstack-stack">layerstack.stack</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/layerstack.html#module-layerstack">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/layerstack.html#layerstack">layerstack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">layerstack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>layerstack</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for layerstack</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">layerstack</span>
+<span class="sd">----------</span>
+<span class="sd">layerstack is a Python package for assembling workflows, especially those </span>
+<span class="sd">associated with modifying, running, and analyzing simulation models</span>
+
+<span class="sd">:copyright: (c) 2021, Alliance for Sustainable Energy, LLC</span>
+<span class="sd">:license: BSD-3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Elaine Hale, Michael Rossol&quot;&quot;&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s1">&#39;michael.rossol@nrel.gov&#39;</span>
+
+
+<span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">remove</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">uuid4</span>
+
+<span class="kn">from</span> <span class="nn">._version</span> <span class="kn">import</span> <span class="n">__version__</span>
+
+
+<div class="viewcode-block" id="LayerStackError"><a class="viewcode-back" href="../api/layerstack.html#layerstack.LayerStackError">[docs]</a><span class="k">class</span> <span class="nc">LayerStackError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Exception base class for this package.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="LayerStackTypeError"><a class="viewcode-back" href="../api/layerstack.html#layerstack.LayerStackTypeError">[docs]</a><span class="k">class</span> <span class="nc">LayerStackTypeError</span><span class="p">(</span><span class="n">LayerStackError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    TypeError exception class for this package.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="LayerStackRuntimeError"><a class="viewcode-back" href="../api/layerstack.html#layerstack.LayerStackRuntimeError">[docs]</a><span class="k">class</span> <span class="nc">LayerStackRuntimeError</span><span class="p">(</span><span class="n">LayerStackError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RuntimeError exception class for this package.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<span class="n">DEFAULT_LOG_FORMAT</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1">|</span><span class="si">%(levelname)s</span><span class="s1">|</span><span class="si">%(name)s</span><span class="s1">|</span><span class="se">\n\t</span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+
+
+<div class="viewcode-block" id="start_console_log"><a class="viewcode-back" href="../api/layerstack.html#layerstack.start_console_log">[docs]</a><span class="k">def</span> <span class="nf">start_console_log</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARN</span><span class="p">,</span><span class="n">log_format</span><span class="o">=</span><span class="n">DEFAULT_LOG_FORMAT</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts logging to the console.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    log_level : enum</span>
+<span class="sd">        logging package log level, i.e. logging.ERROR, logging.WARN, </span>
+<span class="sd">        logging.INFO or logging.DEBUG</span>
+<span class="sd">    log_format : str</span>
+<span class="sd">        format string to use with the logging package</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    logging.StreamHandler</span>
+<span class="sd">        console_handler</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">console_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="n">logformat</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">log_format</span><span class="p">)</span>
+    <span class="n">console_handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logformat</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">console_handler</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">console_handler</span></div>
+
+
+<div class="viewcode-block" id="start_file_log"><a class="viewcode-back" href="../api/layerstack.html#layerstack.start_file_log">[docs]</a><span class="k">def</span> <span class="nf">start_file_log</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARN</span><span class="p">,</span><span class="n">log_format</span><span class="o">=</span><span class="n">DEFAULT_LOG_FORMAT</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Starts logging to a file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        path to the log file</span>
+<span class="sd">    log_level : enum</span>
+<span class="sd">        logging package log level, i.e. logging.ERROR, logging.WARN, </span>
+<span class="sd">        logging.INFO or logging.DEBUG</span>
+<span class="sd">    log_format : str</span>
+<span class="sd">        format string to use with the logging package</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    logging.FileHandler</span>
+<span class="sd">        logfile</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logfile</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">FileHandler</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">logfile</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="n">logformat</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">log_format</span><span class="p">)</span>
+    <span class="n">logfile</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">logformat</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">log_level</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">logfile</span></div>
+
+
+<div class="viewcode-block" id="end_file_log"><a class="viewcode-back" href="../api/layerstack.html#layerstack.end_file_log">[docs]</a><span class="k">def</span> <span class="nf">end_file_log</span><span class="p">(</span><span class="n">logfile</span><span class="p">):</span>
+    <span class="n">logfile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span><span class="o">.</span><span class="n">removeHandler</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="checksum"><a class="viewcode-back" href="../api/layerstack.html#layerstack.checksum">[docs]</a><span class="k">def</span> <span class="nf">checksum</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the checksum of a file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        file to calculate the checksum for</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        checksum</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hash_md5</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">()</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">4096</span><span class="p">),</span> <span class="sa">b</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="n">hash_md5</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">hash_md5</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="TempJsonFilepath"><a class="viewcode-back" href="../api/layerstack.html#layerstack.TempJsonFilepath">[docs]</a><span class="k">class</span> <span class="nc">TempJsonFilepath</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a temporary json filename. Usage::</span>
+
+<span class="sd">        with TempJsonFilepath() as tmpjson:</span>
+<span class="sd">            # save a json file to tmpjson</span>
+<span class="sd">            # use the file as needed</span>
+<span class="sd">            # when this block is exited, the json file will be deleted</span>
+<span class="sd">            # (used in this package to calculate a json checksum)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid4</span><span class="p">())</span> <span class="o">+</span> <span class="s1">&#39;.json&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ctx_type</span><span class="p">,</span> <span class="n">ctx_value</span><span class="p">,</span> <span class="n">ctx_traceback</span><span class="p">):</span>
+        <span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_module_from_file"><a class="viewcode-back" href="../api/layerstack.html#layerstack.load_module_from_file">[docs]</a><span class="k">def</span> <span class="nf">load_module_from_file</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">module_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads a python module from the path of the corresponding file. (Adapted </span>
+<span class="sd">    from https://github.com/epfl-scitas/spack/blob/af6a3556c4c861148b8e1adc2637685932f4b08a/lib/spack/llnl/util/lang.py#L595-L622)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    module_name : str</span>
+<span class="sd">        namespace where the python module will be loaded</span>
+<span class="sd">    module_path : str</span>
+<span class="sd">        path of the python file containing the module</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    module</span>
+<span class="sd">        A valid module object</span>
+<span class="sd">    </span>
+<span class="sd">    Raises</span>
+<span class="sd">    ------    </span>
+<span class="sd">    ImportError </span>
+<span class="sd">        when the module can&#39;t be loaded</span>
+<span class="sd">    FileNotFoundError</span>
+<span class="sd">        when module_path doesn&#39;t exist</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="c1"># Python 3, 3.5 or less</span>
+        <span class="kn">import</span> <span class="nn">importlib.util</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">spec_from_file_location</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">module_path</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">module_from_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="n">spec</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">exec_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="c1"># Python 3, 3.6 or higher</span>
+        <span class="kn">import</span> <span class="nn">importlib.machinery</span>
+        <span class="n">loader</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">machinery</span><span class="o">.</span><span class="n">SourceFileLoader</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">module_path</span><span class="p">)</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load_module</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># Python 2</span>
+        <span class="kn">import</span> <span class="nn">imp</span>
+        <span class="n">module</span> <span class="o">=</span> <span class="n">imp</span><span class="o">.</span><span class="n">load_source</span><span class="p">(</span><span class="n">module_name</span><span class="p">,</span> <span class="n">module_path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">module</span></div>
+
+
+<div class="viewcode-block" id="timer_str"><a class="viewcode-back" href="../api/layerstack.html#layerstack.timer_str">[docs]</a><span class="k">def</span> <span class="nf">timer_str</span><span class="p">(</span><span class="n">elapsed_seconds</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">days</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">elapsed_seconds</span><span class="p">,</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="o">*</span><span class="mi">24</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">days</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">sep</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">days</span><span class="si">:</span><span class="s1">0.0f</span><span class="si">}</span><span class="s1"> d&#39;</span><span class="p">;</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+    <span class="n">hours</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">remainder</span><span class="p">,</span> <span class="mi">60</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">hours</span><span class="p">:</span> 
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">sep</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">hours</span><span class="si">:</span><span class="s1">0.0f</span><span class="si">}</span><span class="s1"> h&#39;</span><span class="p">;</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+    <span class="n">minutes</span><span class="p">,</span> <span class="n">remainder</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">remainder</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">minutes</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">sep</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">minutes</span><span class="si">:</span><span class="s1">0.0f</span><span class="si">}</span><span class="s1"> m&#39;</span><span class="p">;</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+    <span class="k">if</span> <span class="n">days</span> <span class="ow">or</span> <span class="n">hours</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">sep</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">remainder</span><span class="si">:</span><span class="s1">0.0f</span><span class="si">}</span><span class="s1"> s&#39;</span>
+    <span class="k">elif</span> <span class="n">minutes</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">sep</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">remainder</span><span class="si">:</span><span class="s1">0.1f</span><span class="si">}</span><span class="s1"> s&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">sep</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">remainder</span><span class="si">}</span><span class="s1"> s&#39;</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<span class="c1"># import objects required for basic use so they can be imported directly </span>
+<span class="c1"># from layerstack</span>
+<span class="kn">from</span> <span class="nn">.args</span> <span class="kn">import</span> <span class="n">ArgMode</span>
+<span class="kn">from</span> <span class="nn">.layer</span> <span class="kn">import</span> <span class="n">Layer</span>
+<span class="kn">from</span> <span class="nn">.stack</span> <span class="kn">import</span> <span class="n">Stack</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright (c) 2021, Alliance for Sustainable Energy, LLC.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

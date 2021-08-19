@@ -1,0 +1,1067 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>layerstack.stack &mdash; layerstack 0.4.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> layerstack
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">layerstack overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#motivation">motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#a-layerstack-enabled-project">a layerstack-enabled project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/modules.html">layerstack</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.args">layerstack.args module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.tests.html">layerstack.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.args">layerstack.args module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#layerstack-args">layerstack.args</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#layerstack-stack">layerstack.stack</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#layerstack">layerstack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">layerstack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../layerstack.html">layerstack</a> &raquo;</li>
+        
+      <li>layerstack.stack</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for layerstack.stack</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">layerstack.stack</span>
+<span class="sd">----------------</span>
+<span class="sd">- :class:`layerstack.stack.Stack`</span>
+<span class="sd">- :func:`layerstack.stack.main`</span>
+
+<span class="sd">:copyright: (c) 2021, Alliance for Sustainable Energy, LLC</span>
+<span class="sd">:license: BSD-3</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">MutableSequence</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">chdir</span>
+<span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">default_timer</span> <span class="k">as</span> <span class="n">timer</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="kn">import</span> <span class="n">UUID</span><span class="p">,</span> <span class="n">uuid4</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">layerstack</span> <span class="kn">import</span> <span class="p">(</span><span class="n">LayerStackError</span><span class="p">,</span> <span class="n">TempJsonFilepath</span><span class="p">,</span> <span class="n">checksum</span><span class="p">,</span> 
+    <span class="n">start_console_log</span><span class="p">,</span> <span class="n">start_file_log</span><span class="p">,</span> <span class="n">end_file_log</span><span class="p">,</span> <span class="n">timer_str</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">layerstack.layer</span> <span class="kn">import</span> <span class="n">Layer</span><span class="p">,</span> <span class="n">ModelLayerBase</span>
+<span class="kn">from</span> <span class="nn">layerstack.args</span> <span class="kn">import</span> <span class="n">ArgMode</span><span class="p">,</span> <span class="n">Arg</span><span class="p">,</span> <span class="n">Kwarg</span>
+
+
+<div class="viewcode-block" id="Stack"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack">[docs]</a><span class="k">class</span> <span class="nc">Stack</span><span class="p">(</span><span class="n">MutableSequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to create, edit, save, load, and run workflows stored as sequences of </span>
+<span class="sd">    :class:`Layers &lt;layerstack.layer.Layer&gt;`. </span>
+
+<span class="sd">    Stacks are serialized to .json files. Loading and running them is contingent</span>
+<span class="sd">    upon being able to locate the :class:`Layers &lt;layerstack.layer.Layer&gt;` in </span>
+<span class="sd">    the current environment.</span>
+
+<span class="sd">    Stacks are run in a specified directory, but at this time provide little </span>
+<span class="sd">    scaffolding as far as what contents are ultimately saved to that directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layers</span><span class="o">=</span><span class="p">[],</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;v0.1.0&#39;</span><span class="p">,</span> <span class="n">run_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        layers : list of :class:`layerstack.layer.Layer`</span>
+<span class="sd">            List of layers in stack</span>
+<span class="sd">        name : str</span>
+<span class="sd">            name of stack</span>
+<span class="sd">        version : str</span>
+<span class="sd">            stack version number</span>
+<span class="sd">        run_dir : None, str, or pathlib.Path</span>
+<span class="sd">            directory to run stack in</span>
+<span class="sd">        model : None, str, or other</span>
+<span class="sd">            Model to apply layers to, if applicable. Can be None, an object, or </span>
+<span class="sd">            a path to a serialized model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#: str: stack name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        
+        <span class="c1">#: str: stack version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">version</span> <span class="o">=</span> <span class="n">version</span>
+        
+        <span class="c1">#: None or str: run directory for the stack</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span> <span class="o">=</span> <span class="n">run_dir</span>
+
+        <span class="c1">#: None, str, or other: Model to apply layers to, if applicable. </span>
+        <span class="c1">#: Upon initialization, Stack.model may be None or a str path pointing </span>
+        <span class="c1">#: to where a model exists that may be loaded. Stack relies on Layers </span>
+        <span class="c1">#: that implement the :class:`ModelLayerBase &lt;layerstack.layer.ModelLayerBase&gt;` </span>
+        <span class="c1">#: interface for model loading and saving.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+        <span class="c1">#: uuid.uuid4: unique identifier for the stack. Initialized in __init__, </span>
+        <span class="c1">#: but if loading from disk, the newly created UUID will be overridden.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__uuid</span> <span class="o">=</span> <span class="n">uuid4</span><span class="p">()</span>
+
+        <span class="c1">#: list of :class:`layerstack.layer.Layer`</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">layers</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">__checkLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">layers</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__checkLayer</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check to ensure value is a Layer class object</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        value : Layer</span>
+<span class="sd">            New layer to add to stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Layer</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">LayerStackError</span><span class="p">(</span><span class="s2">&quot;Stacks only hold layerstack.layer.Layer &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;objects. You passed a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>                
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get layer i</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : &#39;int&#39;</span>
+<span class="sd">            position of layer to get from stack</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &#39;Layer&#39;</span>
+<span class="sd">            Layer class for layer i in stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set ith layer in stack</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : &#39;int&#39;</span>
+<span class="sd">            position of layer to set in stack</span>
+<span class="sd">        layer : &#39;Layer&#39;</span>
+<span class="sd">            Layer to place at ith position in stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__checkLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="c1"># ETH@20200901 - This was self.__layers.insert(i, layer), but we have </span>
+        <span class="c1"># an insert method, so changing this to behave more as expected</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">layer</span>
+
+    <span class="k">def</span> <span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete ith layer</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : &#39;int&#39;</span>
+<span class="sd">            Position of layer to delete</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<div class="viewcode-block" id="Stack.insert"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.insert">[docs]</a>    <span class="k">def</span> <span class="nf">insert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">layer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Insert layer into stack</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : &#39;int&#39;</span>
+<span class="sd">            Position at which to insert layer</span>
+<span class="sd">        layer : &#39;Layer&#39;</span>
+<span class="sd">            Layer to insert into stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__checkLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">layer</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stack.append"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Append layer to end of stack</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        layer : &#39;Layer&#39;</span>
+<span class="sd">            Layer to append to end of stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Appending Layer </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__checkLayer</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return readable description of this stack</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">, v</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">startswith</span><span class="p">((</span><span class="s1">&#39;v&#39;</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">))</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;runnable</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">runnable</span> <span class="k">else</span> <span class="s1">&#39;NOT runnable</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;run_dir: &#39;</span><span class="si">{}</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s2">&quot;model: &#39;</span><span class="si">{}</span><span class="s2">&#39;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_json_data</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="s1">&#39;layers:</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">result</span> <span class="o">+=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">],</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create iterable of layers in stack</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &#39;iter&#39;</span>
+<span class="sd">            Iterable for layers in stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Number of layers in stack</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &#39;int&#39;</span>
+<span class="sd">            Number of layers in stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__layers</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">suggested_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create stack filename</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &#39;str&#39;</span>
+<span class="sd">            Stack json name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.json&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uuid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get stack uuid</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &#39;uuid4&#39;</span>
+<span class="sd">            Stack unique identifier</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__uuid</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">layers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get layers in stack</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &#39;list&#39;</span>
+<span class="sd">            List of layers in stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__layers</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">run_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get stack run directory</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None or pathlib.Path</span>
+<span class="sd">            Run directory for stack</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_run_dir</span> 
+
+    <span class="nd">@run_dir</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">run_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set run directory for stack</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        value : None, str, or pathlib.Path</span>
+<span class="sd">            Stack run directory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_run_dir</span> <span class="o">=</span> <span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">Path</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> 
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">runnable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine if stack is runnable:</span>
+<span class="sd">        - Are args set for all layers in stack</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &#39;bool&#39;</span>
+<span class="sd">            All args are set for all layers in stack, stack can be run</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;The run_dir must be assigned for this stack to be runnable.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">layer</span><span class="o">.</span><span class="n">runnable</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Set arguments on layer &#39;</span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; to make this stack runnable.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="Stack.set_arg_mode"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.set_arg_mode">[docs]</a>    <span class="k">def</span> <span class="nf">set_arg_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg_mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience function for setting all args and kwargs objects to the same</span>
+<span class="sd">        ArgMode.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="n">layer</span><span class="o">.</span><span class="n">set_arg_mode</span><span class="p">(</span><span class="n">arg_mode</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Stack.save"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save stack</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : &#39;str&#39;</span>
+<span class="sd">            file path to save stack to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">json_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_json_data</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">json_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">))</span>
+
+        <span class="k">return</span></div>
+
+<div class="viewcode-block" id="Stack.archive"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.archive">[docs]</a>    <span class="k">def</span> <span class="nf">archive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Archives this stack by computing the .json checksum on the</span>
+<span class="sd">        without-checksum json file, and then saving a json with the checksum</span>
+<span class="sd">        data added in. Called by the run method with with default filename</span>
+<span class="sd">        self.run_dir / &#39;stack.archive&#39;.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : &#39;str&#39;</span>
+<span class="sd">            file path to save stack to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span> <span class="o">/</span> <span class="s1">&#39;stack.archive&#39;</span> 
+        <span class="k">with</span> <span class="n">TempJsonFilepath</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmpjson</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">tmpjson</span><span class="p">)</span>
+            <span class="n">my_checksum</span> <span class="o">=</span> <span class="n">checksum</span><span class="p">(</span><span class="n">tmpjson</span><span class="p">)</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_json_data</span><span class="p">()</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;checksum&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">my_checksum</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">json_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;: &#39;</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_json_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Extract data from stack and place in json format</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        json_data : &#39;dict&#39;</span>
+<span class="sd">            Dictionary containing stack information:</span>
+<span class="sd">            - stack meta data</span>
+<span class="sd">            - layers in stack</span>
+<span class="sd">                - layer meta data</span>
+<span class="sd">                - layer args</span>
+<span class="sd">                - layer kwargs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="p">)</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;run_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span><span class="p">)</span> <span class="c1"># convert to str due to Path JSON issue</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span> <span class="c1"># model can be all sorts of things--write out as str</span>
+        <span class="n">stack_layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+            <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+                <span class="n">arg_dict</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+                <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">if</span> <span class="n">arg</span><span class="o">.</span><span class="n">set</span><span class="p">:</span>
+                    <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">value_to_save</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">description</span>
+                <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;parser&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">parser</span><span class="p">)</span>
+                <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">choices_to_save</span>
+                <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;nargs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arg</span><span class="o">.</span><span class="n">nargs</span>
+                <span class="n">arg_dict</span><span class="p">[</span><span class="s1">&#39;list_parser&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">list_parser</span><span class="p">)</span>
+                <span class="n">args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg_dict</span><span class="p">)</span>
+
+            <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">kwarg_dict</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+                <span class="n">kwarg_dict</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">value_to_save</span>
+                <span class="n">kwarg_dict</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">default_to_save</span>
+                <span class="n">kwarg_dict</span><span class="p">[</span><span class="s1">&#39;description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">description</span>
+                <span class="n">kwarg_dict</span><span class="p">[</span><span class="s1">&#39;parser&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">kwarg</span><span class="o">.</span><span class="n">parser</span><span class="p">)</span>
+                <span class="n">kwarg_dict</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">choices_to_save</span>
+                <span class="n">kwarg_dict</span><span class="p">[</span><span class="s1">&#39;nargs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">nargs</span>
+                <span class="n">kwarg_dict</span><span class="p">[</span><span class="s1">&#39;list_parser&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">repr</span><span class="p">(</span><span class="n">kwarg</span><span class="o">.</span><span class="n">list_parser</span><span class="p">)</span>
+                <span class="n">kwargs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwarg_dict</span>
+
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Serializing Layer </span><span class="si">{!r}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="n">stack_layers</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="s1">&#39;uuid&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">uuid</span><span class="p">),</span>
+                <span class="s1">&#39;layer_dir&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">layer_dir</span><span class="p">),</span>
+                <span class="s1">&#39;version&#39;</span><span class="p">:</span> <span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+                <span class="s1">&#39;checksum&#39;</span><span class="p">:</span> <span class="n">layer</span><span class="o">.</span><span class="n">checksum</span><span class="p">,</span>
+                <span class="s1">&#39;args&#39;</span><span class="p">:</span> <span class="n">args</span><span class="p">,</span> <span class="s1">&#39;kwargs&#39;</span><span class="p">:</span> <span class="n">kwargs</span><span class="p">})</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack_layers</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;I have </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2"> layers, but serialization has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stack_layers</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack_layers</span>
+        <span class="k">return</span> <span class="n">json_data</span>
+
+<div class="viewcode-block" id="Stack.get_layer_dir"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.get_layer_dir">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_layer_dir</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">layer_dir</span><span class="p">,</span> <span class="n">layer_library_dirs</span><span class="o">=</span><span class="p">[],</span> <span class="n">original_preferred</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hard_fail</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Determine the best path to the :class:`layerstack.layer.Layer` indicated </span>
+<span class="sd">        by layer_dir, based on the user-provided options. This method may be </span>
+<span class="sd">        helpful when :class:`Layers &lt;layerstack.layer.Layer&gt;` and </span>
+<span class="sd">        :class:`Stacks &lt;layerstack.stack.Stack&gt;` are used by different people or </span>
+<span class="sd">        on different systems.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        layer_dir : str or pathlib.Path</span>
+<span class="sd">            Location of the :class:`layerstack.layer.Layer` as originally </span>
+<span class="sd">            represented</span>
+<span class="sd">        layer_library_dirs : list of str or pathlib.Path</span>
+<span class="sd">            Location(s) where the :class:`layerstack.layer.Layer` may now be </span>
+<span class="sd">            found. If multiple locations are provided, it is assumed that they </span>
+<span class="sd">            are listed in descending preference order. </span>
+<span class="sd">        original_preferred : bool</span>
+<span class="sd">            If True and the original layer_dir path exists, it will be used </span>
+<span class="sd">            directly. If False, the original layer_dir path will only be used if</span>
+<span class="sd">            the :class:`layerstack.layer.Layer` is not found in any of the </span>
+<span class="sd">            locations listed in layer_library_dirs.</span>
+<span class="sd">        hard_fail : bool</span>
+<span class="sd">            If True, raises LayerStackError if the layer cannot be located.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pathlib.Path or None</span>
+<span class="sd">            If the :class:`layerstack.layer.Layer` is located, its path is </span>
+<span class="sd">            returned and pathlib.Path.exists(). Otherwise, a warning is logged</span>
+<span class="sd">            and None is returned, unless hard_fail, in which case a </span>
+<span class="sd">            LayerStackError is raised instead.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        LayerStackError</span>
+<span class="sd">            If the :class:`layerstack.layer.Layer` cannot be located and </span>
+<span class="sd">            hard_fail is True.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">layer_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">layer_dir</span><span class="p">)</span>
+
+        <span class="n">candidate_locations</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span> <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">layer_library_dirs</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">original_preferred</span><span class="p">:</span>
+            <span class="n">candidate_locations</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">layer_dir</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">candidate_locations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_dir</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">candidate_location</span> <span class="ow">in</span> <span class="n">candidate_locations</span><span class="p">:</span>
+            <span class="n">candidate</span> <span class="o">=</span> <span class="n">candidate_location</span> <span class="o">/</span> <span class="n">layer_dir</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">candidate</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">return</span> <span class="n">candidate</span>
+        
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to find the layer </span><span class="si">{</span><span class="n">layer_dir</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> in any of the locations</span><span class="se">\n</span><span class="s2">  &quot;</span> <span class="o">+</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">candidate_location</span><span class="p">)</span> <span class="k">for</span> <span class="n">candidate_location</span> <span class="ow">in</span> <span class="n">candidate_locations</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">hard_fail</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LayerStackError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Stack.load"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.load">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">layer_library_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_locations_preferred</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load stack from given .json file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str or pathlib.Path</span>
+<span class="sd">            .json file path from which to load :class:`layerstack.stack.Stack`</span>
+<span class="sd">        layer_library_dir : None, str, pathlib.Path, or list of str or pathlib.Path</span>
+<span class="sd">            If one or more paths are provided, these will be used to locate layer </span>
+<span class="sd">            directories listed in the :class:`layerstack.stack.Stack` json file. </span>
+<span class="sd">            If multiple directories are provided, they will be checked in order.</span>
+<span class="sd">        original_locations_preferred : bool</span>
+<span class="sd">            If True, the original locations of the layers listed in the </span>
+<span class="sd">            :class:`layerstack.stack.Stack` json file will be preferred and use</span>
+<span class="sd">            if they exist on the current file system. If False, any location(s) </span>
+<span class="sd">            passed in through layer_library_dir will be preferred and checked </span>
+<span class="sd">            first</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        result : Stack</span>
+<span class="sd">            Instantiated Stack class instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">json_file</span><span class="p">:</span>
+            <span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">json_file</span><span class="p">,</span> <span class="n">object_pairs_hook</span><span class="o">=</span><span class="n">OrderedDict</span><span class="p">)</span>
+
+        <span class="n">stack_name</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">stack_name</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+
+        <span class="c1"># list of places where we will look for Layers</span>
+        <span class="n">layer_library_dirs</span> <span class="o">=</span> <span class="p">[]</span> 
+        <span class="k">if</span> <span class="n">layer_library_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layer_library_dir</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+                <span class="n">layer_library_dirs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer_library_dir</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">layer_library_dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Path</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span> <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">layer_library_dir</span><span class="p">]</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">LayerStackError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unexpected layer_library_dir = </span><span class="si">{</span><span class="n">layer_library_dir</span><span class="si">}</span><span class="s2">. &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;Was expecting str, pathlib.Path, or list thereof. Failed because, </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># now process each layer</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">json_layer</span> <span class="ow">in</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;layers&#39;</span><span class="p">]:</span>
+
+            <span class="n">layer_dir</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_layer_dir</span><span class="p">(</span>
+                <span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;layer_dir&#39;</span><span class="p">],</span> 
+                <span class="n">layer_library_dirs</span> <span class="o">=</span> <span class="n">layer_library_dirs</span><span class="p">,</span> 
+                <span class="n">original_preferred</span> <span class="o">=</span> <span class="n">original_locations_preferred</span><span class="p">,</span>
+                <span class="n">hard_fail</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">layer</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">layer_dir</span><span class="p">)</span>
+
+            <span class="n">msg_begin</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Layer </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> loaded by Stack </span><span class="si">{</span><span class="n">stack_name</span><span class="si">!r}</span><span class="s2"> &quot;</span>
+
+            <span class="c1"># inform the user about version changes</span>
+            <span class="c1"># TODO: Continue streamlining log text</span>
+            <span class="n">expected_uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">(</span><span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">uuid</span> <span class="o">!=</span> <span class="n">expected_uuid</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> has unexpected uuid. Expected &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">expected_uuid</span><span class="si">!r}</span><span class="s2">, got </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">uuid</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> has different serialized name, got </span><span class="si">{</span><span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">version</span> <span class="o">!=</span> <span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> is Version </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">, whereas the stack was &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;saved at Version </span><span class="si">{</span><span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">layer</span><span class="o">.</span><span class="n">checksum</span> <span class="o">!=</span> <span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;checksum&#39;</span><span class="p">]:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> has same version identifier as when the stack was saved&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;(Version </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="o">.</span><span class="n">version</span><span class="si">!r}</span><span class="s2">), but the checksum has changed.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># set arg and kwarg values based on the json file</span>
+            <span class="c1"># try to handle shifts in argument order and naming</span>
+            <span class="n">actual_args</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">):</span>
+                <span class="n">actual_args</span><span class="p">[</span><span class="n">arg</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">nargs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+
+            <span class="n">assigned_args</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">unassigned_sargs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">serialized_to_actual_map</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">nargs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">assigned_args</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">arg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]):</span>
+                    <span class="n">serialized_to_actual_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="n">assigned_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="c1"># not a full match -- next try name</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">arg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">actual_args</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">actual_args</span><span class="p">[</span><span class="n">arg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">assigned_args</span><span class="p">):</span>
+                    <span class="n">serialized_to_actual_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">actual_args</span><span class="p">[</span><span class="n">arg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span>
+                    <span class="n">assigned_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">actual_args</span><span class="p">[</span><span class="n">arg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]])</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> Position of Layer </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> argument </span><span class="si">{</span><span class="n">arg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">!r}</span><span class="s2"> moved &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;from </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">actual_args</span><span class="p">[</span><span class="n">arg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]]</span><span class="si">!r}</span><span class="s2"> since serialization of Stack </span><span class="si">{</span><span class="n">stack_name</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="n">serialized_to_actual_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">unassigned_sargs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">unassigned_sargs</span><span class="p">:</span>
+                <span class="c1"># there was no full match and no name match for this argument</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">nargs</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">assigned_args</span><span class="p">):</span>
+                    <span class="n">serialized_to_actual_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                    <span class="n">assigned_args</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> Setting the value of Layer </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">s </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&#39;th &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;argument based on argument in same position in Stack </span><span class="si">{</span><span class="n">stack_name</span><span class="si">!r}</span><span class="s2"> even &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;though names are different. Serialized argument name: &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">!r}</span><span class="s2"> Current argument name: </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                    <span class="k">continue</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> Argument </span><span class="si">{</span><span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="si">!r}</span><span class="s2">&#39;s serialized information &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;won&#39;t be used in loading Layer </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> in Stack </span><span class="si">{</span><span class="n">stack_name</span><span class="si">!r}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">serialized_to_actual_map</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">j</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> Unable to set the value of Layer </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">&#39;s &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">&#39;th argument </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> to &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">!r}</span><span class="s2">, because </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="n">json_layer</span><span class="p">[</span><span class="s1">&#39;kwargs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">kwarg</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
+                    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> Unable to set the value of Layer </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">&#39;s &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;kwarg </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> to </span><span class="si">{</span><span class="n">kwarg</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">, because </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">msg_begin</span><span class="si">}</span><span class="s2"> Kwarg </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> is no longer in Layer </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">, so &quot;</span>
+                    <span class="sa">f</span><span class="s2">&quot;the information serialized for it in Stack </span><span class="si">{</span><span class="n">stack_name</span><span class="si">!r}</span><span class="s2"> will not be used.&quot;</span><span class="p">)</span>
+
+            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="n">layers</span><span class="o">=</span><span class="n">layers</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                     <span class="n">version</span><span class="o">=</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">],</span>
+                     <span class="n">run_dir</span><span class="o">=</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;run_dir&#39;</span><span class="p">],</span> <span class="n">model</span><span class="o">=</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">])</span>  
+        <span class="n">result</span><span class="o">.</span><span class="n">_uuid</span> <span class="o">=</span> <span class="n">UUID</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;uuid&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="Stack.run"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.Stack.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log_level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">,</span> <span class="n">archive</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run stack</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        save_path : str</span>
+<span class="sd">            Path to which results from running stack should be saved</span>
+<span class="sd">        log_level : logging</span>
+<span class="sd">            Level of logging to be used while running stack</span>
+<span class="sd">        archive : bool</span>
+<span class="sd">            Archive stack before running</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">timer</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">runnable</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LayerStackError</span><span class="p">(</span><span class="s2">&quot;Stack is not runnable. Be sure run_dir and arguments are set.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># get absolute paths</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">)):</span>
+            <span class="n">model_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">model_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="n">model_path</span> <span class="o">=</span> <span class="n">model_path</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">save_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">save_path</span><span class="p">)</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span>
+
+        <span class="c1"># set up and switch into the run directory</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+
+        <span class="n">old_cur_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+        <span class="n">chdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">run_dir</span><span class="p">)</span> 
+
+        <span class="c1"># set up logging</span>
+        <span class="n">logfile</span> <span class="o">=</span> <span class="n">start_file_log</span><span class="p">(</span><span class="s1">&#39;stack.log&#39;</span><span class="p">,</span><span class="n">log_level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
+        <span class="c1"># also archive</span>
+        <span class="k">if</span> <span class="n">archive</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">archive</span><span class="p">()</span>
+
+        <span class="c1"># run the stack</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">_layer</span>
+                <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">ModelLayerBase</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">model_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">_load_model</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+                    <span class="n">layer</span><span class="o">.</span><span class="n">_check_model_type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">LayerStackError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;To use non-None model </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="si">}</span><span class="s2">, &quot;</span>
+                        <span class="s2">&quot;Layer must be a ModelLayer, but this Stack&#39;s first layer &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running </span><span class="si">{</span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2"> layer&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">layer</span><span class="p">,</span> <span class="n">ModelLayerBase</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">run_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">layer</span><span class="o">.</span><span class="n">run_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">layer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layers</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">layer</span>
+                <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">layer</span><span class="p">,</span> <span class="n">ModelLayerBase</span><span class="p">):</span>
+                    <span class="n">layer</span><span class="o">.</span><span class="n">_save_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">save_path</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">LayerStackError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;To use non-None save_path </span><span class="si">{</span><span class="n">save_path</span><span class="si">}</span><span class="s2">, &quot;</span>
+                        <span class="s2">&quot;Layer must be a ModelLayer, but this Stack&#39;s last Layer &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">layer</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># switch back to initial directory</span>
+            <span class="n">chdir</span><span class="p">(</span><span class="n">old_cur_dir</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stack ran successfully in </span><span class="si">{</span><span class="n">timer_str</span><span class="p">(</span><span class="n">timer</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">end_file_log</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">chdir</span><span class="p">(</span><span class="n">old_cur_dir</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stack failed after </span><span class="si">{</span><span class="n">timer_str</span><span class="p">(</span><span class="n">timer</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">end_file_log</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span>
+            <span class="k">raise</span>        </div></div>
+
+
+<div class="viewcode-block" id="repoint_stack"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.repoint_stack">[docs]</a><span class="k">def</span> <span class="nf">repoint_stack</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">layer_library_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">original_locations_preferred</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
+                  <span class="n">run_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load Stack from p, update run_dir and/or model, and save to outfile or to the</span>
+<span class="sd">    same folder but with the file name prepended with an underscore.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    p : str</span>
+<span class="sd">        path to Stack .json file</span>
+<span class="sd">    layer_library_dir : None, str, pathlib.Path, or list of str or pathlib.Path</span>
+<span class="sd">        If one or more paths are provided, these will be used to locate layer </span>
+<span class="sd">        directories listed in the :class:`layerstack.stack.Stack` json file. </span>
+<span class="sd">        If multiple directories are provided, they will be checked in order.</span>
+<span class="sd">    original_locations_preferred : bool</span>
+<span class="sd">        If True, the original locations of the layers listed in the </span>
+<span class="sd">        :class:`layerstack.stack.Stack` json file will be preferred and use</span>
+<span class="sd">        if they exist on the current file system. If False, any location(s) </span>
+<span class="sd">        passed in through layer_library_dir will be preferred and checked </span>
+<span class="sd">        first</span>
+<span class="sd">    run_dir : str or None</span>
+<span class="sd">        run directory to use</span>
+<span class="sd">    model : str or None</span>
+<span class="sd">        path to starting model</span>
+<span class="sd">    outfile : str or None</span>
+<span class="sd">        where to save modified stack. If not provided, will save the result to </span>
+<span class="sd">        the same directory but with the filename prepended with an underscore</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="n">Stack</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> 
+        <span class="n">layer_library_dir</span><span class="o">=</span><span class="n">layer_library_dir</span><span class="p">,</span> 
+        <span class="n">original_locations_preferred</span><span class="o">=</span><span class="n">original_locations_preferred</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">run_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">run_dir</span> <span class="o">=</span> <span class="n">run_dir</span>
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">outfile</span>
+    <span class="k">if</span> <span class="n">filepath</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">orig_p</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">orig_p</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="p">(</span><span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="n">orig_p</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="n">stack</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+    
+    <span class="k">return</span>    </div>
+
+
+<div class="viewcode-block" id="parse_args_helper"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.parse_args_helper">[docs]</a><span class="k">def</span> <span class="nf">parse_args_helper</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="s2">&quot;Load and optionally run a stack.&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># all CLI options require loading a Stack json file</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;stack_file&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Stack json file to load&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-ld&#39;</span><span class="p">,</span> <span class="s1">&#39;--layer-library-dirs&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;List of layer </span>
+<span class="s2">        parent directories where the layers listed in the Stack .json file may </span>
+<span class="s2">        be found on this file system.&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">)</span> 
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-nop&#39;</span><span class="p">,</span> <span class="s1">&#39;--non-original-locations-preferred&#39;</span><span class="p">,</span> 
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Set this flag if the original layer locations listed in the </span>
+<span class="s2">            .json file should be checked last instead of first (after the </span>
+<span class="s2">            layer-library-dirs instead of before).&quot;&quot;&quot;</span><span class="p">,</span> 
+        <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;original_locations_preferred&#39;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">original_locations_preferred</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># all CLI options also involve configuring logging (at least console)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-d&#39;</span><span class="p">,</span><span class="s1">&#39;--debug&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-w&#39;</span><span class="p">,</span><span class="s1">&#39;--warning-only&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="c1"># CLI options    </span>
+    <span class="n">mode_parsers</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s1">&#39;sub-command&#39;</span><span class="p">)</span>
+    <span class="n">_parser_list</span> <span class="o">=</span> <span class="n">mode_parsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;list&#39;</span><span class="p">)</span>
+    <span class="n">parser_repoint</span> <span class="o">=</span> <span class="n">mode_parsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;repoint&#39;</span><span class="p">)</span>
+    <span class="n">parser_run</span> <span class="o">=</span> <span class="n">mode_parsers</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s1">&#39;run&#39;</span><span class="p">)</span>
+
+    <span class="c1"># repoint arguments</span>
+    <span class="n">parser_repoint</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="s1">&#39;--outfile&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Where to save the </span>
+<span class="s2">        modified stack. By default, will be saved in the same location with &#39;_&#39; </span>
+<span class="s2">        added as a prefix to the filename.&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">parser_repoint</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-rd&#39;</span><span class="p">,</span> <span class="s1">&#39;--run-dir&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Where this stack </span>
+<span class="s2">        should be run.&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">parser_repoint</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-mp&#39;</span><span class="p">,</span> <span class="s1">&#39;--model-path&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Model this stack </span>
+<span class="s2">        should be run on.&quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># run arguments </span>
+    <span class="n">parser_run</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-sp&#39;</span><span class="p">,</span> <span class="s1">&#39;--save-path&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Where the results of </span>
+<span class="s2">        running this stack should be saved. This is an output path for the </span>
+<span class="s2">        stack&#39;s final model.&quot;&quot;&quot;</span><span class="p">)</span>
+    <span class="n">parser_run</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-na&#39;</span><span class="p">,</span> <span class="s1">&#39;--no-archive&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;Set this flag to </span>
+<span class="s2">        turn off stack archiving.&quot;&quot;&quot;</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;archive&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;store_false&#39;</span><span class="p">)</span>
+    <span class="n">parser_run</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">(</span><span class="n">archive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.stack.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args_helper</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+
+    <span class="c1"># determine log level</span>
+    <span class="n">log_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">warning_only</span> <span class="ow">and</span> <span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s1">&#39;list&#39;</span><span class="p">):</span>
+        <span class="n">log_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">log_level</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+
+    <span class="c1"># start logging</span>
+    <span class="n">start_console_log</span><span class="p">(</span><span class="n">log_level</span><span class="o">=</span><span class="n">log_level</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;list&#39;</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="n">Stack</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">stack_file</span><span class="p">,</span> 
+            <span class="n">layer_library_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">layer_library_dirs</span><span class="p">,</span> 
+            <span class="n">original_locations_preferred</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">original_locations_preferred</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Stack loaded from </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">stack_file</span><span class="si">}</span><span class="s2">:</span><span class="se">\n</span><span class="si">{</span><span class="n">stack</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;repoint&#39;</span><span class="p">:</span>
+        <span class="n">repoint_stack</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">stack_file</span><span class="p">,</span> 
+                      <span class="n">layer_library_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">layer_library_dir</span><span class="p">,</span>
+                      <span class="n">original_locations_preferred</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">original_locations_preferred</span><span class="p">,</span>
+                      <span class="n">run_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">run_dir</span><span class="p">,</span> 
+                      <span class="n">model</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">model_path</span><span class="p">,</span> 
+                      <span class="n">outfile</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">outfile</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;run&#39;</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="n">Stack</span><span class="o">.</span><span class="n">load</span><span class="p">(</span>
+            <span class="n">args</span><span class="o">.</span><span class="n">stack_file</span><span class="p">,</span> 
+            <span class="n">layer_library_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">layer_library_dirs</span><span class="p">,</span> 
+            <span class="n">original_locations_preferred</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">original_locations_preferred</span><span class="p">)</span>
+        <span class="n">stack</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">save_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">save_path</span><span class="p">,</span> <span class="n">log_level</span><span class="o">=</span><span class="n">log_level</span><span class="p">,</span> <span class="n">archive</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">archive</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="kc">False</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Unknown mode </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s1">&#39;</span>
+    
+    <span class="k">return</span></div>
+    
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright (c) 2021, Alliance for Sustainable Energy, LLC.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

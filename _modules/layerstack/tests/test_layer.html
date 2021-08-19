@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>layerstack.tests.test_layer &mdash; layerstack 0.4.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> layerstack
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">layerstack overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#motivation">motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#a-layerstack-enabled-project">a layerstack-enabled project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/modules.html">layerstack</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.args">layerstack.args module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.tests.html">layerstack.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.args">layerstack.args module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#layerstack-args">layerstack.args</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#layerstack-stack">layerstack.stack</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#layerstack">layerstack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">layerstack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../layerstack.html">layerstack</a> &raquo;</li>
+        
+          <li><a href="../tests.html">layerstack.tests</a> &raquo;</li>
+        
+      <li>layerstack.tests.test_layer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for layerstack.tests.test_layer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">:copyright: (c) 2021, Alliance for Sustainable Energy, LLC</span>
+<span class="sd">:license: BSD-3</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="kn">from</span> <span class="nn">layerstack</span> <span class="kn">import</span> <span class="n">ArgMode</span><span class="p">,</span> <span class="n">LayerStackRuntimeError</span>
+<span class="kn">from</span> <span class="nn">layerstack.layer</span> <span class="kn">import</span> <span class="n">Layer</span><span class="p">,</span> <span class="n">LayerBase</span><span class="p">,</span> <span class="n">ModelLayerBase</span>
+<span class="kn">from</span> <span class="nn">layerstack.tests</span> <span class="kn">import</span> <span class="n">layer_library_dir</span><span class="p">,</span> <span class="n">outdir</span>
+<span class="kn">from</span> <span class="nn">layerstack.tests.test_session</span> <span class="kn">import</span> <span class="n">manage_outdir</span>
+
+<span class="n">created_layers_library_dir</span> <span class="o">=</span> <span class="n">outdir</span> <span class="o">/</span> <span class="s1">&#39;test_layer_creation&#39;</span>
+
+
+<div class="viewcode-block" id="ModelForTests"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_layer.ModelForTests">[docs]</a><span class="k">class</span> <span class="nc">ModelForTests</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+
+<div class="viewcode-block" id="ModelForTests.save"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_layer.ModelForTests.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> 
+                       <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+                       <span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">},</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ModelForTests.load"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_layer.ModelForTests.load">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="n">json_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ModelForTests</span><span class="p">(</span><span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                             <span class="n">count</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">],</span>
+                             <span class="n">data</span> <span class="o">=</span> <span class="n">json_data</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="LayerBaseClassForTestsWithModels"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_layer.LayerBaseClassForTestsWithModels">[docs]</a><span class="k">class</span> <span class="nc">LayerBaseClassForTestsWithModels</span><span class="p">(</span><span class="n">ModelLayerBase</span><span class="p">):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_check_model_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ModelForTests</span><span class="p">)</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_load_model</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model_path</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ModelForTests</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_save_model</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">model_path</span><span class="p">):</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="create_layer_library_dir"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_layer.create_layer_library_dir">[docs]</a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s1">&#39;module&#39;</span><span class="p">,</span><span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">create_layer_library_dir</span><span class="p">(</span><span class="n">manage_outdir</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">outdir</span><span class="o">.</span><span class="n">exists</span><span class="p">(),</span> <span class="n">outdir</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">created_layers_library_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+    <span class="n">created_layers_library_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_layer_base"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_layer.test_layer_base">[docs]</a><span class="k">def</span> <span class="nf">test_layer_base</span><span class="p">():</span>
+    <span class="n">_layer_dir</span> <span class="o">=</span> <span class="n">Layer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s1">&#39;Test Layer Base&#39;</span><span class="p">,</span> <span class="n">created_layers_library_dir</span><span class="p">)</span>
+    <span class="c1"># should be able to run the layer as-is</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> 
+        <span class="nb">str</span><span class="p">(</span><span class="n">created_layers_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_layer_base&#39;</span> <span class="o">/</span> <span class="s1">&#39;layer.py&#39;</span><span class="p">),</span> 
+        <span class="s1">&#39;dummy_arg&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="test_model_dependent_args_kwargs"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_layer.test_model_dependent_args_kwargs">[docs]</a><span class="k">def</span> <span class="nf">test_model_dependent_args_kwargs</span><span class="p">():</span>
+    <span class="c1"># without model</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_model_dependent_args_kwargs&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_list</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">set_arg_mode</span><span class="p">(</span><span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">)</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;hello&#39;</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;anything allowed&#39;</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">runnable</span>
+
+    <span class="c1"># a model with no data</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ModelForTests</span><span class="p">(</span><span class="s1">&#39;Gilbert&#39;</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_model_dependent_args_kwargs&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_list</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">nargs</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">set_arg_mode</span><span class="p">(</span><span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">)</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;anything allowed&#39;</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">layer</span><span class="o">.</span><span class="n">runnable</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">runnable</span>
+
+    <span class="c1"># a model with data</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ModelForTests</span><span class="p">(</span><span class="s1">&#39;Paula&#39;</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;purple&#39;</span><span class="p">])</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_model_dependent_args_kwargs&#39;</span><span class="p">,</span> <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">is_list</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">nargs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">choices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">set_arg_mode</span><span class="p">(</span><span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">)</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="ow">not</span> <span class="n">layer</span><span class="o">.</span><span class="n">runnable</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">runnable</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">LayerStackRuntimeError</span><span class="p">):</span>
+        <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;anything allowed&#39;</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span>
+    <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;purple&#39;</span>
+    <span class="k">assert</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">layer</span><span class="o">.</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;data_element&#39;</span><span class="p">]</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright (c) 2021, Alliance for Sustainable Energy, LLC.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

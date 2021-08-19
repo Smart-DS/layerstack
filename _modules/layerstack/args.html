@@ -1,0 +1,1072 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>layerstack.args &mdash; layerstack 0.4.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> layerstack
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">layerstack overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#motivation">motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../overview.html#a-layerstack-enabled-project">a layerstack-enabled project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/modules.html">layerstack</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.args">layerstack.args module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#module-layerstack">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.tests.html">layerstack.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.args">layerstack.args module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#layerstack-args">layerstack.args</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#layerstack-stack">layerstack.stack</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/layerstack.html#module-layerstack">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/layerstack.html#layerstack">layerstack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">layerstack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../layerstack.html">layerstack</a> &raquo;</li>
+        
+      <li>layerstack.args</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for layerstack.args</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">layerstack.args</span>
+<span class="sd">---------------</span>
+<span class="sd">Classes that allow the specification of arguments that can be serialized to and</span>
+<span class="sd">loaded from json, as well as expressed on the command line.</span>
+
+<span class="sd">:copyright: (c) 2021, Alliance for Sustainable Energy, LLC</span>
+<span class="sd">:license: BSD-3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="kn">import</span> <span class="nb">super</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">layerstack</span> <span class="kn">import</span> <span class="n">LayerStackTypeError</span><span class="p">,</span> <span class="n">LayerStackRuntimeError</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="KwArgBase"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwArgBase">[docs]</a><span class="k">class</span> <span class="nc">KwArgBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for expressing json- and CLI-compatible arguments. Builds off of</span>
+<span class="sd">    the patterns established by argparse.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str or None</span>
+<span class="sd">        name of the [keyword] argument</span>
+<span class="sd">    description : str</span>
+<span class="sd">        optional description text for this [keyword] argument</span>
+<span class="sd">    parser : callable</span>
+<span class="sd">        function to parse the [keyword] argument value. analogous to the type </span>
+<span class="sd">        argument in the argparse add_argument method </span>
+<span class="sd">    choices : None or list</span>
+<span class="sd">        list of allowable values</span>
+<span class="sd">    nargs : None, int, str</span>
+<span class="sd">        analogous to the nargs argument in the argparse add_argument method</span>
+<span class="sd">    list_parser : callable</span>
+<span class="sd">        function to parse a [keyword] argument value list     </span>
+<span class="sd">    save_parser : callable</span>
+<span class="sd">        function to convert a [keyword] argument value to json-serializable form  </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">list_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">parser</span>           
+        <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="o">=</span> <span class="n">choices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_list</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nargs</span> <span class="o">=</span> <span class="n">nargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list_parser</span> <span class="o">=</span> <span class="n">list_parser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span> <span class="o">=</span> <span class="n">save_parser</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nargs</span>
+
+    <span class="nd">@nargs</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">nargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;?&#39;</span><span class="p">,</span> <span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_nargs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_list</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># following argparse convention that if </span>
+                                 <span class="c1"># nargs = 1, the single element is placed in a</span>
+                                 <span class="c1"># list</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nargs</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nargs</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">choices_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span><span class="p">(</span><span class="n">choice</span><span class="p">)</span> <span class="k">for</span> <span class="n">choice</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        read-only attribute</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            whether this [keyword] argument is a list (True) or single value (False)    </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_list</span>
+
+<div class="viewcode-block" id="KwArgBase.get_name"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwArgBase.get_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cleaned</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cleaned</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span></div>
+
+    <span class="k">def</span> <span class="nf">_set_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Called by derived classes to set their _value attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">none_allowed</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Handles value and list parsing. If none_allowed, that means that the </span>
+<span class="sd">        value can be set to None, separate and prior to value and list parsing.</span>
+<span class="sd">        This is used, e.g., for specifying Kwarg defaults. </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        any</span>
+<span class="sd">            parsed value or parsed list of values</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">none_allowed</span> <span class="ow">and</span> <span class="p">(</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_list</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_parser</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_parser</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">values</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="p">:</span>
+                            <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">values</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> not in choices = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">values</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_list</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"> not in the allowable choices: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="KwArgBase.add_argument_kwargs"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwArgBase.add_argument_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">add_argument_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts KwArgBase atttributes to argparse add_argument keyword </span>
+<span class="sd">        arugments. For use in constructing command-line interfaces.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            kwargs for argparse add_argument call</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;help&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;choices&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">choices</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nargs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;nargs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nargs</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span></div></div>
+
+
+<div class="viewcode-block" id="Arg"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.Arg">[docs]</a><span class="k">class</span> <span class="nc">Arg</span><span class="p">(</span><span class="n">KwArgBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines a required, positional argument.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        name of the argument</span>
+<span class="sd">    description : str</span>
+<span class="sd">        optional description text for this argument</span>
+<span class="sd">    parser : callable</span>
+<span class="sd">        function to parse the argument value. analogous to the type argument in </span>
+<span class="sd">        the argparse add_argument method</span>
+<span class="sd">    choices : None or list</span>
+<span class="sd">        list of allowable values</span>
+<span class="sd">    nargs : None, int, str</span>
+<span class="sd">        analogous to the nargs argument in the argparse add_argument method</span>
+<span class="sd">    list_parser : callable</span>
+<span class="sd">        function to parse an argument value list</span>
+<span class="sd">    save_parser : callable</span>
+<span class="sd">        function to convert a [keyword] argument value to json-serializable form</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">nargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">list_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                         <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">nargs</span><span class="p">,</span> <span class="n">list_parser</span><span class="o">=</span><span class="n">list_parser</span><span class="p">,</span>
+                         <span class="n">save_parser</span><span class="o">=</span><span class="n">save_parser</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;    description = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;    parser = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;    choices = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;    nargs = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nargs</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;    list_parser = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">list_parser</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;    save_parser = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span><span class="si">!r}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        read-only attribute</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            whether the value has been set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_value&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        settable attribute. setter parses value using parser and list_parser as </span>
+<span class="sd">        appropriate</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        any</span>
+<span class="sd">            the value to which this argument has been set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        JSON-serializable form of the argument value. Uses save_parser if provided.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Kwarg"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.Kwarg">[docs]</a><span class="k">class</span> <span class="nc">Kwarg</span><span class="p">(</span><span class="n">KwArgBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Defines an optional or defaulted keyword argument.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    default : None or any</span>
+<span class="sd">        default value to be used if no explicit value has been set. is parsed </span>
+<span class="sd">        with parser and list_parser as appropriate, if default is not None</span>
+<span class="sd">    description : str</span>
+<span class="sd">        optional description text for this [keyword] argument</span>
+<span class="sd">    parser : callable</span>
+<span class="sd">        function to parse the [keyword] argument value. analogous to the type </span>
+<span class="sd">        argument in the argparse add_argument method</span>
+<span class="sd">    choices : None or list</span>
+<span class="sd">        list of allowable values</span>
+<span class="sd">    nargs : None, int, str</span>
+<span class="sd">        analogous to the nargs argument in the argparse add_argument method</span>
+<span class="sd">    list_parser : callable</span>
+<span class="sd">        function to parse a [keyword] argument value list</span>
+<span class="sd">    action : str</span>
+<span class="sd">        analogous to the action argument in the argparse add_argument method. </span>
+<span class="sd">        allows, e.g., command-line boolean flags.</span>
+<span class="sd">    save_parser : callable</span>
+<span class="sd">        function to convert a [keyword] argument value to json-serializable form</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">nargs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">list_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">save_parser</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span> <span class="n">parser</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                         <span class="n">choices</span><span class="o">=</span><span class="n">choices</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="n">nargs</span><span class="p">,</span> <span class="n">list_parser</span><span class="o">=</span><span class="n">list_parser</span><span class="p">,</span>
+                         <span class="n">save_parser</span><span class="o">=</span><span class="n">save_parser</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_value</span><span class="p">(</span><span class="n">default</span><span class="p">,</span><span class="n">none_allowed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">(default = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;      description = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;      parser = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;      choices = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">choices</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;      nargs = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nargs</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;      list_parser = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">list_parser</span><span class="si">!r}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;      save_parser = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span><span class="si">!r}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">defaulted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        read-only attribute</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            whether a non-default value has been set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_value&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        settable attribute. setter parses value using parser and list_parser as </span>
+<span class="sd">        appropriate. setting to None clears any user-defined value and reverts </span>
+<span class="sd">        to the default.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        any</span>
+<span class="sd">            the value to which this argument has been set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;_value&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
+
+    <span class="nd">@value</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value</span>
+
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">defaulted</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">value_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        JSON-serializable form of the keyword argument value. Uses save_parser </span>
+<span class="sd">        if provided and self.value is not None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">default_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        JSON-serializable form of the keyword argument default value. Uses </span>
+<span class="sd">        save_parser if provided and self.default is not None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_parser</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Kwarg.add_argument_kwargs"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.Kwarg.add_argument_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">add_argument_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">add_argument_kwargs</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span></div></div>
+
+
+<div class="viewcode-block" id="ArgMode"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.ArgMode">[docs]</a><span class="k">class</span> <span class="nc">ArgMode</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Enumeration describing whether the KwArgs in an ArgList or KwargDict are </span>
+<span class="sd">    currently being DESCribed (that is, they are being added to or removed from </span>
+<span class="sd">    the container objects, or are generally being edited), or USEd (that is, </span>
+<span class="sd">    the values are being set or queried in preparation for running a Layer or </span>
+<span class="sd">    a Stack).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">DESC</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">USE</span> <span class="o">=</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="ArgList"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.ArgList">[docs]</a><span class="k">class</span> <span class="nc">ArgList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="p">[],</span> <span class="n">mode</span><span class="o">=</span><span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List that contains Arg objects. In describe mode (mode == ArgMode.DESC), </span>
+<span class="sd">        Arg objects may be added to and removed from this list. Their </span>
+<span class="sd">        descriptions and other attributes may be edited. In use mode (mode == </span>
+<span class="sd">        ArgMode.USE), only the argument values are accessible through this </span>
+<span class="sd">        class&#39;s get, set, and iter methods.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        iterable : list or other iterable</span>
+<span class="sd">            passed to list.__init__. if non-empty, must contain Arg objects.</span>
+<span class="sd">        mode : ArgMode</span>
+<span class="sd">            mode for this ArgList to be in upon return</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        settable attribute</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ArgMode</span>
+<span class="sd">            current mode of this ArgList, that is, whether it is being used to </span>
+<span class="sd">            DESCribe or USE arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span>
+
+    <span class="nd">@mode</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Arg or any</span>
+<span class="sd">            Arg at position i (if mode == ArgMode.DESC), or Arg.value at </span>
+<span class="sd">            position i (if mode == ArgMode.USE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        Arg or any</span>
+<span class="sd">            the next Arg (if mode == ArgMode.DESC) or the next Arg.value (if </span>
+<span class="sd">            mode == ArgMode.USE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">arg</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span> <span class="k">else</span> <span class="n">arg</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the Arg or the Arg.value at position i.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : int</span>
+<span class="sd">            index into this list</span>
+<span class="sd">        value : Arg or any</span>
+<span class="sd">            Arg to place at position i if mode == ArgMode.DESC, or value to set</span>
+<span class="sd">            the Arg already in position i to if mode == ArgMode.USE</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        LayerStackTypeError</span>
+<span class="sd">            if mode == ArgMode.DESC and value is not an Arg</span>
+<span class="sd">        Exception</span>
+<span class="sd">            if mode == ArgMode.USE and there is a failure in the value parsing</span>
+<span class="sd">            process. value and value list parsers are provided by users, so </span>
+<span class="sd">            there could be unexpected behavior.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Arg</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">LayerStackTypeError</span><span class="p">(</span><span class="s2">&quot;ArgLists only hold Args. &quot;</span> <span class="o">+</span> 
+                    <span class="s2">&quot;You passed a </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">tmp</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="ArgList.add_arguments"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.ArgList.add_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds this ArgList&#39;s arguments to parser, for use in a command-line </span>
+<span class="sd">        interface.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parser : argparse.ArgumentParser</span>
+<span class="sd">            parser.add_argument is called once for each Arg in this ArgList</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        LayerStackRuntimeError</span>
+<span class="sd">            if mode != ArgMode.DESC, since representing this ArgList&#39;s arguments</span>
+<span class="sd">            in an argparse.ArgumentParser is a descriptive task</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">+</span> 
+                <span class="s2">&quot;must be in ArgMode.DESC to add arguments to an argparse parser.&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">arg</span><span class="o">.</span><span class="n">add_argument_kwargs</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="ArgList.set_args"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.ArgList.set_args">[docs]</a>    <span class="k">def</span> <span class="nf">set_args</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cli_args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets this ArgList&#39;s argument values to those in cli_args, which is </span>
+<span class="sd">        assumed to have come from argparse.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cli_args : argparse.Namespace</span>
+<span class="sd">            object returned by parser.parse_args(), where parser is an </span>
+<span class="sd">            argparse.ArgumentParser to which this ArgList&#39;s add_arguments method</span>
+<span class="sd">            was applied</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        LayerStackRuntimeError</span>
+<span class="sd">            if mode != ArgMode.USE, since setting this ArgList&#39;s argument values</span>
+<span class="sd">            is a form of using a fixed ArgList</span>
+<span class="sd">        LayerStackRuntimeError</span>
+<span class="sd">            if an expected argument name is not found in cli_args</span>
+<span class="sd">        Exception</span>
+<span class="sd">            there could be a failure in the value parsing process. value and </span>
+<span class="sd">            value list parsers are provided by users, so there could be </span>
+<span class="sd">            unexpected behavior.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="s2">&quot;must be in ArgMode.USE to set values.&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span>
+            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">temp_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cli_args</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">cleaned</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">arg</span><span class="o">.</span><span class="n">get_name</span><span class="p">(</span><span class="n">cleaned</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="s2"> not found in &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;cli_args:</span><span class="se">\n</span><span class="si">{</span><span class="n">cli_args</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">because </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">arg</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp_value</span> <span class="c1"># may throw if temp_value is bad per arg.parser, etc.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span>
+            <span class="k">raise</span> <span class="n">e</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        read-only attribute. behavior is independent of mode</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            whether all of the Args in this ArgList have had their values set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">arg</span><span class="o">.</span><span class="n">set</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        read-only attribute. behavior is independent of mode</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of str</span>
+<span class="sd">            list of the names of the Args in this ArgList</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">():</span>
+            <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">names</span></div>
+
+
+<div class="viewcode-block" id="KwargDict"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwargDict">[docs]</a><span class="k">class</span> <span class="nc">KwargDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iterable</span><span class="o">=</span><span class="p">[],</span> <span class="n">mode</span><span class="o">=</span><span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        OrderedDict that contains Kwarg objects. In describe mode (mode == </span>
+<span class="sd">        ArgMode.DESC), Kwarg objects may be add and removed. Their descriptions </span>
+<span class="sd">        and other attributes may be edited. In use mode (mode == ArgMode.USE), </span>
+<span class="sd">        only the argument values are accessible through this class&#39;s get, set, </span>
+<span class="sd">        and iter methods.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        iterable : list or other iterable</span>
+<span class="sd">            passed to collections.OrderedDict.__init__. if non-empty, values </span>
+<span class="sd">            must be Kwarg objects.</span>
+<span class="sd">        mode : ArgMode</span>
+<span class="sd">            mode for this KwargDict to be in upon return</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        settable attribute</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ArgMode</span>
+<span class="sd">            current mode of this KwargDict, that is, whether it is being used to </span>
+<span class="sd">            DESCribe or USE arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span>
+
+    <span class="nd">@mode</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : str</span>
+<span class="sd">            name of the Kwarg of interest</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Kwarg or any</span>
+<span class="sd">            Kwarg with name key (if mode == ArgMode.DESC), or Kwarg.value for </span>
+<span class="sd">            the Kwarg with name key (if mode == ArgMode.USE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">value</span>
+
+<div class="viewcode-block" id="KwargDict.items"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwargDict.items">[docs]</a>    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return the items in this KwargDict</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of name, value pairs</span>
+<span class="sd">            name is always the Kwarg.name. the value is either the Kwarg itself </span>
+<span class="sd">            (if mode == ArgMode.DESC), or its .value (if mode == ArgMode.USE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="n">kwarg</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KwargDict.iteritems"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwargDict.iteritems">[docs]</a>    <span class="k">def</span> <span class="nf">iteritems</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iterate throught the items in this KwargDict</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        ------</span>
+<span class="sd">        name, value pair</span>
+<span class="sd">            name is always the next Kwarg.name. the value is either the next </span>
+<span class="sd">            Kwarg itself (if mode == ArgMode.DESC), or its .value (if mode == </span>
+<span class="sd">            ArgMode.USE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">kwarg</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span> <span class="k">else</span> <span class="p">(</span><span class="n">kwarg</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="KwargDict.values"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwargDict.values">[docs]</a>    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return the list of values in this KwargDict</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list of values</span>
+<span class="sd">            values are either Kwargs (if mode == ArgMode.DESC) or the </span>
+<span class="sd">            Kwarg.values (if mode == ArgMode.USE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">kwarg</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="KwargDict.itervalues"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwargDict.itervalues">[docs]</a>    <span class="k">def</span> <span class="nf">itervalues</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        iterate through the list of values in this KwargDict</span>
+
+<span class="sd">        Yields</span>
+<span class="sd">        -------</span>
+<span class="sd">        value</span>
+<span class="sd">            value is either the next Kwarg (if mode == ArgMode.DESC) or the </span>
+<span class="sd">            next Kwarg.value (if mode == ArgMode.USE)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">kwarg</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span> <span class="k">else</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">value</span></div>
+
+    <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add or edit a Kwarg named key, or set its value, depending on mode.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : str</span>
+<span class="sd">            Kwarg name</span>
+<span class="sd">        value : Kwarg or any</span>
+<span class="sd">            Kwarg to assign to name key if mode == ArgMode.DESC, or value to set</span>
+<span class="sd">            the Kwarg already named key if mode == ArgMode.USE</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        LayerStackTypeError</span>
+<span class="sd">            if mode == ArgMode.DESC and value is not an Kwarg</span>
+<span class="sd">        Exception</span>
+<span class="sd">            if mode == ArgMode.USE and there is a failure in the value parsing</span>
+<span class="sd">            process. value and value list parsers are provided by users, so </span>
+<span class="sd">            there could be unexpected behavior.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Kwarg</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">LayerStackTypeError</span><span class="p">(</span><span class="s2">&quot;KwargDicts only hold Kwargs. &quot;</span> <span class="o">+</span> 
+                    <span class="s2">&quot;You passed a </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> not in this </span><span class="si">{}</span><span class="s2">,&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">+</span> 
+                <span class="s2">&quot; but asked to set its value. Creating a default Kwarg.&quot;</span><span class="p">)</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">Kwarg</span><span class="p">()</span>
+            <span class="n">tmp</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">tmp</span><span class="p">)</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="n">tmp</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="KwargDict.add_arguments"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwargDict.add_arguments">[docs]</a>    <span class="k">def</span> <span class="nf">add_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parser</span><span class="p">,</span> <span class="n">short_names</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds this KwargDict&#39;s keyword arguments to parser, for use in a </span>
+<span class="sd">        command-line interface.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        parser : argparse.ArgumentParser</span>
+<span class="sd">            parser.add_argument is called once for each Arg in this ArgList</span>
+<span class="sd">        short_names : list</span>
+<span class="sd">            list of short names (e.g., &#39;d&#39; for an argument specified as &#39;-d&#39;,</span>
+<span class="sd">            &#39;--debug&#39;) already registered in parser</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        LayerStackRuntimeError</span>
+<span class="sd">            if mode != ArgMode.DESC, since representing this KwargDict&#39;s </span>
+<span class="sd">            keyword arguments in an argparse.ArgumentParser is a descriptive </span>
+<span class="sd">            task</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">+</span> 
+                <span class="s2">&quot;must be in ArgMode.DESC to add arguments to an argparse parser.&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">short_name</span> <span class="o">=</span> <span class="n">get_short_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">short_names</span><span class="o">=</span><span class="n">short_names</span><span class="p">)</span>
+            <span class="n">kwarg_kwargs</span> <span class="o">=</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">add_argument_kwargs</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">short_name</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span>
+                                    <span class="o">**</span><span class="n">kwarg_kwargs</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Unable to add kwarg &#39;</span><span class="si">{}</span><span class="s2">&#39; to parser with &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> 
+                             <span class="s2">&quot;short name &#39;</span><span class="si">{}</span><span class="s2">&#39; and add_argument kwargs </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">short_name</span><span class="p">,</span><span class="n">kwarg_kwargs</span><span class="p">))</span>
+                <span class="k">raise</span></div>
+
+<div class="viewcode-block" id="KwargDict.set_kwargs"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.KwargDict.set_kwargs">[docs]</a>    <span class="k">def</span> <span class="nf">set_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cli_args</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets this KwargDict&#39;s keyword argument values to those in cli_args, </span>
+<span class="sd">        which is assumed to have come from argparse.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cli_args : argparse.Namespace</span>
+<span class="sd">            object returned by parser.parse_args(), where parser is an </span>
+<span class="sd">            argparse.ArgumentParser to which this ArgList&#39;s add_arguments method</span>
+<span class="sd">            was applied</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        LayerStackRuntimeError</span>
+<span class="sd">            if mode != ArgMode.USE, since setting this ArgList&#39;s argument values</span>
+<span class="sd">            is a form of using a fixed ArgList</span>
+<span class="sd">        LayerStackRuntimeError</span>
+<span class="sd">            if an expected argument name is not found in cli_args</span>
+<span class="sd">        Exception</span>
+<span class="sd">            there could be a failure in the value parsing process. value and </span>
+<span class="sd">            value list parsers are provided by users, so there could be </span>
+<span class="sd">            unexpected behavior.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span> <span class="o">+</span> 
+                <span class="s2">&quot;must be in ArgMode.USE to set values.&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">DESC</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">kwarg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">temp_value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cli_args</span><span class="p">,</span> <span class="n">kwarg</span><span class="o">.</span><span class="n">get_name</span><span class="p">())</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">kwarg</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span><span class="si">}</span><span class="s2"> not found in &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;cli_args:</span><span class="se">\n</span><span class="si">{</span><span class="n">cli_args</span><span class="si">}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">because </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">kwarg</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">temp_value</span> <span class="c1"># may throw if temp_value is bad per kwarg.parser, etc.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span>
+            <span class="k">raise</span> <span class="n">e</span></div></div>
+        
+
+<div class="viewcode-block" id="get_short_name"><a class="viewcode-back" href="../../api/layerstack.html#layerstack.args.get_short_name">[docs]</a><span class="k">def</span> <span class="nf">get_short_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">short_names</span> <span class="o">=</span> <span class="p">[],</span> <span class="n">seps</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">]):</span>
+    <span class="n">short_name</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">multisplit</span><span class="p">(</span><span class="n">astr</span><span class="p">,</span> <span class="n">seps</span><span class="p">):</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">sep</span> <span class="ow">in</span> <span class="n">seps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">parts</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">parts</span> <span class="o">=</span> <span class="n">astr</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+                <span class="n">tmp</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">part</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">))</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">tmp</span>
+        <span class="k">return</span> <span class="n">parts</span>
+
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">multisplit</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">seps</span><span class="p">)</span>
+    <span class="n">len_parts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">part</span><span class="p">)</span> <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">]</span>
+
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">);</span> <span class="n">candidates</span> <span class="o">=</span> <span class="nb">set</span><span class="p">();</span> <span class="n">k</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">short_name</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span> <span class="o">==</span> <span class="n">k</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">LayerStackRuntimeError</span><span class="p">(</span><span class="s2">&quot;Unable to find a short name &quot;</span>
+                <span class="s2">&quot;for </span><span class="si">{name}</span><span class="s2">. Current short names:</span><span class="se">\n</span><span class="s2">[</span><span class="se">\n</span><span class="s2">  </span><span class="si">{short_names}</span><span class="se">\n</span><span class="s2">]&quot;</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Started with parts = </span><span class="si">{parts}</span><span class="s2">,</span><span class="se">\n</span><span class="s2">evaluated &quot;</span>
+                <span class="s2">&quot;candidates:</span><span class="se">\n</span><span class="s2">[</span><span class="se">\n</span><span class="s2">  </span><span class="si">{candidates}</span><span class="se">\n</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">,</span> 
+                    <span class="n">short_names</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">repr</span><span class="p">(</span><span class="n">sn</span><span class="p">)</span> <span class="k">for</span> <span class="n">sn</span> <span class="ow">in</span> <span class="n">short_names</span><span class="p">]),</span>
+                    <span class="n">parts</span> <span class="o">=</span> <span class="n">parts</span><span class="p">,</span>
+                    <span class="n">candidates</span> <span class="o">=</span> <span class="s2">&quot;,</span><span class="se">\n</span><span class="s2">  &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">repr</span><span class="p">(</span><span class="n">candi</span><span class="p">)</span> <span class="k">for</span> <span class="n">candi</span> <span class="ow">in</span> <span class="n">candidates</span><span class="p">])</span>
+                <span class="p">))</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">k</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">candidates</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;M = </span><span class="si">{</span><span class="n">M</span><span class="si">}</span><span class="s2">; N = </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">; k = </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">N</span><span class="p">:</span>
+            <span class="n">candidate</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+                <span class="n">m</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">len_parts</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">M</span><span class="p">)</span>
+                <span class="n">candidate</span> <span class="o">+=</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="n">m</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">; i = </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">; m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">N</span><span class="p">):</span>
+                <span class="n">mm1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">len_parts</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">M</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">candidate</span> <span class="o">+=</span> <span class="n">parts</span><span class="p">[</span><span class="n">i</span><span class="p">][:</span><span class="n">mm1</span><span class="p">]</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">; N = </span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">; i = </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">; mm1 = </span><span class="si">{</span><span class="n">mm1</span><span class="si">}</span><span class="s2">; </span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">candidate</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">short_names</span><span class="p">:</span>
+                <span class="n">short_name</span> <span class="o">=</span> <span class="n">candidate</span>
+                <span class="k">break</span>
+            <span class="n">candidates</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">candidate</span><span class="p">)</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">M</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="k">assert</span> <span class="n">short_name</span>
+    <span class="n">short_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">short_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">short_name</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright (c) 2021, Alliance for Sustainable Energy, LLC.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

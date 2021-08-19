@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>layerstack.tests.test_stack &mdash; layerstack 0.4.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> layerstack
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">layerstack overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#motivation">motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../overview.html#a-layerstack-enabled-project">a layerstack-enabled project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/modules.html">layerstack</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.args">layerstack.args module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/layerstack.html">layerstack package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.tests.html">layerstack.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.args">layerstack.args module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#layerstack-args">layerstack.args</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack.stack">layerstack.stack module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#layerstack-stack">layerstack.stack</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/layerstack.html#module-layerstack">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/layerstack.html#layerstack">layerstack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">layerstack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../layerstack.html">layerstack</a> &raquo;</li>
+        
+          <li><a href="../tests.html">layerstack.tests</a> &raquo;</li>
+        
+      <li>layerstack.tests.test_stack</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for layerstack.tests.test_stack</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">:copyright: (c) 2021, Alliance for Sustainable Energy, LLC</span>
+<span class="sd">:license: BSD-3</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">layerstack</span> <span class="kn">import</span> <span class="n">ArgMode</span><span class="p">,</span> <span class="n">LayerStackError</span><span class="p">,</span> <span class="n">Layer</span><span class="p">,</span> <span class="n">Stack</span>
+<span class="kn">from</span> <span class="nn">layerstack.tests</span> <span class="kn">import</span> <span class="n">layer_library_dir</span><span class="p">,</span> <span class="n">outdir</span>
+<span class="kn">from</span> <span class="nn">layerstack.stack</span> <span class="kn">import</span> <span class="n">repoint_stack</span><span class="p">,</span> <span class="n">parse_args_helper</span>
+
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="test_layer_types"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_stack.test_layer_types">[docs]</a><span class="k">def</span> <span class="nf">test_layer_types</span><span class="p">():</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_list_args&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">LayerStackError</span><span class="p">)</span> <span class="k">as</span> <span class="n">excinfo</span><span class="p">:</span>
+        <span class="n">Stack</span><span class="p">(</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layer</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">assert</span> <span class="s1">&#39;int&#39;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">excinfo</span><span class="o">.</span><span class="n">value</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">excinfo</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">LayerStackError</span><span class="p">):</span>
+        <span class="n">Stack</span><span class="p">(</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layer</span><span class="o">.</span><span class="n">layer_dir</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="test_basic_compose_and_run"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_stack.test_basic_compose_and_run">[docs]</a><span class="k">def</span> <span class="nf">test_basic_compose_and_run</span><span class="p">():</span>
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_list_args&#39;</span><span class="p">)</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">(</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layer</span><span class="p">],</span> 
+                  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Basic Test&#39;</span><span class="p">,</span> 
+                  <span class="n">run_dir</span> <span class="o">=</span> <span class="n">outdir</span> <span class="o">/</span> <span class="s1">&#39;test_basic_compose_and_run&#39;</span><span class="p">)</span>
+    <span class="n">stack</span><span class="o">.</span><span class="n">set_arg_mode</span><span class="p">(</span><span class="n">ArgMode</span><span class="o">.</span><span class="n">USE</span><span class="p">)</span>
+    <span class="n">stack</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="n">stack</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_get_layer_dir"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_stack.test_get_layer_dir">[docs]</a><span class="k">def</span> <span class="nf">test_get_layer_dir</span><span class="p">():</span>
+    <span class="n">alt_layer_library_dir</span> <span class="o">=</span> <span class="n">outdir</span> <span class="o">/</span> <span class="s1">&#39;test_get_layer_dir&#39;</span>
+    <span class="n">alt_layer_library_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+
+    <span class="n">orig_layer_dir</span> <span class="o">=</span> <span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_list_args&#39;</span> 
+    <span class="n">new_layer_dir</span> <span class="o">=</span> <span class="n">alt_layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_list_args&#39;</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">orig_layer_dir</span><span class="p">,</span> <span class="n">new_layer_dir</span><span class="p">)</span>
+
+    <span class="n">test_layer_dir</span> <span class="o">=</span> <span class="n">Stack</span><span class="o">.</span><span class="n">get_layer_dir</span><span class="p">(</span>
+        <span class="n">orig_layer_dir</span><span class="p">,</span> 
+        <span class="n">layer_library_dirs</span><span class="o">=</span><span class="p">[</span><span class="n">alt_layer_library_dir</span><span class="p">],</span> 
+        <span class="n">original_preferred</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">test_layer_dir</span> <span class="o">==</span> <span class="n">orig_layer_dir</span>
+
+    <span class="n">test_layer_dir</span> <span class="o">=</span> <span class="n">Stack</span><span class="o">.</span><span class="n">get_layer_dir</span><span class="p">(</span>
+        <span class="n">orig_layer_dir</span><span class="p">,</span> 
+        <span class="n">layer_library_dirs</span><span class="o">=</span><span class="p">[</span><span class="n">alt_layer_library_dir</span><span class="p">],</span> 
+        <span class="n">original_preferred</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">test_layer_dir</span> <span class="o">==</span> <span class="n">new_layer_dir</span>
+
+    <span class="n">fake_layer_dir</span> <span class="o">=</span> <span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;my_nonexistent_layer&#39;</span>
+    <span class="n">test_layer_dir</span> <span class="o">=</span> <span class="n">Stack</span><span class="o">.</span><span class="n">get_layer_dir</span><span class="p">(</span>
+        <span class="n">fake_layer_dir</span><span class="p">,</span> 
+        <span class="n">layer_library_dirs</span><span class="o">=</span><span class="p">[</span><span class="n">alt_layer_library_dir</span><span class="p">],</span> 
+        <span class="n">original_preferred</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">test_layer_dir</span> <span class="ow">is</span> <span class="kc">None</span></div>
+
+<span class="c1"># *** create new stack and test repointing ***</span>
+<div class="viewcode-block" id="test_repointing_run_dir"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_stack.test_repointing_run_dir">[docs]</a><span class="k">def</span> <span class="nf">test_repointing_run_dir</span><span class="p">():</span>
+    
+    <span class="n">stack_library_dir</span> <span class="o">=</span> <span class="n">outdir</span> <span class="o">/</span> <span class="s1">&#39;test_stack_repoint&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">stack_library_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">stack_library_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+
+    <span class="n">layer</span> <span class="o">=</span> <span class="n">Layer</span><span class="p">(</span><span class="n">layer_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_list_args&#39;</span><span class="p">)</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="n">Stack</span><span class="p">(</span><span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="n">layer</span><span class="p">],</span> 
+                  <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Basic Test&#39;</span><span class="p">,</span> 
+                  <span class="n">run_dir</span> <span class="o">=</span> <span class="n">outdir</span> <span class="o">/</span> <span class="s1">&#39;test_basic_repoint&#39;</span><span class="p">)</span>
+    
+    <span class="n">p</span> <span class="o">=</span> <span class="n">stack_library_dir</span> <span class="o">/</span> <span class="s1">&#39;test_stack_repoint_layer_1.json&#39;</span>
+    <span class="n">stack</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">stack</span><span class="o">.</span><span class="n">run_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+
+    <span class="n">new_run_dir</span> <span class="o">=</span> <span class="n">outdir</span> <span class="o">/</span> <span class="s1">&#39;new_run_dir&#39;</span>
+
+    <span class="n">repoint_stack</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">run_dir</span> <span class="o">=</span> <span class="n">new_run_dir</span><span class="p">)</span>
+
+    <span class="n">np</span> <span class="o">=</span> <span class="n">stack_library_dir</span> <span class="o">/</span> <span class="s1">&#39;_test_stack_repoint_layer_1.json&#39;</span>
+    <span class="n">check_stack</span> <span class="o">=</span> <span class="n">Stack</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">np</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">check_stack</span><span class="o">.</span><span class="n">run_dir</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_run_dir</span><span class="p">)</span> </div>
+
+
+<div class="viewcode-block" id="test_parser"><a class="viewcode-back" href="../../../api/layerstack.tests.html#layerstack.tests.test_stack.test_parser">[docs]</a><span class="k">def</span> <span class="nf">test_parser</span><span class="p">():</span>
+    <span class="n">cli_arg_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;test_hw_amc_5min_simple.json&#39;</span><span class="p">,</span> <span class="s1">&#39;run&#39;</span><span class="p">,</span> <span class="s1">&#39;-sp&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">outdir</span><span class="p">)]</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args_helper</span><span class="p">(</span><span class="n">cli_arg_list</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">stack_file</span> <span class="o">==</span> <span class="s1">&#39;test_hw_amc_5min_simple.json&#39;</span>
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;run&#39;</span>
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">save_path</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">outdir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">layer_library_dirs</span> <span class="o">==</span> <span class="kc">None</span>
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">original_locations_preferred</span> <span class="o">==</span> <span class="kc">True</span>
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span> <span class="o">==</span> <span class="kc">False</span>
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">warning_only</span> <span class="o">==</span> <span class="kc">False</span>
+    <span class="k">assert</span> <span class="n">args</span><span class="o">.</span><span class="n">archive</span> <span class="o">==</span> <span class="kc">True</span></div>
+
+
+
+
+
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright (c) 2021, Alliance for Sustainable Energy, LLC.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

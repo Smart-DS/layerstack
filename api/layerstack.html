@@ -1,0 +1,1904 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>layerstack package &mdash; layerstack 0.4.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="layerstack.tests package" href="layerstack.tests.html" />
+    <link rel="prev" title="layerstack" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> layerstack
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.4.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">layerstack overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#motivation">motivation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../overview.html#a-layerstack-enabled-project">a layerstack-enabled project</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html">layerstack</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">layerstack package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-layerstack.args">layerstack.args module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-layerstack.stack">layerstack.stack module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-layerstack">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">layerstack package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="layerstack.tests.html">layerstack.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-layerstack.args">layerstack.args module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#layerstack-args">layerstack.args</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-layerstack.layer">layerstack.layer module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-layerstack.stack">layerstack.stack module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#layerstack-stack">layerstack.stack</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-layerstack">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#layerstack">layerstack</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">layerstack</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../api.html">API</a> &raquo;</li>
+        
+          <li><a href="modules.html">layerstack</a> &raquo;</li>
+        
+      <li>layerstack package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/api/layerstack.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="layerstack-package">
+<h1>layerstack package<a class="headerlink" href="#layerstack-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="layerstack.tests.html">layerstack.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests.conftest">layerstack.tests.conftest module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests.test_args_kwargs">layerstack.tests.test_args_kwargs module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests.test_layer">layerstack.tests.test_layer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests.test_layerbase">layerstack.tests.test_layerbase module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests.test_session">layerstack.tests.test_session module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="layerstack.tests.html#layerstack-tests-test-session">layerstack.tests.test_session</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests.test_stack">layerstack.tests.test_stack module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests.test_stack_save_load">layerstack.tests.test_stack_save_load module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="layerstack.tests.html#module-layerstack.tests">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-layerstack.args">
+<span id="layerstack-args-module"></span><h2>layerstack.args module<a class="headerlink" href="#module-layerstack.args" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="layerstack-args">
+<h3>layerstack.args<a class="headerlink" href="#layerstack-args" title="Permalink to this headline">¶</a></h3>
+<p>Classes that allow the specification of arguments that can be serialized to and
+loaded from json, as well as expressed on the command line.</p>
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><ol class="loweralpha simple" start="3">
+<li><p>2021, Alliance for Sustainable Energy, LLC</p></li>
+</ol>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>BSD-3</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.args.</span></span><span class="sig-name descname"><span class="pre">KwArgBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwArgBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwArgBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for expressing json- and CLI-compatible arguments. Builds off of
+the patterns established by argparse.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>name of the [keyword] argument</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>optional description text for this [keyword] argument</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.parser">
+<span class="sig-name descname"><span class="pre">parser</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to parse the [keyword] argument value. analogous to the type
+argument in the argparse add_argument method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.choices">
+<span class="sig-name descname"><span class="pre">choices</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.choices" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of allowable values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>None or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.nargs">
+<span class="sig-name descname"><span class="pre">nargs</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.nargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>analogous to the nargs argument in the argparse add_argument method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>None, int, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.list_parser">
+<span class="sig-name descname"><span class="pre">list_parser</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.list_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to parse a [keyword] argument value list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.save_parser">
+<span class="sig-name descname"><span class="pre">save_parser</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.save_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to convert a [keyword] argument value to json-serializable form</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id0">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">nargs</span></span><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.choices_to_save">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">choices_to_save</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.choices_to_save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.is_list">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_list</span></span><a class="headerlink" href="#layerstack.args.KwArgBase.is_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>read-only attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether this [keyword] argument is a list (True) or single value (False)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cleaned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwArgBase.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwArgBase.get_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwArgBase.add_argument_kwargs">
+<span class="sig-name descname"><span class="pre">add_argument_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwArgBase.add_argument_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwArgBase.add_argument_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts KwArgBase atttributes to argparse add_argument keyword
+arugments. For use in constructing command-line interfaces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>kwargs for argparse add_argument call</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.args.Arg">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.args.</span></span><span class="sig-name descname"><span class="pre">Arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#Arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.Arg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#layerstack.args.KwArgBase" title="layerstack.args.KwArgBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.args.KwArgBase</span></code></a></p>
+<p>Defines a required, positional argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – name of the argument</p></li>
+<li><p><strong>description</strong> (<em>str</em>) – optional description text for this argument</p></li>
+<li><p><strong>parser</strong> (<em>callable</em>) – function to parse the argument value. analogous to the type argument in
+the argparse add_argument method</p></li>
+<li><p><strong>choices</strong> (<em>None</em><em> or </em><em>list</em>) – list of allowable values</p></li>
+<li><p><strong>nargs</strong> (<em>None</em><em>, </em><em>int</em><em>, </em><em>str</em>) – analogous to the nargs argument in the argparse add_argument method</p></li>
+<li><p><strong>list_parser</strong> (<em>callable</em>) – function to parse an argument value list</p></li>
+<li><p><strong>save_parser</strong> (<em>callable</em>) – function to convert a [keyword] argument value to json-serializable form</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.Arg.set">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">set</span></span><a class="headerlink" href="#layerstack.args.Arg.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>read-only attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether the value has been set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.Arg.value">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#layerstack.args.Arg.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>settable attribute. setter parses value using parser and list_parser as
+appropriate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the value to which this argument has been set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.Arg.value_to_save">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value_to_save</span></span><a class="headerlink" href="#layerstack.args.Arg.value_to_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>JSON-serializable form of the argument value. Uses save_parser if provided.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.args.</span></span><span class="sig-name descname"><span class="pre">Kwarg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choices</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_parser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#Kwarg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.Kwarg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#layerstack.args.KwArgBase" title="layerstack.args.KwArgBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.args.KwArgBase</span></code></a></p>
+<p>Defines an optional or defaulted keyword argument.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.default">
+<span class="sig-name descname"><span class="pre">default</span></span><a class="headerlink" href="#layerstack.args.Kwarg.default" title="Permalink to this definition">¶</a></dt>
+<dd><p>default value to be used if no explicit value has been set. is parsed
+with parser and list_parser as appropriate, if default is not None</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>None or any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#layerstack.args.Kwarg.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>optional description text for this [keyword] argument</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.parser">
+<span class="sig-name descname"><span class="pre">parser</span></span><a class="headerlink" href="#layerstack.args.Kwarg.parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to parse the [keyword] argument value. analogous to the type
+argument in the argparse add_argument method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.choices">
+<span class="sig-name descname"><span class="pre">choices</span></span><a class="headerlink" href="#layerstack.args.Kwarg.choices" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of allowable values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>None or list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.nargs">
+<span class="sig-name descname"><span class="pre">nargs</span></span><a class="headerlink" href="#layerstack.args.Kwarg.nargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>analogous to the nargs argument in the argparse add_argument method</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>None, int, str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.list_parser">
+<span class="sig-name descname"><span class="pre">list_parser</span></span><a class="headerlink" href="#layerstack.args.Kwarg.list_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to parse a [keyword] argument value list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.action">
+<span class="sig-name descname"><span class="pre">action</span></span><a class="headerlink" href="#layerstack.args.Kwarg.action" title="Permalink to this definition">¶</a></dt>
+<dd><p>analogous to the action argument in the argparse add_argument method.
+allows, e.g., command-line boolean flags.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.save_parser">
+<span class="sig-name descname"><span class="pre">save_parser</span></span><a class="headerlink" href="#layerstack.args.Kwarg.save_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>function to convert a [keyword] argument value to json-serializable form</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>callable</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.defaulted">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">defaulted</span></span><a class="headerlink" href="#layerstack.args.Kwarg.defaulted" title="Permalink to this definition">¶</a></dt>
+<dd><p>read-only attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether a non-default value has been set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.value">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value</span></span><a class="headerlink" href="#layerstack.args.Kwarg.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>settable attribute. setter parses value using parser and list_parser as
+appropriate. setting to None clears any user-defined value and reverts
+to the default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the value to which this argument has been set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.value_to_save">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">value_to_save</span></span><a class="headerlink" href="#layerstack.args.Kwarg.value_to_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>JSON-serializable form of the keyword argument value. Uses save_parser
+if provided and self.value is not None.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.default_to_save">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">default_to_save</span></span><a class="headerlink" href="#layerstack.args.Kwarg.default_to_save" title="Permalink to this definition">¶</a></dt>
+<dd><p>JSON-serializable form of the keyword argument default value. Uses
+save_parser if provided and self.default is not None.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.Kwarg.add_argument_kwargs">
+<span class="sig-name descname"><span class="pre">add_argument_kwargs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#Kwarg.add_argument_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.Kwarg.add_argument_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts KwArgBase atttributes to argparse add_argument keyword
+arugments. For use in constructing command-line interfaces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>kwargs for argparse add_argument call</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.args.ArgMode">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.args.</span></span><span class="sig-name descname"><span class="pre">ArgMode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#ArgMode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.ArgMode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumeration describing whether the KwArgs in an ArgList or KwargDict are
+currently being DESCribed (that is, they are being added to or removed from
+the container objects, or are generally being edited), or USEd (that is,
+the values are being set or queried in preparation for running a Layer or
+a Stack).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.ArgMode.DESC">
+<span class="sig-name descname"><span class="pre">DESC</span></span><em class="property"> <span class="pre">=</span> <span class="pre">1</span></em><a class="headerlink" href="#layerstack.args.ArgMode.DESC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.args.ArgMode.USE">
+<span class="sig-name descname"><span class="pre">USE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">2</span></em><a class="headerlink" href="#layerstack.args.ArgMode.USE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.args.ArgList">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.args.</span></span><span class="sig-name descname"><span class="pre">ArgList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ArgMode.DESC</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#ArgList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.ArgList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></p>
+<p>List that contains Arg objects. In describe mode (mode == ArgMode.DESC),
+Arg objects may be added to and removed from this list. Their
+descriptions and other attributes may be edited. In use mode (mode ==
+ArgMode.USE), only the argument values are accessible through this
+class’s get, set, and iter methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>list</em><em> or </em><em>other iterable</em>) – passed to list.__init__. if non-empty, must contain Arg objects.</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="#layerstack.args.ArgMode" title="layerstack.args.ArgMode"><em>ArgMode</em></a>) – mode for this ArgList to be in upon return</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.ArgList.mode">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#layerstack.args.ArgList.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>settable attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current mode of this ArgList, that is, whether it is being used to
+DESCribe or USE arguments</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#layerstack.args.ArgMode" title="layerstack.args.ArgMode">ArgMode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.ArgList.add_arguments">
+<span class="sig-name descname"><span class="pre">add_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#ArgList.add_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.ArgList.add_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds this ArgList’s arguments to parser, for use in a command-line
+interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>parser</strong> (<em>argparse.ArgumentParser</em>) – parser.add_argument is called once for each Arg in this ArgList</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#layerstack.LayerStackRuntimeError" title="layerstack.LayerStackRuntimeError"><strong>LayerStackRuntimeError</strong></a> – if mode != ArgMode.DESC, since representing this ArgList’s arguments
+    in an argparse.ArgumentParser is a descriptive task</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.ArgList.set_args">
+<span class="sig-name descname"><span class="pre">set_args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cli_args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#ArgList.set_args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.ArgList.set_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets this ArgList’s argument values to those in cli_args, which is
+assumed to have come from argparse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cli_args</strong> (<em>argparse.Namespace</em>) – object returned by parser.parse_args(), where parser is an
+argparse.ArgumentParser to which this ArgList’s add_arguments method
+was applied</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#layerstack.LayerStackRuntimeError" title="layerstack.LayerStackRuntimeError"><strong>LayerStackRuntimeError</strong></a> – if mode != ArgMode.USE, since setting this ArgList’s argument values
+    is a form of using a fixed ArgList</p></li>
+<li><p><a class="reference internal" href="#layerstack.LayerStackRuntimeError" title="layerstack.LayerStackRuntimeError"><strong>LayerStackRuntimeError</strong></a> – if an expected argument name is not found in cli_args</p></li>
+<li><p><strong>Exception</strong> – there could be a failure in the value parsing process. value and
+    value list parsers are provided by users, so there could be
+    unexpected behavior.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.ArgList.set">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">set</span></span><a class="headerlink" href="#layerstack.args.ArgList.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>read-only attribute. behavior is independent of mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>whether all of the Args in this ArgList have had their values set</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.ArgList.names">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">names</span></span><a class="headerlink" href="#layerstack.args.ArgList.names" title="Permalink to this definition">¶</a></dt>
+<dd><p>read-only attribute. behavior is independent of mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of the names of the Args in this ArgList</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.args.</span></span><span class="sig-name descname"><span class="pre">KwargDict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ArgMode.DESC</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwargDict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwargDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.OrderedDict</span></code></p>
+<p>OrderedDict that contains Kwarg objects. In describe mode (mode ==
+ArgMode.DESC), Kwarg objects may be add and removed. Their descriptions
+and other attributes may be edited. In use mode (mode == ArgMode.USE),
+only the argument values are accessible through this class’s get, set,
+and iter methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterable</strong> (<em>list</em><em> or </em><em>other iterable</em>) – passed to collections.OrderedDict.__init__. if non-empty, values
+must be Kwarg objects.</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="#layerstack.args.ArgMode" title="layerstack.args.ArgMode"><em>ArgMode</em></a>) – mode for this KwargDict to be in upon return</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict.mode">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mode</span></span><a class="headerlink" href="#layerstack.args.KwargDict.mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>settable attribute</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>current mode of this KwargDict, that is, whether it is being used to
+DESCribe or USE arguments</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#layerstack.args.ArgMode" title="layerstack.args.ArgMode">ArgMode</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwargDict.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwargDict.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the items in this KwargDict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>name is always the Kwarg.name. the value is either the Kwarg itself
+(if mode == ArgMode.DESC), or its .value (if mode == ArgMode.USE)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of name, value pairs</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict.iteritems">
+<span class="sig-name descname"><span class="pre">iteritems</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwargDict.iteritems"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwargDict.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd><p>iterate throught the items in this KwargDict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields</dt>
+<dd class="field-odd"><p><em>name, value pair</em> – name is always the next Kwarg.name. the value is either the next
+Kwarg itself (if mode == ArgMode.DESC), or its .value (if mode ==
+ArgMode.USE)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict.values">
+<span class="sig-name descname"><span class="pre">values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwargDict.values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwargDict.values" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the list of values in this KwargDict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>values are either Kwargs (if mode == ArgMode.DESC) or the
+Kwarg.values (if mode == ArgMode.USE)</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict.itervalues">
+<span class="sig-name descname"><span class="pre">itervalues</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwargDict.itervalues"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwargDict.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd><p>iterate through the list of values in this KwargDict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Yields</dt>
+<dd class="field-odd"><p><em>value</em> – value is either the next Kwarg (if mode == ArgMode.DESC) or the
+next Kwarg.value (if mode == ArgMode.USE)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict.add_arguments">
+<span class="sig-name descname"><span class="pre">add_arguments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parser</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwargDict.add_arguments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwargDict.add_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds this KwargDict’s keyword arguments to parser, for use in a
+command-line interface.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>parser</strong> (<em>argparse.ArgumentParser</em>) – parser.add_argument is called once for each Arg in this ArgList</p></li>
+<li><p><strong>short_names</strong> (<em>list</em>) – list of short names (e.g., ‘d’ for an argument specified as ‘-d’,
+‘–debug’) already registered in parser</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#layerstack.LayerStackRuntimeError" title="layerstack.LayerStackRuntimeError"><strong>LayerStackRuntimeError</strong></a> – if mode != ArgMode.DESC, since representing this KwargDict’s
+    keyword arguments in an argparse.ArgumentParser is a descriptive
+    task</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.args.KwargDict.set_kwargs">
+<span class="sig-name descname"><span class="pre">set_kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cli_args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#KwargDict.set_kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.KwargDict.set_kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets this KwargDict’s keyword argument values to those in cli_args,
+which is assumed to have come from argparse.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cli_args</strong> (<em>argparse.Namespace</em>) – object returned by parser.parse_args(), where parser is an
+argparse.ArgumentParser to which this ArgList’s add_arguments method
+was applied</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="#layerstack.LayerStackRuntimeError" title="layerstack.LayerStackRuntimeError"><strong>LayerStackRuntimeError</strong></a> – if mode != ArgMode.USE, since setting this ArgList’s argument values
+    is a form of using a fixed ArgList</p></li>
+<li><p><a class="reference internal" href="#layerstack.LayerStackRuntimeError" title="layerstack.LayerStackRuntimeError"><strong>LayerStackRuntimeError</strong></a> – if an expected argument name is not found in cli_args</p></li>
+<li><p><strong>Exception</strong> – there could be a failure in the value parsing process. value and
+    value list parsers are provided by users, so there could be
+    unexpected behavior.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.args.get_short_name">
+<span class="sig-prename descclassname"><span class="pre">layerstack.args.</span></span><span class="sig-name descname"><span class="pre">get_short_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">short_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['_',</span> <span class="pre">'-']</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/args.html#get_short_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.args.get_short_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-layerstack.layer">
+<span id="layerstack-layer-module"></span><h2>layerstack.layer module<a class="headerlink" href="#module-layerstack.layer" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><ol class="loweralpha simple" start="3">
+<li><p>2021, Alliance for Sustainable Energy, LLC</p></li>
+</ol>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>BSD-3</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.layer.</span></span><span class="sig-name descname"><span class="pre">LayerBase</span></span><a class="reference internal" href="../_modules/layerstack/layer.html#LayerBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.LayerBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Abstract base class for user-defined layers. All attributes and methods are
+class level.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#layerstack.layer.LayerBase.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>layer name, expected to be human-readable (spaces are okay and even
+preferred)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#layerstack.layer.LayerBase.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>unique identifier for the layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>uuid.uuid4</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.version">
+<span class="sig-name descname"><span class="pre">version</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#layerstack.layer.LayerBase.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>human readable version number for the layer (defaults to ‘0.1.0’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.desc">
+<span class="sig-name descname"><span class="pre">desc</span></span><em class="property"> <span class="pre">=</span> <span class="pre">None</span></em><a class="headerlink" href="#layerstack.layer.LayerBase.desc" title="Permalink to this definition">¶</a></dt>
+<dd><p>layer description</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.args">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#LayerBase.args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.LayerBase.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each layer must define its positional arguments by populating and
+returning an ArgList object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>ArgList object describing the layer’s positional arguments. Arg
+names should appear as positional arguments in the apply method in
+the same order as they are defined here.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#layerstack.args.ArgList" title="layerstack.args.ArgList">ArgList</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.kwargs">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#LayerBase.kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.LayerBase.kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each layer must define its keyword arguments by populating and returning
+a KwargDict object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>KwargDict object describing the layer’s keyword arguments. Keyword
+argument specifications in the apply method should match what is
+defined in this method (i.e., be equivalent to
+Kwarg.name=Kwarg.default).</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#layerstack.args.KwargDict" title="layerstack.args.KwargDict">KwargDict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.apply">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#LayerBase.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.LayerBase.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run this layer in the context of the stack, with positional and keyword
+arguments. In general in user-defined layers (classes derived from
+LayerBase), *args and **kwargs should be replaced by the actual
+positional argument names (defined in the args method) and keyword
+argument name, default value pairs (defined in the kwargs method).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stack</strong> (<a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><em>layerstack.stack.Stack</em></a>) – Stack class instance in which the layer is being run</p></li>
+<li><p><strong>*args</strong> – the layer’s positional arguments</p></li>
+<li><p><strong>**kwargs</strong> – the layer’s keyword arguments</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.LayerBase.main">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#LayerBase.main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.LayerBase.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Single-layer command-line interface entry point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>log_format</strong> (<em>str</em>) – custom logging format to use with the logging package via
+layerstack.start_console_log</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.layer.ModelLayerBase">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.layer.</span></span><span class="sig-name descname"><span class="pre">ModelLayerBase</span></span><a class="reference internal" href="../_modules/layerstack/layer.html#ModelLayerBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.ModelLayerBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#layerstack.layer.LayerBase" title="layerstack.layer.LayerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.LayerBase</span></code></a></p>
+<p>Abstract base class for user-defined layers that operate on a model.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.ModelLayerBase._check_model_type">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">_check_model_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#ModelLayerBase._check_model_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.ModelLayerBase._check_model_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check model type to ensure it is operable. Raises an exception if the
+model is the wrong type or some other error is encountered. Derived
+classes should implement this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> – model to be operated on</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.ModelLayerBase._load_model">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">_load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#ModelLayerBase._load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.ModelLayerBase._load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load model from cli. Derived classes must implement this method if they
+support loading from disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model_path</strong> (<em>'str'</em>) – Path from which to load model</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.ModelLayerBase._save_model">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">_save_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#ModelLayerBase._save_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.ModelLayerBase._save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save model from cli. Derived classes must implement this method if they
+support saving the model out to disk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> – model to be saved to disk</p></li>
+<li><p><strong>model_path</strong> (<em>'str'</em>) – Path to save model to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.ModelLayerBase.args">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">args</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#ModelLayerBase.args"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.ModelLayerBase.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create ArgList</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> (<em>None</em><em> or </em><em>a model</em>) – model to be operated on</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>ArgList class instance containing list of layer’s args</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>‘ArgList’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.ModelLayerBase.kwargs">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">kwargs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#ModelLayerBase.kwargs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.ModelLayerBase.kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create KwargDict</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> – model to be operated on</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>KwargDict class instance containing dict of layer’s kwargs</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>‘KwargDict’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.ModelLayerBase.apply">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">apply</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#ModelLayerBase.apply"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.ModelLayerBase.apply" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run this layer in the context of the stack, with positional and keyword
+arguments. In general in user-defined layers (classes derived from
+LayerBase), *args and **kwargs should be replaced by the actual
+positional argument names (defined in the args method) and keyword
+argument name, default value pairs (defined in the kwargs method).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stack</strong> (<em>'Stack'</em>) – Stack class instance in which the layer is being run</p></li>
+<li><p><strong>model</strong> – model this layer will operate on</p></li>
+<li><p><strong>*args</strong> – The layer’s positional arguments</p></li>
+<li><p><strong>**kwargs</strong> – The layer’s keyword arguments</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Updated model</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>model</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.layer.Layer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.layer.</span></span><span class="sig-name descname"><span class="pre">Layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#Layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.Layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class to interact with layers:
+- Create
+- Load
+- Run</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.layer_dir">
+<span class="sig-name descname"><span class="pre">layer_dir</span></span><a class="headerlink" href="#layerstack.layer.Layer.layer_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Directory containing the layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>‘str’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.Layer._layer">
+<span class="sig-name descname"><span class="pre">_layer</span></span><a class="headerlink" href="#layerstack.layer.Layer._layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Layer object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>‘LayerBase|ModelLayerBase’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.Layer._checksum">
+<span class="sig-name descname"><span class="pre">_checksum</span></span><a class="headerlink" href="#layerstack.layer.Layer._checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checksum for layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>‘str’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.Layer._name">
+<span class="sig-name descname"><span class="pre">_name</span></span><a class="headerlink" href="#layerstack.layer.Layer._name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Layer name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>‘str’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.Layer._args">
+<span class="sig-name descname"><span class="pre">_args</span></span><a class="headerlink" href="#layerstack.layer.Layer._args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Layer’s args</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>‘ArgList’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.layer.Layer._kwargs">
+<span class="sig-name descname"><span class="pre">_kwargs</span></span><a class="headerlink" href="#layerstack.layer.Layer._kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Layer’s kwargs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>‘KwargDict’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>layer_dir</strong> (<em>'str'</em>) – Directory from which to load the layer</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.create">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">name</span></em>, <em class="sig-param"><span class="pre">parent_dir</span></em>, <em class="sig-param"><span class="pre">desc=None</span></em>, <em class="sig-param"><span class="pre">layer_base_class=&lt;class</span> <span class="pre">'layerstack.layer.LayerBase'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#Layer.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.Layer.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Layer name</p></li>
+<li><p><strong>parent_dir</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – Parent directory for layer</p></li>
+<li><p><strong>desc</strong> (<em>str</em>) – Layer description</p></li>
+<li><p><strong>layer_base_class</strong> (<a class="reference internal" href="#layerstack.layer.LayerBase" title="layerstack.layer.LayerBase"><em>LayerBase</em></a><em> or </em><em>child class</em>) – Base class on which to build layer</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>dir_path</strong> – Directory containing new layer</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>‘str’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.layer_filename">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">layer_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#Layer.layer_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.Layer.layer_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create file path for layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>layer_dir</strong> (<em>str</em>) – Parent directory for layer</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Path to layer.py file</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.load_layer">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">load_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#Layer.load_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.Layer.load_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>layer_dir</strong> (<em>'str'</em>) – Parent directory for layer</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Layer class object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>‘Layer’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.name">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#layerstack.layer.Layer.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get layer name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>layer name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘str’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.layer">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">layer</span></span><a class="headerlink" href="#layerstack.layer.Layer.layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get layer class</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>layer class object</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘Layer’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.checksum">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">checksum</span></span><a class="headerlink" href="#layerstack.layer.Layer.checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get layer checksum</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>layer checksum</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘str’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.args">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#layerstack.layer.Layer.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get layer args</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Layer ArgList</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘ArgList’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.kwargs">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">kwargs</span></span><a class="headerlink" href="#layerstack.layer.Layer.kwargs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get layer kwargs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Layer KwargDict</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘KwargDict’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.set_arg_mode">
+<span class="sig-name descname"><span class="pre">set_arg_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg_mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#Layer.set_arg_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.Layer.set_arg_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function for setting args and kwargs objects to the same
+ArgMode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.run">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stack</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#Layer.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.Layer.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer_dir</strong> (<em>'str'</em>) – Parent directory for layer</p></li>
+<li><p><strong>stack</strong> (<em>'Stack'</em>) – Stack class instance that is handling the layer</p></li>
+<li><p><strong>model</strong> – Model to be operated on</p></li>
+<li><p><strong>*args</strong> – layer args</p></li>
+<li><p><strong>**kwargs</strong> – layer kwargs</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>updated model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.runnable">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">runnable</span></span><a class="headerlink" href="#layerstack.layer.Layer.runnable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if layer is runnable (i.e. all args are set)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Layer args are set and layer can be run</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘bool’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.layer.Layer.run_layer">
+<span class="sig-name descname"><span class="pre">run_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stack</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/layer.html#Layer.run_layer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.layer.Layer.run_layer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stack</strong> (<em>'Stack'</em>) – Stack class instance that is handling the layer</p></li>
+<li><p><strong>model</strong> – Model to be operated on</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>updated model</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-layerstack.stack">
+<span id="layerstack-stack-module"></span><h2>layerstack.stack module<a class="headerlink" href="#module-layerstack.stack" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="layerstack-stack">
+<h3>layerstack.stack<a class="headerlink" href="#layerstack-stack" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.stack.Stack</span></code></a></p></li>
+<li><p><a class="reference internal" href="#layerstack.stack.main" title="layerstack.stack.main"><code class="xref py py-func docutils literal notranslate"><span class="pre">layerstack.stack.main()</span></code></a></p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><ol class="loweralpha simple" start="3">
+<li><p>2021, Alliance for Sustainable Energy, LLC</p></li>
+</ol>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>BSD-3</p>
+</dd>
+</dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.stack.Stack">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.stack.</span></span><span class="sig-name descname"><span class="pre">Stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'v0.1.0'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.MutableSequence</span></code></p>
+<p>Class to create, edit, save, load, and run workflows stored as sequences of
+<a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Layers</span></code></a>.</p>
+<p>Stacks are serialized to .json files. Loading and running them is contingent
+upon being able to locate the <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Layers</span></code></a> in
+the current environment.</p>
+<p>Stacks are run in a specified directory, but at this time provide little
+scaffolding as far as what contents are ultimately saved to that directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layers</strong> (list of <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.Layer</span></code></a>) – List of layers in stack</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – name of stack</p></li>
+<li><p><strong>version</strong> (<em>str</em>) – stack version number</p></li>
+<li><p><strong>run_dir</strong> (<em>None</em><em>, </em><em>str</em><em>, or </em><em>pathlib.Path</em>) – directory to run stack in</p></li>
+<li><p><strong>model</strong> (<em>None</em><em>, </em><em>str</em><em>, or </em><em>other</em>) – Model to apply layers to, if applicable. Can be None, an object, or
+a path to a serialized model.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#layerstack.stack.Stack.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>stack name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#layerstack.stack.Stack.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>stack version</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#layerstack.stack.Stack.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model to apply layers to, if applicable.
+Upon initialization, Stack.model may be None or a str path pointing
+to where a model exists that may be loaded. Stack relies on Layers
+that implement the <a class="reference internal" href="#layerstack.layer.ModelLayerBase" title="layerstack.layer.ModelLayerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelLayerBase</span></code></a>
+interface for model loading and saving.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>None, str, or other</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.insert">
+<span class="sig-name descname"><span class="pre">insert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.insert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Insert layer into stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<em>'int'</em>) – Position at which to insert layer</p></li>
+<li><p><strong>layer</strong> (<em>'Layer'</em>) – Layer to insert into stack</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.append">
+<span class="sig-name descname"><span class="pre">append</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.append"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append layer to end of stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>layer</strong> (<em>'Layer'</em>) – Layer to append to end of stack</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.suggested_filename">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">suggested_filename</span></span><a class="headerlink" href="#layerstack.stack.Stack.suggested_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create stack filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stack json name</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘str’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.uuid">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#layerstack.stack.Stack.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get stack uuid</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stack unique identifier</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘uuid4’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.layers">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">layers</span></span><a class="headerlink" href="#layerstack.stack.Stack.layers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get layers in stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of layers in stack</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘list’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.run_dir">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">run_dir</span></span><a class="headerlink" href="#layerstack.stack.Stack.run_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>run directory for the stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>None or str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.runnable">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">runnable</span></span><a class="headerlink" href="#layerstack.stack.Stack.runnable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if stack is runnable:
+- Are args set for all layers in stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>All args are set for all layers in stack, stack can be run</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>‘bool’</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.set_arg_mode">
+<span class="sig-name descname"><span class="pre">set_arg_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arg_mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.set_arg_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.set_arg_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function for setting all args and kwargs objects to the same
+ArgMode.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>'str'</em>) – file path to save stack to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.archive">
+<span class="sig-name descname"><span class="pre">archive</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.archive"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.archive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Archives this stack by computing the .json checksum on the
+without-checksum json file, and then saving a json with the checksum
+data added in. Called by the run method with with default filename
+self.run_dir / ‘stack.archive’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>'str'</em>) – file path to save stack to</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.get_layer_dir">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">get_layer_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">layer_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_library_dirs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_preferred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hard_fail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.get_layer_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.get_layer_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the best path to the <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.Layer</span></code></a> indicated
+by layer_dir, based on the user-provided options. This method may be
+helpful when <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Layers</span></code></a> and
+<a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stacks</span></code></a> are used by different people or
+on different systems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layer_dir</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – Location of the <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.Layer</span></code></a> as originally
+represented</p></li>
+<li><p><strong>layer_library_dirs</strong> (<em>list of str</em><em> or </em><em>pathlib.Path</em>) – Location(s) where the <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.Layer</span></code></a> may now be
+found. If multiple locations are provided, it is assumed that they
+are listed in descending preference order.</p></li>
+<li><p><strong>original_preferred</strong> (<em>bool</em>) – If True and the original layer_dir path exists, it will be used
+directly. If False, the original layer_dir path will only be used if
+the <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.Layer</span></code></a> is not found in any of the
+locations listed in layer_library_dirs.</p></li>
+<li><p><strong>hard_fail</strong> (<em>bool</em>) – If True, raises LayerStackError if the layer cannot be located.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If the <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.Layer</span></code></a> is located, its path is
+returned and pathlib.Path.exists(). Otherwise, a warning is logged
+and None is returned, unless hard_fail, in which case a
+LayerStackError is raised instead.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pathlib.Path or None</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference internal" href="#layerstack.LayerStackError" title="layerstack.LayerStackError"><strong>LayerStackError</strong></a> – If the <a class="reference internal" href="#layerstack.layer.Layer" title="layerstack.layer.Layer"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.layer.Layer</span></code></a> cannot be located and
+    hard_fail is True.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.load">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_library_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_locations_preferred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load stack from given .json file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em><em> or </em><em>pathlib.Path</em>) – .json file path from which to load <a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.stack.Stack</span></code></a></p></li>
+<li><p><strong>layer_library_dir</strong> (<em>None</em><em>, </em><em>str</em><em>, </em><em>pathlib.Path</em><em>, or </em><em>list of str</em><em> or </em><em>pathlib.Path</em>) – If one or more paths are provided, these will be used to locate layer
+directories listed in the <a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.stack.Stack</span></code></a> json file.
+If multiple directories are provided, they will be checked in order.</p></li>
+<li><p><strong>original_locations_preferred</strong> (<em>bool</em>) – If True, the original locations of the layers listed in the
+<a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.stack.Stack</span></code></a> json file will be preferred and use
+if they exist on the current file system. If False, any location(s)
+passed in through layer_library_dir will be preferred and checked
+first</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>result</strong> – Instantiated Stack class instance</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack">Stack</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="layerstack.stack.Stack.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">archive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#Stack.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.Stack.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run stack</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>save_path</strong> (<em>str</em>) – Path to which results from running stack should be saved</p></li>
+<li><p><strong>log_level</strong> (<em>logging</em>) – Level of logging to be used while running stack</p></li>
+<li><p><strong>archive</strong> (<em>bool</em>) – Archive stack before running</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.stack.repoint_stack">
+<span class="sig-prename descclassname"><span class="pre">layerstack.stack.</span></span><span class="sig-name descname"><span class="pre">repoint_stack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layer_library_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_locations_preferred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#repoint_stack"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.repoint_stack" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load Stack from p, update run_dir and/or model, and save to outfile or to the
+same folder but with the file name prepended with an underscore.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>str</em>) – path to Stack .json file</p></li>
+<li><p><strong>layer_library_dir</strong> (<em>None</em><em>, </em><em>str</em><em>, </em><em>pathlib.Path</em><em>, or </em><em>list of str</em><em> or </em><em>pathlib.Path</em>) – If one or more paths are provided, these will be used to locate layer
+directories listed in the <a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.stack.Stack</span></code></a> json file.
+If multiple directories are provided, they will be checked in order.</p></li>
+<li><p><strong>original_locations_preferred</strong> (<em>bool</em>) – If True, the original locations of the layers listed in the
+<a class="reference internal" href="#layerstack.stack.Stack" title="layerstack.stack.Stack"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.stack.Stack</span></code></a> json file will be preferred and use
+if they exist on the current file system. If False, any location(s)
+passed in through layer_library_dir will be preferred and checked
+first</p></li>
+<li><p><strong>run_dir</strong> (<em>str</em><em> or </em><em>None</em>) – run directory to use</p></li>
+<li><p><strong>model</strong> (<em>str</em><em> or </em><em>None</em>) – path to starting model</p></li>
+<li><p><strong>outfile</strong> (<em>str</em><em> or </em><em>None</em>) – where to save modified stack. If not provided, will save the result to
+the same directory but with the filename prepended with an underscore</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.stack.parse_args_helper">
+<span class="sig-prename descclassname"><span class="pre">layerstack.stack.</span></span><span class="sig-name descname"><span class="pre">parse_args_helper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#parse_args_helper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.parse_args_helper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.stack.main">
+<span class="sig-prename descclassname"><span class="pre">layerstack.stack.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack/stack.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.stack.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-layerstack">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-layerstack" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="layerstack">
+<h3>layerstack<a class="headerlink" href="#layerstack" title="Permalink to this headline">¶</a></h3>
+<p>layerstack is a Python package for assembling workflows, especially those
+associated with modifying, running, and analyzing simulation models</p>
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><ol class="loweralpha simple" start="3">
+<li><p>2021, Alliance for Sustainable Energy, LLC</p></li>
+</ol>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>BSD-3</p>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="layerstack.LayerStackError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">LayerStackError</span></span><a class="reference internal" href="../_modules/layerstack.html#LayerStackError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.LayerStackError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Exception base class for this package.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="layerstack.LayerStackTypeError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">LayerStackTypeError</span></span><a class="reference internal" href="../_modules/layerstack.html#LayerStackTypeError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.LayerStackTypeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#layerstack.LayerStackError" title="layerstack.LayerStackError"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.LayerStackError</span></code></a></p>
+<p>TypeError exception class for this package.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="layerstack.LayerStackRuntimeError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">LayerStackRuntimeError</span></span><a class="reference internal" href="../_modules/layerstack.html#LayerStackRuntimeError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.LayerStackRuntimeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#layerstack.LayerStackError" title="layerstack.LayerStackError"><code class="xref py py-class docutils literal notranslate"><span class="pre">layerstack.LayerStackError</span></code></a></p>
+<p>RuntimeError exception class for this package.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.start_console_log">
+<span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">start_console_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack.html#start_console_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.start_console_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts logging to the console.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>log_level</strong> (<em>enum</em>) – logging package log level, i.e. logging.ERROR, logging.WARN,
+logging.INFO or logging.DEBUG</p></li>
+<li><p><strong>log_format</strong> (<em>str</em>) – format string to use with the logging package</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>console_handler</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>logging.StreamHandler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.start_file_log">
+<span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">start_file_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%(asctime)s|%(levelname)s|%(name)s|\n\t%(message)s'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack.html#start_file_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.start_file_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts logging to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – path to the log file</p></li>
+<li><p><strong>log_level</strong> (<em>enum</em>) – logging package log level, i.e. logging.ERROR, logging.WARN,
+logging.INFO or logging.DEBUG</p></li>
+<li><p><strong>log_format</strong> (<em>str</em>) – format string to use with the logging package</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>logfile</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>logging.FileHandler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.end_file_log">
+<span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">end_file_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logfile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack.html#end_file_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.end_file_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.checksum">
+<span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">checksum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack.html#checksum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.checksum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the checksum of a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – file to calculate the checksum for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>checksum</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="layerstack.TempJsonFilepath">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">TempJsonFilepath</span></span><a class="reference internal" href="../_modules/layerstack.html#TempJsonFilepath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.TempJsonFilepath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Creates a temporary json filename. Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">TempJsonFilepath</span><span class="p">()</span> <span class="k">as</span> <span class="n">tmpjson</span><span class="p">:</span>
+    <span class="c1"># save a json file to tmpjson</span>
+    <span class="c1"># use the file as needed</span>
+    <span class="c1"># when this block is exited, the json file will be deleted</span>
+    <span class="c1"># (used in this package to calculate a json checksum)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.load_module_from_file">
+<span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">load_module_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">module_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack.html#load_module_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.load_module_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loads a python module from the path of the corresponding file. (Adapted
+from <a class="reference external" href="https://github.com/epfl-scitas/spack/blob/af6a3556c4c861148b8e1adc2637685932f4b08a/lib/spack/llnl/util/lang.py#L595-L622">https://github.com/epfl-scitas/spack/blob/af6a3556c4c861148b8e1adc2637685932f4b08a/lib/spack/llnl/util/lang.py#L595-L622</a>)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>module_name</strong> (<em>str</em>) – namespace where the python module will be loaded</p></li>
+<li><p><strong>module_path</strong> (<em>str</em>) – path of the python file containing the module</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A valid module object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>module</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ImportError</strong> – when the module can’t be loaded</p></li>
+<li><p><strong>FileNotFoundError</strong> – when module_path doesn’t exist</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="layerstack.timer_str">
+<span class="sig-prename descclassname"><span class="pre">layerstack.</span></span><span class="sig-name descname"><span class="pre">timer_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elapsed_seconds</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/layerstack.html#timer_str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#layerstack.timer_str" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="layerstack.tests.html" class="btn btn-neutral float-right" title="layerstack.tests package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="layerstack" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright (c) 2021, Alliance for Sustainable Energy, LLC.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
