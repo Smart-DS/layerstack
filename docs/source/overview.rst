@@ -46,8 +46,8 @@ a layerstack-enabled project
 The envisioned use of layerstack is for modelers to write a *Layer*
 whenever they have identified some sort of task that they would like to
 repeatedly perform in one of their workflows. To create a layer, one
-uses the layerstack.layer.Layer.create class method, which creates a new
-folder whose name is based on the layer’s name, and which contains a
+uses the :meth:`layerstack.layer.Layer.create` class method, which creates 
+a new folder whose name is based on the layer’s name, and which contains a
 ``layer.py`` Python module. The layer developer then opens the
 ``layer.py`` module file in a text editor and fills out the template
 code that has been placed there. In particular, the developer will need
@@ -78,15 +78,15 @@ post-processing or analysis steps that produce summary datasets or
 output visualizations.
 
 To implement this structure, one modeler will need to write a class
-derived from ``layerstack.layer.ModelLayerBase``, implement several of
+derived from :class:`layerstack.layer.ModelLayerBase`, implement several of
 its protected methods (i.e.,
-``layerstack.layer.ModelLayerBase._check_model_type``,
-``layerstack.layer.ModelLayerBase._load_model``, and
-``layerstack.layer.ModelLayerBase._save_model``), and then make the
+:meth:`layerstack.layer.ModelLayerBase._check_model_type`,
+:meth:`layerstack.layer.ModelLayerBase._load_model`, and
+:meth:`layerstack.layer.ModelLayerBase._save_model`), and then make the
 class definition available to her collaborators (e.g. all users of the
 modeling package, or at least her immediate team members). Then, if you
 specify this class as the ``layer_base_class`` in
-``layerstack.layer.Layer.create``, ``layerstack.stack.Stack`` will know
+:meth:`layerstack.layer.Layer.create`, :class:`layerstack.stack.Stack` will know
 how to identify, load, and save the models that you want to operate on
 with your layers.
 
